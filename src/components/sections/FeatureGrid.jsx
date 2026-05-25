@@ -3,18 +3,18 @@ import { MarketingCard } from '../cards/MarketingCard';
 
 const features = [
   {
-    title: "Zero Regressions",
-    description: "Our defensive wrappers protect your business logic while we safely inject motion primitives.",
+    title: "1. Elige tu servicio",
+    description: "Branding, redes sociales, diseño web, publicidad o ventas. Tú eliges lo que necesitas y nosotros lo hacemos realidad.",
     icon: <span className="text-xl">🛡️</span>,
   },
   {
-    title: "Cinematic Easing",
-    description: "Custom cubic-bezier curves that feel natural, expensive, and meticulously choreographed.",
+    title: "2. Conoce a tu equipo",
+    description: "Te integramos a un grupo exclusivo en WhatsApp. Ahí estarás en contacto directo con tu asesor, diseñador y estratega.",
     icon: <span className="text-xl">🎬</span>,
   },
   {
-    title: "GPU Accelerated",
-    description: "We strictly animate transforms and opacities to maintain 60fps and zero layout thrashing.",
+    title: "3. Haz tu primer pedido",
+    description: "¿Necesitas ventas, web o publicidad? Lo solicitas y nuestro equipo lo entrega en tiempo récord con calidad.",
     icon: <span className="text-xl">⚡</span>,
   }
 ];
@@ -25,10 +25,10 @@ export const FeatureGrid = () => {
       <div className="container mx-auto px-6 md:px-12">
         <div className="mb-16 text-center max-w-2xl mx-auto">
           <h2 className="text-3xl md:text-5xl font-serif font-bold tracking-tight mb-6">
-            <RevealText text="Enterprise Infrastructure." />
+            <RevealText text="¿Cómo trabajamos?" />
           </h2>
           <FadeIn delay={0.2} direction="up" className="text-foreground/70 text-lg">
-            Built for legacy migration. Designed for visual excellence.
+            Rápido, claro y enfocado en resultados.
           </FadeIn>
         </div>
 

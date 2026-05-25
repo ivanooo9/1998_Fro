@@ -7,14 +7,14 @@ export const Footer = () => {
         <FadeIn delay={0.2}>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-12 mb-16">
             <div className="col-span-2 md:col-span-1">
-              <span className="font-serif font-bold text-2xl text-foreground mb-4 block">Merlin</span>
+              <span className="font-serif font-bold text-2xl text-foreground mb-4 block">1998</span>
               <p className="text-foreground/60 text-sm max-w-xs">
-                Crafting cinematic digital experiences for the modern web.
+                Creamos marcas que venden. Estrategia y desarrollo web.
               </p>
             </div>
             
             <div>
-              <h4 className="font-bold text-foreground mb-4">Product</h4>
+              <h4 className="font-bold text-foreground mb-4">Servicios</h4>
               <ul className="space-y-2 text-sm text-foreground/60">
                 <li><a href="#" className="hover:text-foreground transition-colors">Features</a></li>
                 <li><a href="#" className="hover:text-foreground transition-colors">Integrations</a></li>
@@ -24,7 +24,7 @@ export const Footer = () => {
             </div>
 
             <div>
-              <h4 className="font-bold text-foreground mb-4">Company</h4>
+              <h4 className="font-bold text-foreground mb-4">Empresa</h4>
               <ul className="space-y-2 text-sm text-foreground/60">
                 <li><a href="#" className="hover:text-foreground transition-colors">About Us</a></li>
                 <li><a href="#" className="hover:text-foreground transition-colors">Careers</a></li>
@@ -43,7 +43,7 @@ export const Footer = () => {
           </div>
           
           <div className="flex flex-col md:flex-row items-center justify-between pt-8 border-t border-border/40 text-sm text-foreground/40">
-            <p>© {new Date().getFullYear()} Merlin Architecture. All rights reserved.</p>
+            <p>© {new Date().getFullYear()} 1998 - Desarrollo Digital y Marketing. Todos los derechos reservados.</p>
             <div className="flex gap-4 mt-4 md:mt-0">
               <a href="#" className="hover:text-foreground transition-colors">Twitter</a>
               <a href="#" className="hover:text-foreground transition-colors">GitHub</a>

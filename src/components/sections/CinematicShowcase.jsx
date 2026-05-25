@@ -8,10 +8,10 @@ export const CinematicShowcase = () => {
       <div className="container mx-auto px-6 md:px-12 relative z-10 text-center">
         <div className="max-w-3xl mx-auto mb-20">
           <h2 className="text-4xl md:text-6xl font-serif font-bold tracking-tight mb-8">
-            <RevealText text="Flawless Execution." />
+            <RevealText text="Impulsa tu Marca." />
           </h2>
           <FadeIn delay={0.2} direction="up" className="text-foreground/70 text-lg md:text-xl">
-            <p>Every frame, every interaction, perfectly tuned to 60fps.</p>
+            <p>Lleva tu negocio al siguiente nivel hoy mismo.</p>
           </FadeIn>
         </div>
 

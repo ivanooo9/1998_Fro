@@ -46,33 +46,41 @@ export const Navbar = () => {
           <span className="text-primary-foreground font-bold font-serif">M</span>
         </div>
         <span className="font-serif font-bold text-xl text-foreground tracking-tight hidden sm:block">
-          Merlin
+          1998
         </span>
       </div>
 
       {/* Nav Links */}
       <nav aria-label="Navegación principal" className="hidden md:flex">
         <ul className="flex items-center gap-8">
-          {['Vision', 'Features', 'Showcase', 'Pricing'].map((item) => (
-            <li key={item}>
-              <a 
-                href={`#${item.toLowerCase()}`}
-                className="text-sm font-medium text-foreground/70 hover:text-foreground transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4 focus-visible:ring-offset-background"
-              >
-                {item}
-              </a>
-            </li>
-          ))}
+          {['Vision', 'Features', 'Showcase', 'Pricing'].map((item) => {
+            const labelMap = {
+              'Vision': 'Inicio',
+              'Features': '¿Cómo trabajamos?',
+              'Showcase': 'Planes',
+              'Pricing': 'Portafolio'
+            };
+            return (
+              <li key={item}>
+                <a 
+                  href={`#${item.toLowerCase()}`}
+                  className="text-sm font-medium text-foreground/70 hover:text-foreground transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4 focus-visible:ring-offset-background"
+                >
+                  {labelMap[item]}
+                </a>
+              </li>
+            );
+          })}
         </ul>
       </nav>
 
       {/* CTA */}
       <div className="flex-shrink-0 flex items-center gap-4">
         <PremiumButton variant="ghost" size="sm" className="hidden sm:flex">
-          Log in
+          Blog
         </PremiumButton>
         <PremiumButton variant="primary" size="sm">
-          Get Started
+          Contáctanos
         </PremiumButton>
       </div>
     </motion.header>

@@ -7,22 +7,22 @@ export const CTASection = () => {
         <MotionContainer staggerChildren={0.2} className="max-w-4xl mx-auto text-center">
           <FadeIn direction="up">
             <h2 className="text-4xl md:text-6xl font-serif font-bold tracking-tight mb-6 leading-tight text-foreground">
-              Ready to upgrade your React architecture?
+              ¿Cuál plan se ajusta mejor a tu negocio?
             </h2>
           </FadeIn>
           
           <FadeIn delay={0.2} direction="up">
             <p className="text-xl text-foreground/70 mb-12 max-w-2xl mx-auto">
-              Inject enterprise-grade motion and progressive enhancement into your legacy app with zero regressions.
+              Desde desarrollo web hasta cierres de ventas. En 1998 nos encargamos de que tu empresa destaque de verdad.
             </p>
           </FadeIn>
           
           <FadeIn delay={0.4} direction="up" className="flex flex-col sm:flex-row items-center justify-center gap-6">
             <PremiumButton variant="primary" size="lg" className="w-full sm:w-auto px-12">
-              Start Building
+              Escríbenos
             </PremiumButton>
             <PremiumButton variant="ghost" size="lg" className="w-full sm:w-auto px-12">
-              Contact Sales
+              Ver Planes
             </PremiumButton>
           </FadeIn>
         </MotionContainer>

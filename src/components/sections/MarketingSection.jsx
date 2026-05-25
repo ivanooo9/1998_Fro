@@ -9,16 +9,16 @@ export const MarketingSection = ({ reversed = false }) => {
           {/* Text Content */}
           <MotionContainer staggerChildren={0.2} className="flex-1 max-w-xl">
             <h2 className="text-3xl md:text-5xl font-serif font-bold tracking-tight mb-6 leading-tight">
-              <RevealText text="Motion as a" className="block" />
-              <RevealText text="First-Class Citizen." delay={0.1} className="block text-foreground/70" />
+              <RevealText text="No somos una" className="block" />
+              <RevealText text="empresa cualquiera." delay={0.1} className="block text-foreground/70" />
             </h2>
             <FadeIn delay={0.3} direction="up" className="text-foreground/70 text-lg mb-8 leading-relaxed">
               <p>
-                We don't just add animations as an afterthought. We build motion directly into the architectural layer, ensuring every hover, scroll, and click feels incredibly polished and deliberate without breaking React's reactivity.
+                Creamos marcas con carácter, páginas web que generan ingresos y estrategias digitales que realmente venden. Nuestro modelo es flexible, pero el impacto que logramos es duradero. Te ayudamos a generar resultados.
               </p>
             </FadeIn>
             <FadeIn delay={0.5} direction="up">
-              <PremiumButton variant="outline">Learn more</PremiumButton>
+              <PremiumButton variant="outline">Contáctanos</PremiumButton>
             </FadeIn>
           </MotionContainer>
 
