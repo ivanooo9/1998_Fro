@@ -4,7 +4,7 @@ export const MarketingSection = ({ reversed = false }) => {
   return (
     <section className="py-24 overflow-hidden relative">
       <div className="container mx-auto px-6 md:px-12">
-        <div className={`flex flex-col gap-12 lg:gap-20 items-center ${reversed ? 'lg:flex-row-reverse' : 'lg:flex-row'}`}>
+        <div className={`flex gap-12 lg:gap-20 items-center ${reversed ? 'flex-col-reverse lg:flex-row-reverse' : 'flex-col lg:flex-row'}`}>
           
           {/* Text Content */}
           <MotionContainer staggerChildren={0.2} className="flex-1 max-w-xl">

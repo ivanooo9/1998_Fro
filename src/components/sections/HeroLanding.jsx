@@ -8,7 +8,7 @@ import {
 
 export const HeroLanding = () => {
   return (
-    <section className="relative min-h-[90vh] flex items-center justify-center pt-24 pb-12 overflow-hidden">
+    <section className="relative min-h-[90vh] flex items-center justify-center pt-24 pb-12 overflow-hidden bg-background">
       {/* Background Cinematic Video */}
       <video
         autoPlay
@@ -40,12 +40,12 @@ export const HeroLanding = () => {
             </span>
           </FadeIn>
 
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif font-bold tracking-tight text-foreground leading-[1.1] mb-8">
+          <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-serif font-bold tracking-tight text-foreground leading-[1.1] mb-6">
             <RevealText text="Estrategia, creatividad" className="block" />
             <RevealText text="y resultados reales." delay={0.1} className="block text-foreground/80" />
           </h1>
           
-          <FadeIn delay={0.4} direction="up" className="text-lg md:text-xl text-foreground/60 mb-10 max-w-2xl leading-relaxed">
+          <FadeIn delay={0.4} direction="up" className="text-base md:text-xl text-foreground/60 mb-8 max-w-2xl leading-relaxed">
             <p>
               Creamos marcas que venden. Te ayudamos a destacar con desarrollo web, marketing digital y estrategias de ventas que sí funcionan. Atrae más clientes y aumenta tus ingresos.
             </p>

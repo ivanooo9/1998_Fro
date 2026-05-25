@@ -57,3 +57,10 @@
 #sticky-social a[class*="twitter"], #sticky-social a[class*="twitter"]:hover, #sticky-social a[class*="twitter"] span { background: #00aced; }
 #sticky-social a[class*="linkedin"], #sticky-social a[class*="linkedin"]:hover, #sticky-social a[class*="linkedin"] span { background: #007bb6; }	
 #sticky-social a[class*="instagrem"], #sticky-social a[class*="instagrem"]:hover, #sticky-social a[class*="instagrem"] span { background: #517fa4; }
+
+@media (max-width: 767px) {
+  #sticky-social {
+    display: none;
+  }
+}
+

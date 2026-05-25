@@ -17,7 +17,8 @@
   padding: 2rem 1.5rem;
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none;  /* IE and Edge */
-  scroll-smooth: always;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch; /* iOS momentum scroll */
   max-width: 100%;
 }
 

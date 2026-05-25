@@ -6,8 +6,9 @@ export const StickySocial = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      // Mostrar la barra lateral si el scroll supera los 150px
-      if (window.scrollY > 150) {
+      // Ocultar en la sección Hero (primeros window.innerHeight - 100 píxeles)
+      const threshold = window.innerHeight - 100;
+      if (window.scrollY > threshold) {
         setIsVisible(true);
       } else {
         setIsVisible(false);
