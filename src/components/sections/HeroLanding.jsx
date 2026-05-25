@@ -9,6 +9,22 @@ import {
 export const HeroLanding = () => {
   return (
     <section className="relative min-h-[90vh] flex items-center justify-center pt-24 pb-12 overflow-hidden">
+      {/* Background Cinematic Video */}
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none"
+      >
+        <source media="(min-width: 1024px)" src="/videos/hero-pc.mp4" type="video/mp4" />
+        <source media="(min-width: 768px)" src="/videos/hero-tablet.mp4" type="video/mp4" />
+        <source src="/videos/hero-mobile.mp4" type="video/mp4" />
+      </video>
+
+      {/* Video Overlay Layer */}
+      <div className="absolute inset-0 bg-black/60 z-0 pointer-events-none" />
+
       {/* Background Cinematic Glow */}
       <div className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none">
         <div className="w-[800px] h-[500px] bg-primary/20 rounded-[100%] blur-[120px] opacity-50 mix-blend-screen translate-y-[-20%]" />
