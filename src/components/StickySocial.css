@@ -1,9 +1,3 @@
-@import url("https://weloveiconfonts.com/api/?family=entypo");
-
-[class*="entypo-"]:before {
-   font-family: "entypo", sans-serif;
-}
-
 #sticky-social {
    left: 0;
    position: fixed;
@@ -53,14 +47,45 @@
    left: 100%;
 }
 
-#sticky-social a[class*="facebook"], #sticky-social a[class*="facebook"]:hover, #sticky-social a[class*="facebook"] span { background: #3b5998; }
-#sticky-social a[class*="twitter"], #sticky-social a[class*="twitter"]:hover, #sticky-social a[class*="twitter"] span { background: #00aced; }
-#sticky-social a[class*="linkedin"], #sticky-social a[class*="linkedin"]:hover, #sticky-social a[class*="linkedin"] span { background: #007bb6; }	
-#sticky-social a[class*="instagrem"], #sticky-social a[class*="instagrem"]:hover, #sticky-social a[class*="instagrem"] span { background: #517fa4; }
-
-@media (max-width: 767px) {
-  #sticky-social {
-    display: none;
-  }
+#sticky-social a[class*="facebook"],
+#sticky-social a[class*="facebook"]:hover,
+#sticky-social a[class*="facebook"] span {
+   background: #3b5998;
 }
 
+#sticky-social a[class*="twitter"],
+#sticky-social a[class*="twitter"]:hover,
+#sticky-social a[class*="twitter"] span {
+   background: #00aced;
+}
+
+#sticky-social a[class*="linkedin"],
+#sticky-social a[class*="linkedin"]:hover,
+#sticky-social a[class*="linkedin"] span {
+   background: #007bb6;
+}
+
+#sticky-social a[class*="instagrem"],
+#sticky-social a[class*="instagrem"]:hover,
+#sticky-social a[class*="instagrem"] span {
+   background: #517fa4;
+}
+
+#sticky-social .social-icon {
+   font-size: 20px;
+   display: block;
+   margin: 0 auto;
+}
+
+#sticky-social ul li a {
+   display: flex;
+   /* Para centrar correctamente el SVG sin dañar la posición absoluta del span */
+   align-items: center;
+   justify-content: center;
+}
+
+@media (max-width: 767px) {
+   #sticky-social {
+      display: none;
+   }
+}

@@ -1,7 +1,14 @@
 @import "./design-system/tokens/theme.css";
 
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+  /* Ajusta según Navbar */
+}
+
 /* Sandbox Custom Utilities and Overrides */
 @layer base {
+
   /* Fallback custom font styling if GT Sectra is not available */
   .font-serif {
     font-family: 'Playfair Display', Georgia, serif;
@@ -15,26 +22,31 @@
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   padding: 2rem 1.5rem;
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none;  /* IE and Edge */
   scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch; /* iOS momentum scroll */
   max-width: 100%;
+
+  /* Scrollbar hiding (modern approach) */
+  scrollbar-width: none;
+  /* Firefox */
 }
 
+/* Hide scrollbar for Chrome, Safari, Edge */
 .carousel::-webkit-scrollbar {
-  display: none; /* Chrome, Safari and Opera */
+  display: none;
 }
 
-/* Carousel Item (a tag) */
+/* Carousel Item */
 .carousel a {
   display: flex;
   flex-direction: column;
   min-width: 290px;
   max-width: 290px;
   background: rgba(20, 20, 20, 0.45);
-  backdrop-filter: blur(12px);
+
+  /* Correct order: prefixed first */
   -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 1.25rem;
   padding: 1.25rem;
@@ -47,7 +59,9 @@
 .carousel a:hover {
   transform: translateY(-4px);
   border-color: rgba(255, 255, 255, 0.2);
-  box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.7), 0 0 20px -5px rgba(255, 255, 255, 0.05);
+  box-shadow:
+    0 12px 30px -10px rgba(0, 0, 0, 0.7),
+    0 0 20px -5px rgba(255, 255, 255, 0.05);
 }
 
 .carousel a h2 {
@@ -85,4 +99,3 @@
 .carousel a:hover .img img {
   transform: scale(1.04);
 }
-

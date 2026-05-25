@@ -2,7 +2,7 @@ import { MotionContainer, FadeIn, PremiumButton } from '../../design-system';
 
 export const CTASection = () => {
   return (
-    <section className="py-32 relative overflow-hidden border-t border-border/40 bg-card/10">
+    <section id="planes" className="py-32 relative overflow-hidden border-t border-border/40 bg-card/10">
       <div className="container mx-auto px-6 md:px-12 relative z-10">
         <MotionContainer staggerChildren={0.2} className="max-w-4xl mx-auto text-center">
           <FadeIn direction="up">

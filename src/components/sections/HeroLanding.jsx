@@ -8,7 +8,7 @@ import {
 
 export const HeroLanding = () => {
   return (
-    <section className="relative min-h-[90vh] flex items-center justify-center pt-24 pb-12 overflow-hidden bg-background">
+    <section id="inicio" className="relative min-h-[90vh] flex items-center justify-center pt-24 pb-12 overflow-hidden bg-background">
       {/* Background Cinematic Video */}
       <video
         autoPlay

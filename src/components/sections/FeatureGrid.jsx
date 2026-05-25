@@ -21,7 +21,7 @@ const features = [
 
 export const FeatureGrid = () => {
   return (
-    <section id="features" className="py-24 bg-background relative z-10">
+    <section id="como-trabajamos" className="py-24 bg-background relative z-10">
       <div className="container mx-auto px-6 md:px-12">
         <div className="mb-16 text-center max-w-2xl mx-auto">
           <h2 className="text-3xl md:text-5xl font-serif font-bold tracking-tight mb-6">

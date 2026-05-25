@@ -28,6 +28,15 @@ export const Navbar = () => {
     ['1px solid rgba(255, 255, 255, 0)', '1px solid rgba(255, 255, 255, 0.08)']
   );
 
+  const handleNavClick = (e, targetId) => {
+    e.preventDefault();
+    const element = document.getElementById(targetId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+    setIsOpen(false);
+  };
+
   return (
     <motion.header
       className={cn(
@@ -62,10 +71,18 @@ export const Navbar = () => {
               'Showcase': 'Planes',
               'Pricing': 'Portafolio'
             };
+            const targetMap = {
+              'Vision': 'inicio',
+              'Features': 'como-trabajamos',
+              'Showcase': 'planes',
+              'Pricing': 'portafolio'
+            };
+            const targetId = targetMap[item];
             return (
               <li key={item}>
                 <a 
-                  href={`#${item.toLowerCase()}`}
+                  href={`#${targetId}`}
+                  onClick={(e) => handleNavClick(e, targetId)}
                   className="text-sm font-medium text-foreground/70 hover:text-foreground transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4 focus-visible:ring-offset-background"
                 >
                   {labelMap[item]}
@@ -122,11 +139,18 @@ export const Navbar = () => {
                   'Showcase': 'Planes',
                   'Pricing': 'Portafolio'
                 };
+                const targetMap = {
+                  'Vision': 'inicio',
+                  'Features': 'como-trabajamos',
+                  'Showcase': 'planes',
+                  'Pricing': 'portafolio'
+                };
+                const targetId = targetMap[item];
                 return (
                   <li key={item}>
                     <a
-                      href={`#${item.toLowerCase()}`}
-                      onClick={() => setIsOpen(false)}
+                      href={`#${targetId}`}
+                      onClick={(e) => handleNavClick(e, targetId)}
                       className="block py-2 text-base font-medium text-foreground/80 hover:text-foreground transition-colors"
                     >
                       {labelMap[item]}

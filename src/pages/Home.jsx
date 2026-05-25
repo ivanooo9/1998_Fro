@@ -7,6 +7,7 @@ import { CinematicShowcase } from '../components/sections/CinematicShowcase';
 import PortfolioCarousel from '../components/PortfolioCarousel';
 import { CTASection } from '../components/sections/CTASection';
 import { StickySocial } from '../components/StickySocial';
+import InfiniteServicesMarquee from '../components/sections/InfiniteServicesMarquee';
 
 export const Home = () => {
   return (
@@ -18,7 +19,7 @@ export const Home = () => {
         <HeroLanding />
         <FeatureGrid />
         
-        <MarketingSection />
+        <InfiniteServicesMarquee />
         <MarketingSection reversed />
         
         <CinematicShowcase />
