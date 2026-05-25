@@ -1,0 +1,9 @@
+@import "./design-system/tokens/theme.css";
+
+/* Sandbox Custom Utilities and Overrides */
+@layer base {
+  /* Fallback custom font styling if GT Sectra is not available */
+  .font-serif {
+    font-family: 'Playfair Display', Georgia, serif;
+  }
+}
