@@ -4,6 +4,7 @@ import { HeroLanding } from '../components/sections/HeroLanding';
 import { FeatureGrid } from '../components/sections/FeatureGrid';
 import { MarketingSection } from '../components/sections/MarketingSection';
 import { CinematicShowcase } from '../components/sections/CinematicShowcase';
+import PortfolioCarousel from '../components/PortfolioCarousel';
 import { CTASection } from '../components/sections/CTASection';
 
 export const Home = () => {
@@ -19,6 +20,7 @@ export const Home = () => {
         <MarketingSection reversed />
         
         <CinematicShowcase />
+        <PortfolioCarousel />
         <CTASection />
       </main>
 
