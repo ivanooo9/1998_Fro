@@ -26,7 +26,7 @@ export const MarketingSection = ({ reversed = false }) => {
           <div className="flex-1 w-full max-w-xl lg:max-w-none">
             <FadeIn direction={reversed ? 'right' : 'left'} delay={0.2} duration={1.2}>
               {/* Se eliminó el p-4 md:p-8 para que el video llene el contenedor hasta los bordes redondeados */}
-              <div className="relative aspect-square md:aspect-video rounded-3xl overflow-hidden bg-card/20 border border-border shadow-2xl">
+              <div className="relative aspect-square md:aspect-video rounded-3xl overflow-hidden bg-card/85 dark:bg-card/20 border border-border shadow-2xl">
 
                 {/* Elemento de Video - Capa Base */}
                 <video
@@ -40,8 +40,8 @@ export const MarketingSection = ({ reversed = false }) => {
                 </video>
 
                 {/* Brillos cinemáticos superpuestos - Capa Superior */}
-                <div className="absolute top-0 right-0 w-64 h-64 bg-primary/20 rounded-full blur-3xl translate-x-1/3 -translate-y-1/3 z-10 pointer-events-none mix-blend-screen" />
-                <div className="absolute bottom-0 left-0 w-64 h-64 bg-blue-500/20 rounded-full blur-3xl -translate-x-1/3 translate-y-1/3 z-10 pointer-events-none mix-blend-screen" />
+                <div className="absolute top-0 right-0 w-64 h-64 bg-primary/15 dark:bg-primary/20 rounded-full blur-3xl translate-x-1/3 -translate-y-1/3 z-10 pointer-events-none mix-blend-multiply dark:mix-blend-screen" />
+                <div className="absolute bottom-0 left-0 w-64 h-64 bg-blue-500/15 dark:bg-blue-500/20 rounded-full blur-3xl -translate-x-1/3 translate-y-1/3 z-10 pointer-events-none mix-blend-multiply dark:mix-blend-screen" />
 
                 {/* Capa de oscurecimiento sutil para que el video no sea cegador */}
                 <div className="absolute inset-0 bg-background/20 z-10 pointer-events-none" />

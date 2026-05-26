@@ -14,6 +14,16 @@ El tema del proyecto está construido bajo una estética oscura premium (*Premiu
 *   **Bordes (`--border` - HSL `0 0% 12%` / `#1f1f1f`)**: Delimitadores sutiles de baja luminosidad (12%) que se mezclan perfectamente con el fondo.
 *   **Color Acento/Primario (`--primary` - HSL `0 0% 98%`)**: Blanco de alto contraste utilizado para llamados a la acción principales.
 
+### Variables de Tema Claro (`html.light`)
+Para dar soporte al modo claro con una estética limpia y premium, el sistema redefine las variables cuando se aplica la clase `.light` en el HTML:
+*   `--background`: `204 100% 99%` (Fondo blanco-celeste corporativo `#fafdff`).
+*   `--foreground`: `0 0% 4%` (Texto oscuro `#0a0a0a` de alto contraste).
+*   `--card`: `204 33% 97%` (Superficie de tarjeta `#f2f6f9` suave).
+*   `--card-foreground`: `0 0% 4%` (Texto de tarjetas oscuro).
+*   `--border`: `204 10% 90%` (Gris claro `#e3e7eb` sutil).
+*   `--primary`: `0 0% 4%` (Inversión del primario a negro).
+*   `--primary-foreground`: `0 0% 98%` (Texto claro sobre primario oscuro).
+
 ### Clases Utilitarias Centralizadas (Tailwind `@layer utilities`)
 Ubicadas en [theme.css](file:///c:/Users/eduardo/Documents/Practicas/front_1998/src/design-system/tokens/theme.css):
 *   **`.glass`**: Aplica un fondo semi-translúcido (`bg-card/60`), un desenfoque de fondo acelerado por hardware (`backdrop-blur-md`) y un borde sutil.
@@ -78,6 +88,11 @@ Efecto cinematográfico en el cual el texto asciende desde una máscara invisibl
     *   `delay` (default: `0`): Retraso de la animación.
     *   `duration`: Duración personalizada.
     *   `as` (default: `'span'`): Elemento semántico contenedor del bloque.
+
+### G. `<ThemeToggle />`
+Ubicación del archivo: [ThemeToggle.jsx](file:///c:/Users/eduardo/Documents/Practicas/front_1998/src/components/layout/ThemeToggle.jsx)
+Botón interactivo de cambio de tema. Sus dimensiones físicas están totalmente fijadas (`w-10 h-10`), previniendo Layout Shifts durante su renderizado o animación.
+*   **Animación Física**: Utiliza un SVG interno animado con Framer Motion y `AnimatePresence` en modo `wait`, rotando y desplazando verticalmente los iconos FiSun y FiMoon al alternar de tema.
 
 ---
 

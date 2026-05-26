@@ -89,3 +89,15 @@ Selector condicional de renderizado que conmuta entre dos versiones de un mismo 
     *   Si el modo es `SOFT` o `enablePremiumUI` es `false`, devuelve estrictamente el componente legacy.
     *   Si el modo es `FULL`, devuelve estrictamente el componente premium.
     *   Si el modo es `HYBRID`, evalúa y da prioridad al componente premium; si este no se ha construido, realiza fallback al legacy automáticamente.
+
+---
+
+## 5. Proveedor de Temas (`ThemeContext.jsx`)
+Ubicación del archivo: [ThemeContext.jsx](file:///c:/Users/eduardo/Documents/Practicas/front_1998/src/design-system/integration/ThemeContext.jsx)
+
+El `ThemeProvider` gestiona el estado global del tema (claro/oscuro) del sitio, operando de forma desacoplada y envolviendo al `IntegrationConfigProvider`.
+
+*   **Persistencia Local**: Guarda la preferencia del usuario en `localStorage` bajo la clave `theme`.
+*   **Sincronización del DOM**: Inyecta y remueve dinámicamente la clase `.light` en `document.documentElement` para alternar las variables de color HSL base del tema.
+*   **Seguridad de Hidratación (Hydration Safety)**: Controla el montaje inicial del componente (`mounted` flag) para evitar parpadeos visuales o discrepancias de renderizado entre cliente y servidor en entornos SSR/SSG.
+

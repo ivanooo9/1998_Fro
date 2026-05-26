@@ -15,18 +15,28 @@ export const CinematicShowcase = () => {
           </FadeIn>
         </div>
 
-        {/* Massive Floating Image / Video Placeholder */}
+        {/* Massive Floating Image / Video Frame */}
         <FadeIn delay={0.4} direction="up" duration={1.2}>
           <div className="relative w-full max-w-5xl mx-auto aspect-[16/9] md:aspect-[21/9] rounded-3xl overflow-hidden bg-card/40 border border-border/50 shadow-[0_0_100px_-20px_rgba(255,255,255,0.05)] flex items-center justify-center">
-            
+
+            {/* Etiqueta de Video Cinematográfico */}
+            <video
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="absolute inset-0 w-full h-full object-cover z-0"
+            >
+              {/* Cambia esta ruta por la de tu video en la carpeta public */}
+              <source src="/videos/hero-pc.mp4" media="(min-width: 1024px)" type="video/mp4" />
+
+            </video>
+
+            {/* Capa de Efecto Glass (superpuesta al video) */}
             {flags.enableGlassEffects && (
               <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent z-10" />
             )}
-            
-            <div className="text-foreground/30 font-serif tracking-widest text-sm uppercase">
-              Cinematic Media Frame
-            </div>
-            
+
           </div>
         </FadeIn>
       </div>

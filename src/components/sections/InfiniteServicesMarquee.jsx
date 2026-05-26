@@ -54,7 +54,7 @@ const InfiniteServicesMarquee = () => {
                   style={{ backgroundImage: `url(${service.bgImage})` }}
                 ></div>
 
-                <div className="absolute inset-0 bg-black/40"></div>
+                <div className="absolute inset-0 bg-white/60 dark:bg-black/40"></div>
 
                 <motion.div
                   className="absolute inset-0 bg-black z-0 pointer-events-none"
@@ -62,10 +62,10 @@ const InfiniteServicesMarquee = () => {
                 />
 
                 <div className="absolute inset-0 p-8 md:p-14 flex flex-col justify-end z-10 pointer-events-none">
-                  <h3 className="text-4xl md:text-6xl font-serif font-bold text-white mb-4 tracking-tight drop-shadow-xl">
+                  <h3 className="text-4xl md:text-6xl font-serif font-bold text-foreground dark:text-white mb-4 tracking-tight drop-shadow-xl">
                     {service.title}
                   </h3>
-                  <p className="text-gray-200 text-xl md:text-2xl leading-relaxed drop-shadow-md max-w-2xl font-medium">
+                  <p className="text-foreground/80 dark:text-gray-200 text-xl md:text-2xl leading-relaxed drop-shadow-md max-w-2xl font-medium">
                     {service.description}
                   </p>
                 </div>

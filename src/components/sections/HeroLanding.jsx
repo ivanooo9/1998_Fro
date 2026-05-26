@@ -23,11 +23,11 @@ export const HeroLanding = () => {
       </video>
 
       {/* Video Overlay Layer */}
-      <div className="absolute inset-0 bg-black/60 z-0 pointer-events-none" />
-
+      <div className="absolute inset-0 bg-white/75 dark:bg-black/60 z-0 pointer-events-none" />
+ 
       {/* Background Cinematic Glow */}
       <div className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none">
-        <div className="w-[800px] h-[500px] bg-primary/20 rounded-[100%] blur-[120px] opacity-50 mix-blend-screen translate-y-[-20%]" />
+        <div className="w-[800px] h-[500px] bg-primary/10 dark:bg-primary/20 rounded-[100%] blur-[120px] opacity-40 dark:opacity-50 mix-blend-multiply dark:mix-blend-screen translate-y-[-20%]" />
       </div>
 
       <div className="container mx-auto px-6 md:px-12 relative z-10 text-center">
