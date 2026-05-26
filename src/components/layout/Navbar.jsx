@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { cn, PremiumButton, useIntegrationConfig } from '../../design-system';
+import { ThemeToggle } from './ThemeToggle';
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -95,6 +96,7 @@ export const Navbar = () => {
 
       {/* CTA and Hamburger */}
       <div className="flex-shrink-0 flex items-center gap-4">
+        <ThemeToggle />
         <div className="hidden md:flex items-center gap-4">
           <PremiumButton variant="ghost" size="sm">
             Blog

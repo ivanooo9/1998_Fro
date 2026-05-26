@@ -13,3 +13,5 @@ export * from './integration/wrappers/LegacyCardAdapter';
 export * from './integration/wrappers/ProgressiveEnhancer';
 export * from './integration/IntegrationConfigProvider';
 export * from './integration/useIntegrationConfig';
+export * from './integration/ThemeContext';
+
