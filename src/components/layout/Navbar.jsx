@@ -13,7 +13,7 @@ export const Navbar = () => {
     [0, 50],
     ['rgba(10, 10, 10, 0)', 'rgba(10, 10, 10, 0.85)']
   );
-  
+
   // Interpolación de blur: 0 -> 12px
   const backdropBlur = useTransform(
     scrollY,
@@ -51,63 +51,84 @@ export const Navbar = () => {
       animate={{ y: 0 }}
       transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
     >
-      {/* Logo Placeholder */}
-      <div className="flex-shrink-0 flex items-center gap-2 cursor-pointer">
-        <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
-          <span className="text-primary-foreground font-bold font-serif">M</span>
-        </div>
-        <span className="font-serif font-bold text-xl text-foreground tracking-tight hidden sm:block">
-          1998
-        </span>
-      </div>
+      {/* Desktop Panoramic Layout */}
+      <div className="hidden md:grid grid-cols-[1fr_auto_1fr] w-full items-center h-full gap-8 lg:gap-20">
 
-      {/* Nav Links */}
-      <nav aria-label="Navegación principal" className="hidden md:flex">
-        <ul className="flex items-center gap-8">
-          {['Vision', 'Features', 'Showcase', 'Pricing'].map((item) => {
-            const labelMap = {
-              'Vision': 'Inicio',
-              'Features': '¿Cómo trabajamos?',
-              'Showcase': 'Planes',
-              'Pricing': 'Portafolio'
-            };
-            const targetMap = {
-              'Vision': 'inicio',
-              'Features': 'como-trabajamos',
-              'Showcase': 'planes',
-              'Pricing': 'portafolio'
-            };
-            const targetId = targetMap[item];
-            return (
-              <li key={item}>
-                <a 
-                  href={`#${targetId}`}
-                  onClick={(e) => handleNavClick(e, targetId)}
-                  className="text-sm font-medium text-foreground/70 hover:text-foreground transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4 focus-visible:ring-offset-background"
-                >
-                  {labelMap[item]}
-                </a>
-              </li>
-            );
-          })}
-        </ul>
-      </nav>
-
-      {/* CTA and Hamburger */}
-      <div className="flex-shrink-0 flex items-center gap-4">
-        <div className="hidden md:flex items-center gap-4">
-          <PremiumButton variant="ghost" size="sm">
+        {/* Left Nav: Distribuido a los extremos */}
+        <div className="flex items-center justify-between w-full">
+          <PremiumButton
+            variant="primary"
+            size="sm"
+            className="bg-transparent hover:bg-transparent text-white border-none shadow-none p-0"
+            onClick={(e) => handleNavClick(e, 'blog')}
+          >
             Blog
           </PremiumButton>
-          <PremiumButton variant="primary" size="sm">
-            Contáctanos
+          <PremiumButton
+            variant="primary"
+            size="sm"
+            className="bg-transparent hover:bg-transparent text-white border-none shadow-none p-0 mr-8"
+            onClick={(e) => handleNavClick(e, 'como-trabajamos')}
+          >
+            ¿Cómo trabajamos?
           </PremiumButton>
+        </div>
+
+        {/* Center: Logo */}
+        <div className="flex justify-center px-4">
+          <div
+            onClick={(e) => handleNavClick(e, 'inicio')}
+            className="flex items-center gap-2 cursor-pointer"
+          >
+            <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
+              <span className="text-primary-foreground font-bold font-serif">M</span>
+            </div>
+            <span className="font-serif font-bold text-xl text-foreground tracking-tight">
+              1998
+            </span>
+          </div>
+        </div>
+
+        {/* Right Nav: Distribuido a los extremos */}
+        <div className="flex items-center justify-between w-full">
+          <PremiumButton
+            variant="primary"
+            size="sm"
+            className="bg-transparent hover:bg-transparent text-white border-none shadow-none p-0 ml-8"
+            onClick={(e) => handleNavClick(e, 'planes')}
+          >
+            Planes
+          </PremiumButton>
+          <PremiumButton
+            variant="primary"
+            size="sm"
+            className="bg-transparent hover:bg-transparent text-white border-none shadow-none p-0"
+            onClick={(e) => handleNavClick(e, 'portafolio')}
+          >
+            Portafolio
+          </PremiumButton>
+        </div>
+      </div>
+
+      {/* Mobile Layout */}
+      <div className="flex md:hidden w-full items-center justify-between h-full">
+        {/* Mobile Logo */}
+        <div
+          onClick={(e) => handleNavClick(e, 'inicio')}
+          className="flex items-center gap-2 cursor-pointer"
+        >
+          <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
+            <span className="text-primary-foreground font-bold font-serif">M</span>
+          </div>
+          <span className="font-serif font-bold text-xl text-foreground tracking-tight">
+            1998
+          </span>
         </div>
 
         {/* Mobile Hamburger Button */}
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="md:hidden flex items-center justify-center w-10 h-10 rounded-full border border-border/40 bg-card/25 text-foreground hover:bg-card/50 transition-colors focus:outline-none focus:ring-2 focus:ring-primary"
+          className="flex items-center justify-center w-10 h-10 rounded-full border border-border/40 bg-card/25 text-foreground hover:bg-card/50 transition-colors focus:outline-none focus:ring-2 focus:ring-primary"
           aria-label="Toggle menu"
           aria-expanded={isOpen}
         >
@@ -132,15 +153,15 @@ export const Navbar = () => {
             className="absolute top-20 left-0 right-0 bg-background/95 border-b border-border/80 backdrop-blur-xl md:hidden overflow-hidden z-40"
           >
             <ul className="flex flex-col p-6 gap-4 text-left">
-              {['Vision', 'Features', 'Showcase', 'Pricing'].map((item) => {
+              {['Blog', 'Features', 'Showcase', 'Pricing'].map((item) => {
                 const labelMap = {
-                  'Vision': 'Inicio',
+                  'Blog': 'Blog',
                   'Features': '¿Cómo trabajamos?',
                   'Showcase': 'Planes',
                   'Pricing': 'Portafolio'
                 };
                 const targetMap = {
-                  'Vision': 'inicio',
+                  'Blog': 'blog',
                   'Features': 'como-trabajamos',
                   'Showcase': 'planes',
                   'Pricing': 'portafolio'
@@ -148,25 +169,17 @@ export const Navbar = () => {
                 const targetId = targetMap[item];
                 return (
                   <li key={item}>
-                    <a
-                      href={`#${targetId}`}
+                    <PremiumButton
+                      variant="primary"
+                      size="sm"
+                      className="w-full justify-center bg-transparent hover:bg-transparent text-white border-none shadow-none"
                       onClick={(e) => handleNavClick(e, targetId)}
-                      className="block py-2 text-base font-medium text-foreground/80 hover:text-foreground transition-colors"
                     >
                       {labelMap[item]}
-                    </a>
+                    </PremiumButton>
                   </li>
                 );
               })}
-              <hr className="border-border/40 my-2" />
-              <div className="flex flex-col gap-3 pb-2">
-                <PremiumButton variant="ghost" size="sm" className="w-full justify-center">
-                  Blog
-                </PremiumButton>
-                <PremiumButton variant="primary" size="sm" className="w-full justify-center">
-                  Contáctanos
-                </PremiumButton>
-              </div>
             </ul>
           </motion.div>
         )}

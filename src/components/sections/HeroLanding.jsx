@@ -34,16 +34,7 @@ export const HeroLanding = () => {
         <MotionContainer staggerChildren={0.15} className="max-w-4xl mx-auto flex flex-col items-center">
 
 
-          {/* 
-          <FadeIn delay={0.6} direction="up" className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
-            <PremiumButton variant="primary" size="lg" className="w-full sm:w-auto">
-              Contáctanos
-            </PremiumButton>
-            <PremiumButton variant="outline" size="lg" className="w-full sm:w-auto">
-              Nuestro Portafolio
-            </PremiumButton>
-          </FadeIn>
-*/}
+
 
         </MotionContainer>
       </div>
