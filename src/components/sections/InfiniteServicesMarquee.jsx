@@ -19,31 +19,52 @@ const InfiniteServicesMarquee = () => {
   });
 
   return (
-    <section ref={containerRef} className="relative w-full bg-background pt-[10vh] pb-[10vh]">
-      <div className="w-full max-w-6xl mx-auto px-4 md:px-8">
+    <section ref={containerRef} className="relative w-full bg-background h-[500vh]">
+      <div className="w-full max-w-6xl mx-auto px-4 md:px-8 h-full relative">
         {services.map((service, index) => {
-          const range = [index * (1 / services.length), 1];
-          const targetScale = 1 - ((services.length - index) * 0.04);
-          const scale = useTransform(scrollYProgress, range, [1, targetScale]);
-          const darken = useTransform(scrollYProgress, range, [0, 0.6]);
+          const N = services.length;
+          const range = [0];
+          const scaleOutput = [1];
+          const opacityOutput = [0];
+
+          if (index > 0) {
+            range.push(index * (1 / N));
+            scaleOutput.push(1);
+            opacityOutput.push(0);
+          }
+
+          for (let j = index + 1; j < N; j++) {
+            const stepProgress = j * (1 / N);
+            range.push(stepProgress);
+            
+            const depth = j - index;
+            const targetScale = 1 - (depth * 0.04);
+            scaleOutput.push(targetScale);
+            
+            const targetOpacity = Math.min(0.3 + (depth - 1) * 0.15, 0.6);
+            opacityOutput.push(targetOpacity);
+          }
+
+          if (range[range.length - 1] < 1) {
+            range.push(1);
+            scaleOutput.push(scaleOutput[scaleOutput.length - 1]);
+            opacityOutput.push(opacityOutput[opacityOutput.length - 1]);
+          }
+
+          const scale = useTransform(scrollYProgress, range, scaleOutput);
+          const darken = useTransform(scrollYProgress, range, opacityOutput);
 
           return (
             <div
               key={service.id}
-              className="sticky w-full flex items-center justify-center"
+              className="sticky h-screen w-full flex items-center justify-center relative"
               style={{
-                top: `calc(10vh + ${index * 30}px)`,
-
-                // LA SOLUCIÓN ESTÁ AQUÍ:
-                // Le damos 100vh de margen a la última tarjeta. Esto fuerza al navegador a 
-                // crear una "pista de scroll" extra equivalente a una pantalla entera. 
-                // Así, la tarjeta #5 tiene espacio para subir, colocarse en su lugar, y hacer
-                // una pausa antes de que toda la sección desaparezca.
-                marginBottom: index === services.length - 1 ? '100vh' : '80vh'
+                top: `${index * 30}px`
               }}
             >
+              {/* Capa 1: Fondo animado (Imagen y overlays que escalan y se oscurecen) */}
               <motion.div
-                className="relative w-full h-[70vh] md:h-[80vh] rounded-[32px] overflow-hidden border border-border/20 origin-top"
+                className="relative w-full h-[70vh] md:h-[80vh] rounded-[32px] overflow-hidden border border-border/20 origin-top z-0"
                 style={{
                   scale,
                   boxShadow: '0 -20px 50px -15px rgba(0,0,0,0.6)'
@@ -60,16 +81,17 @@ const InfiniteServicesMarquee = () => {
                   className="absolute inset-0 bg-black z-0 pointer-events-none"
                   style={{ opacity: darken }}
                 />
-
-                <div className="absolute inset-0 p-8 md:p-14 flex flex-col justify-end z-10 pointer-events-none">
-                  <h3 className="text-4xl md:text-6xl font-serif font-bold text-foreground dark:text-white mb-4 tracking-tight drop-shadow-xl">
-                    {service.title}
-                  </h3>
-                  <p className="text-foreground/80 dark:text-gray-200 text-xl md:text-2xl leading-relaxed drop-shadow-md max-w-2xl font-medium">
-                    {service.description}
-                  </p>
-                </div>
               </motion.div>
+
+              {/* Capa 2: Texto estático, nítido e imponente en primer plano */}
+              <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-[70vh] md:h-[80vh] p-8 md:p-16 flex flex-col justify-center items-start text-left z-10 pointer-events-none">
+                <h3 className="text-5xl md:text-8xl font-serif font-bold text-white mb-6 tracking-tight drop-shadow-2xl">
+                  {service.title}
+                </h3>
+                <p className="text-gray-200 text-lg md:text-xl leading-relaxed drop-shadow-lg max-w-lg font-medium">
+                  {service.description}
+                </p>
+              </div>
             </div>
           );
         })}
