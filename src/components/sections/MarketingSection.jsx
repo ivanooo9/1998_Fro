@@ -40,8 +40,8 @@ export const MarketingSection = ({ reversed = false }) => {
                 </video>
 
                 {/* Brillos cinemáticos superpuestos - Capa Superior */}
-                <div className="absolute top-0 right-0 w-64 h-64 bg-primary/15 dark:bg-primary/20 rounded-full blur-3xl translate-x-1/3 -translate-y-1/3 z-10 pointer-events-none mix-blend-multiply dark:mix-blend-screen" />
-                <div className="absolute bottom-0 left-0 w-64 h-64 bg-blue-500/15 dark:bg-blue-500/20 rounded-full blur-3xl -translate-x-1/3 translate-y-1/3 z-10 pointer-events-none mix-blend-multiply dark:mix-blend-screen" />
+                <div className="absolute top-0 right-0 w-64 h-64 bg-glow-primary/15 dark:bg-glow-primary/20 rounded-full blur-3xl translate-x-1/3 -translate-y-1/3 z-10 pointer-events-none mix-blend-multiply dark:mix-blend-screen" />
+                <div className="absolute bottom-0 left-0 w-64 h-64 bg-glow-secondary/15 dark:bg-glow-secondary/20 rounded-full blur-3xl -translate-x-1/3 translate-y-1/3 z-10 pointer-events-none mix-blend-multiply dark:mix-blend-screen" />
 
                 {/* Capa de oscurecimiento sutil para que el video no sea cegador */}
                 <div className="absolute inset-0 bg-background/20 z-10 pointer-events-none" />

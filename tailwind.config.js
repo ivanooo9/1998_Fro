@@ -15,6 +15,8 @@ export default {
         border: "hsl(var(--border))",
         primary: "hsl(var(--primary))",
         "primary-foreground": "hsl(var(--primary-foreground))",
+        "glow-primary": "hsl(var(--glow-primary))",
+        "glow-secondary": "hsl(var(--glow-secondary))",
       },
       transitionTimingFunction: {
         // Aprobado por el usuario: easing suave y premium

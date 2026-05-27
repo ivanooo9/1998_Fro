@@ -3,36 +3,26 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 const ThemeContext = createContext();
 
 export const ThemeProvider = ({ children }) => {
-  const [theme, setTheme] = useState('dark');
+  const [theme] = useState('dark');
   const [mounted, setMounted] = useState(false);
 
   // Inicialización segura para el cliente
   useEffect(() => {
     setMounted(true);
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme) {
-      setTheme(savedTheme);
-    }
   }, []);
 
-  // Efecto sincronizador del DOM
+  // Efecto sincronizador del DOM (siempre modo oscuro)
   useEffect(() => {
     if (!mounted) return;
 
     const root = window.document.documentElement;
-    if (theme === 'light') {
-      root.classList.add('light');
-      root.classList.remove('dark');
-    } else {
-      root.classList.remove('light');
-      root.classList.add('dark');
-    }
-    
-    localStorage.setItem('theme', theme);
-  }, [theme, mounted]);
+    root.classList.remove('light');
+    root.classList.add('dark');
+    localStorage.setItem('theme', 'dark');
+  }, [mounted]);
 
   const toggleTheme = () => {
-    setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
+    // Ya no se permite cambiar de tema, siempre oscuro
   };
 
   // Previene discrepancias de SSR/CSR retornando null o un estado base hasta montar
