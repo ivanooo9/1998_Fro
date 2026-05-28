@@ -6,7 +6,7 @@ const InfiniteServicesMarquee = () => {
   const containerRef = useRef(null);
 
   const services = [
-    { id: 1, title: "1. Web & App", description: "Creamos tu página web o app, una sucursal de tu negocio 24/7", bgImage: "/images/fondo-marquee-1.png" },
+    { id: 1, title: "1. Web & App", description: "Creamos tu página web o app, una sucursal de tu negocio 24/7", bgImage: "/videos/prueba-2.mp4" },
     { id: 2, title: "2. Publicidad Digital", description: "Anuncios en redes y Google que traen más clientes", bgImage: "/images/fondo-marquee-2.png" },
     { id: 3, title: "3. Branding", description: "Diseñamos tu logo y todo lo que hace única a tu marca", bgImage: "/images/fondo-marquee-3.png" },
     { id: 4, title: "4. Redes Sociales", description: "Manejamos tus redes con contenido que llama la atención", bgImage: "/images/fondo-marquee-4.png" },
@@ -21,6 +21,9 @@ const InfiniteServicesMarquee = () => {
   return (
     <section ref={containerRef} className="relative w-full bg-background h-[500vh]">
       <div className="w-full max-w-6xl mx-auto px-4 md:px-8 h-full relative">
+        <h2 className="text-3xl md:text-4xl font-bold text-center text-white">
+          Servicios
+        </h2>
         {services.map((service, index) => {
           const N = services.length;
           const range = [0];
@@ -36,11 +39,11 @@ const InfiniteServicesMarquee = () => {
           for (let j = index + 1; j < N; j++) {
             const stepProgress = j * (1 / N);
             range.push(stepProgress);
-            
+
             const depth = j - index;
             const targetScale = 1 - (depth * 0.04);
             scaleOutput.push(targetScale);
-            
+
             const targetOpacity = Math.min(0.3 + (depth - 1) * 0.15, 0.6);
             opacityOutput.push(targetOpacity);
           }
@@ -62,35 +65,42 @@ const InfiniteServicesMarquee = () => {
                 top: `${index * 30}px`
               }}
             >
-              {/* Capa 1: Fondo animado (Imagen y overlays que escalan y se oscurecen) */}
-              <motion.div
-                className="relative w-full h-[70vh] md:h-[80vh] rounded-[32px] overflow-hidden border border-border/20 origin-top z-0"
-                style={{
-                  scale,
-                  boxShadow: '0 -20px 50px -15px rgba(0,0,0,0.6)'
-                }}
-              >
-                <div
-                  className="absolute inset-0 bg-cover bg-center transition-transform duration-700 hover:scale-105"
-                  style={{ backgroundImage: `url(${service.bgImage})` }}
-                ></div>
+              {/* Contenedor de la Tarjeta con Pantalla Dividida */}
+              <div className="w-full h-[70vh] md:h-[80vh] grid grid-cols-1 md:grid-cols-2 rounded-[32px] overflow-hidden border border-border/20 shadow-2xl bg-transparent">
 
-                <div className="absolute inset-0 bg-white/60 dark:bg-black/40"></div>
+                {/* Columna Izquierda: Texto estático con fondo sólido para cubrir el texto anterior */}
+                <div className="bg-background w-full h-full p-8 md:p-16 flex flex-col justify-center items-start text-left z-10 relative">
+                  <h3 className="text-4xl md:text-6xl font-serif font-bold text-foreground mb-6 tracking-tight">
+                    {service.title}
+                  </h3>
+                  <p className="text-foreground/75 text-base md:text-lg leading-relaxed max-w-md font-medium">
+                    {service.description}
+                  </p>
+                </div>
 
-                <motion.div
-                  className="absolute inset-0 bg-black z-0 pointer-events-none"
-                  style={{ opacity: darken }}
-                />
-              </motion.div>
+                {/* Columna Derecha: Imagen animada con contenedor padre transparente */}
+                <div className="bg-transparent w-full h-full relative overflow-hidden z-0">
+                  <motion.div
+                    className="w-full h-full origin-top relative"
+                    style={{
+                      scale,
+                      boxShadow: '0 -20px 50px -15px rgba(0,0,0,0.6)'
+                    }}
+                  >
+                    <div
+                      className="absolute inset-0 bg-cover bg-center transition-transform duration-700 hover:scale-105"
+                      style={{ backgroundImage: `url(${service.bgImage})` }}
+                    ></div>
 
-              {/* Capa 2: Texto estático, nítido e imponente en primer plano */}
-              <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-[70vh] md:h-[80vh] p-8 md:p-16 flex flex-col justify-center items-start text-left z-10 pointer-events-none">
-                <h3 className="text-5xl md:text-8xl font-serif font-bold text-white mb-6 tracking-tight drop-shadow-2xl">
-                  {service.title}
-                </h3>
-                <p className="text-gray-200 text-lg md:text-xl leading-relaxed drop-shadow-lg max-w-lg font-medium">
-                  {service.description}
-                </p>
+                    <div className="absolute inset-0 bg-white/40 dark:bg-black/20"></div>
+
+                    <motion.div
+                      className="absolute inset-0 bg-black z-0 pointer-events-none"
+                      style={{ opacity: darken }}
+                    />
+                  </motion.div>
+                </div>
+
               </div>
             </div>
           );

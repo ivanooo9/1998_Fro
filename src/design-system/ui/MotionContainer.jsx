@@ -8,7 +8,8 @@ export const MotionContainer = ({
   className,
   staggerChildren = 0.1, 
   delayChildren = 0,
-  as = 'div'
+  as = 'div',
+  animate
 }) => {
   const { safeStagger } = useReducedMotionGlobal();
   const MotionComponent = motion[as] || motion.div;
@@ -21,8 +22,10 @@ export const MotionContainer = ({
       className={cn(className)}
       variants={motionVariants.staggerContainer(finalStagger, delayChildren)}
       initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, margin: "-50px" }}
+      {...(animate !== undefined ? { animate } : {
+        whileInView: "visible",
+        viewport: { once: true, margin: "-50px" }
+      })}
     >
       {children}
     </MotionComponent>

@@ -8,7 +8,8 @@ export const RevealText = ({
   className,
   delay = 0,
   duration,
-  as: Component = 'span' 
+  as: Component = 'span',
+  staggered = false
 }) => {
   const { safeDuration } = useReducedMotionGlobal();
 
@@ -17,9 +18,11 @@ export const RevealText = ({
       <motion.span
         className="block"
         variants={motionVariants.revealText(safeDuration || duration, delay)}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-50px" }}
+        {...(!staggered && {
+          initial: "hidden",
+          whileInView: "visible",
+          viewport: { once: true, margin: "-50px" }
+        })}
       >
         {text}
       </motion.span>

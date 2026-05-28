@@ -6,7 +6,7 @@ import {
   cn
 } from '../../design-system';
 
-export const HeroLanding = () => {
+export const HeroLanding = ({ isLoading }) => {
   return (
     <section id="inicio" className="relative min-h-[90vh] flex items-center justify-center pt-24 pb-12 overflow-hidden bg-background">
       {/* Background Cinematic Video */}
@@ -31,11 +31,29 @@ export const HeroLanding = () => {
       </div>
 
       <div className="container mx-auto px-6 md:px-12 relative z-10 text-center">
-        <MotionContainer staggerChildren={0.15} className="max-w-4xl mx-auto flex flex-col items-center">
+        <MotionContainer
+          animate={isLoading ? "hidden" : "visible"}
+          staggerChildren={0.12}
+          delayChildren={0.4}
+          className="max-w-4xl mx-auto flex flex-col items-center"
+        >
+          {/* Tagline / Badge Wrapper */}
+          <FadeIn direction="up" delay={0} staggered={true} className="mb-6">
+            {/* INYECTAR BADGE CORPORATIVO DE MERLIN STUDIO AQUÍ */}
+          </FadeIn>
+
+          {/* Main Hero Title */}
 
 
+          {/* Subtitle description Wrapper */}
+          <FadeIn direction="up" delay={0.2} staggered={true} className="max-w-2xl mb-8">
+            {/* INYECTAR SUBTÍTULO O FRASE INICIAL DE MERLIN STUDIO AQUÍ */}
+          </FadeIn>
 
-
+          {/* CTA Buttons Wrapper */}
+          <FadeIn direction="up" delay={0.3} staggered={true} className="flex gap-4 items-center justify-center">
+            {/* INYECTAR BOTONES DE ACCIÓN DE MERLIN STUDIO AQUÍ */}
+          </FadeIn>
         </MotionContainer>
       </div>
 

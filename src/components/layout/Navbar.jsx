@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { cn, PremiumButton, useIntegrationConfig } from '../../design-system';
 
-export const Navbar = () => {
+export const Navbar = ({ isLoading }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { scrollY } = useScroll();
   const { flags } = useIntegrationConfig();
@@ -48,8 +48,8 @@ export const Navbar = () => {
         borderBottom
       }}
       initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+      animate={isLoading ? { y: -100 } : { y: 0 }}
+      transition={{ duration: 1.0, ease: [0.76, 0, 0.24, 1], delay: 0.15 }}
     >
       {/* Desktop Panoramic Layout */}
       <div className="hidden md:grid grid-cols-[1fr_auto_1fr] w-full items-center h-full gap-8 lg:gap-20">

@@ -11,6 +11,9 @@ export const easings = {
   
   // Desplazamiento lineal suave, ideal para carousels contínuos o background pans.
   linearSmooth: [0.25, 0.1, 0.25, 1],
+
+  // Curva de Merlin Studio (alta inercia para transiciones líquidas).
+  merlin: [0.76, 0, 0.24, 1],
 };
 
 /**
