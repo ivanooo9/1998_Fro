@@ -1,4 +1,4 @@
-import { MotionContainer, FadeIn, RevealText, PremiumButton, GlassCard } from '../../design-system';
+import { MotionContainer, FadeIn, RevealText, PremiumButton, GlassCard } from '@/design-system';
 
 export const MarketingSection = ({ reversed = false }) => {
   return (

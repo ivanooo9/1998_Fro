@@ -1,4 +1,4 @@
-import { MotionContainer, FadeIn, PremiumButton } from '../../design-system';
+import { MotionContainer, FadeIn, PremiumButton } from '@/design-system';
 
 export const CTASection = () => {
   return (

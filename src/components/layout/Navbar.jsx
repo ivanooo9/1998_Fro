@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
-import { cn, PremiumButton, useIntegrationConfig } from '../../design-system';
+import { cn, PremiumButton, useIntegrationConfig } from '@/design-system';
 
 export const Navbar = ({ isLoading }) => {
   const [isOpen, setIsOpen] = useState(false);

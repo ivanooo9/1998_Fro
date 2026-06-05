@@ -1,4 +1,4 @@
-import { FadeIn, RevealText, cn, useIntegrationConfig } from '../../design-system';
+import { FadeIn, RevealText, cn, useIntegrationConfig } from '@/design-system';
 
 export const CinematicShowcase = () => {
   const { flags } = useIntegrationConfig();

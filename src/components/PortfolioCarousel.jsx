@@ -1,7 +1,83 @@
 import React, { useEffect, useRef } from 'react';
-import { FadeIn } from '../design-system';
+import { FadeIn } from '@/design-system';
 
-const PortfolioCarousel = () => {
+const projects = [
+  {
+    title: "Secultura",
+    category: "Plataforma Cultural",
+    href: "https://secultura.net/",
+    img: "https://mil998.com/wp-content/uploads/2025/10/PORTAFOLIO-1998.png"
+  },
+  {
+    title: "Fumilimpieza",
+    category: "Servicios Corporativos",
+    href: "https://fumilimpieza.net/",
+    img: "https://mil998.com/wp-content/uploads/2025/10/3.png"
+  },
+  {
+    title: "CAE Loja",
+    category: "Sitio Institucional",
+    href: "https://caeloja.com/",
+    img: "https://mil998.com/wp-content/uploads/2025/10/4.png"
+  },
+  {
+    title: "Duolens",
+    category: "E-commerce Óptica",
+    href: "https://duolens.ec/",
+    img: "https://mil998.com/wp-content/uploads/2025/10/5.png"
+  },
+  {
+    title: "Electrocercos",
+    category: "Desarrollo Web",
+    href: "https://electrocercos.ec/",
+    img: "https://mil998.com/wp-content/uploads/2025/10/2.png",
+    isStart: true
+  },
+  {
+    title: "Maku Sushi",
+    category: "Landing Gastronómica",
+    href: "https://www.makusushi.com/init",
+    img: "https://mil998.com/wp-content/uploads/2025/10/9.png"
+  },
+  {
+    title: "Profesionales EC",
+    category: "Directorio Web",
+    href: "https://profesionales.ec/",
+    img: "https://mil998.com/wp-content/uploads/2025/10/10.png"
+  },
+  {
+    title: "La Marquesa",
+    category: "Tienda Online",
+    href: "https://lamarquesaecuador.com/",
+    img: "https://mil998.com/wp-content/uploads/2025/10/6.png"
+  },
+  {
+    title: "Tienda 98",
+    category: "E-commerce",
+    href: "https://tienda98.com/",
+    img: "https://mil998.com/wp-content/uploads/2025/10/8.png"
+  },
+  {
+    title: "The Clean Harmony",
+    category: "Servicios Integrales",
+    href: "https://thecleanharmony.com/",
+    img: "https://mil998.com/wp-content/uploads/2025/10/7.png"
+  },
+  {
+    title: "Importadora Ortega",
+    category: "Catálogo Digital",
+    href: "https://importadoraortega.com/",
+    img: "https://mil998.com/wp-content/uploads/2025/10/11.png"
+  },
+  {
+    title: "Prestig01",
+    category: "Sitio Corporativo",
+    href: "https://prestig01.com/",
+    img: "https://mil998.com/wp-content/uploads/2025/10/12.png"
+  }
+];
+
+export const PortfolioCarousel = () => {
   const carouselRef = useRef(null);
 
   useEffect(() => {
@@ -42,77 +118,22 @@ const PortfolioCarousel = () => {
       {/* The carousel container */}
       <div className="relative z-10 max-w-7xl mx-auto">
         <section ref={carouselRef} className="carousel">
-          <a href="https://secultura.net/" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', color: 'inherit' }}>
-            <h2>Secultura</h2>
-            <p>Plataforma Cultural</p>
-            <div className="img"><img src="https://mil998.com/wp-content/uploads/2025/10/PORTAFOLIO-1998.png" alt="Secultura" loading="lazy" /></div>
-          </a>
-
-          <a href="https://fumilimpieza.net/" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', color: 'inherit' }}>
-            <h2>Fumilimpieza</h2>
-            <p>Servicios Corporativos</p>
-            <div className="img"><img src="https://mil998.com/wp-content/uploads/2025/10/3.png" alt="Fumilimpieza" loading="lazy" /></div>
-          </a>
-
-          <a href="https://caeloja.com/" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', color: 'inherit' }}>
-            <h2>CAE Loja</h2>
-            <p>Sitio Institucional</p>
-            <div className="img"><img src="https://mil998.com/wp-content/uploads/2025/10/4.png" alt="CAE Loja" loading="lazy" /></div>
-          </a>
-
-          <a href="https://duolens.ec/" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', color: 'inherit' }}>
-            <h2>Duolens</h2>
-            <p>E-commerce Óptica</p>
-            <div className="img"><img src="https://mil998.com/wp-content/uploads/2025/10/5.png" alt="Duolens" loading="lazy" /></div>
-          </a>
-
-          <a href="https://electrocercos.ec/" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', color: 'inherit' }} className="scroll-start">
-            <h2>Electrocercos</h2>
-            <p>Desarrollo Web</p>
-            <div className="img"><img src="https://mil998.com/wp-content/uploads/2025/10/2.png" alt="Electrocercos" loading="lazy" /></div>
-          </a>
-
-          <a href="https://www.makusushi.com/init" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', color: 'inherit' }}>
-            <h2>Maku Sushi</h2>
-            <p>Landing Gastronómica</p>
-            <div className="img"><img src="https://mil998.com/wp-content/uploads/2025/10/9.png" alt="Maku Sushi" loading="lazy" /></div>
-          </a>
-
-          <a href="https://profesionales.ec/" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', color: 'inherit' }}>
-            <h2>Profesionales EC</h2>
-            <p>Directorio Web</p>
-            <div className="img"><img src="https://mil998.com/wp-content/uploads/2025/10/10.png" alt="Profesionales EC" loading="lazy" /></div>
-          </a>
-
-          <a href="https://lamarquesaecuador.com/" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', color: 'inherit' }}>
-            <h2>La Marquesa</h2>
-            <p>Tienda Online</p>
-            <div className="img"><img src="https://mil998.com/wp-content/uploads/2025/10/6.png" alt="La Marquesa" loading="lazy" /></div>
-          </a>
-
-          <a href="https://tienda98.com/" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', color: 'inherit' }}>
-            <h2>Tienda 98</h2>
-            <p>E-commerce</p>
-            <div className="img"><img src="https://mil998.com/wp-content/uploads/2025/10/8.png" alt="Tienda 98" loading="lazy" /></div>
-          </a>
-
-          <a href="https://thecleanharmony.com/" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', color: 'inherit' }}>
-            <h2>The Clean Harmony</h2>
-            <p>Servicios Integrales</p>
-            <div className="img"><img src="https://mil998.com/wp-content/uploads/2025/10/7.png" alt="The Clean Harmony" loading="lazy" /></div>
-          </a>
-
-          <a href="https://importadoraortega.com/" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', color: 'inherit' }}>
-            <h2>Importadora Ortega</h2>
-            <p>Catálogo Digital</p>
-            <div className="img"><img src="https://mil998.com/wp-content/uploads/2025/10/11.png" alt="Importadora Ortega" loading="lazy" /></div>
-          </a>
-
-          <a href="https://prestig01.com/" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', color: 'inherit' }}>
-            <h2>Prestig01</h2>
-            <p>Sitio Corporativo</p>
-            <div className="img"><img src="https://mil998.com/wp-content/uploads/2025/10/12.png" alt="Prestig01" loading="lazy" /></div>
-          </a>
+          {projects.map((project, i) => (
+            <a
+              key={i}
+              href={project.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ textDecoration: 'none', color: 'inherit' }}
+              className={project.isStart ? "scroll-start" : undefined}
+            >
+              <h2>{project.title}</h2>
+              <p>{project.category}</p>
+              <div className="img">
+                <img src={project.img} alt={project.title} loading="lazy" />
+              </div>
+            </a>
+          ))}
         </section>
       </div>
     </section>

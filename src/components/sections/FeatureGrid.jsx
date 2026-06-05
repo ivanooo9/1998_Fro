@@ -1,4 +1,4 @@
-import { MotionContainer, FadeIn, RevealText } from '../../design-system';
+import { MotionContainer, FadeIn, RevealText } from '@/design-system';
 import { MarketingCard } from '../cards/MarketingCard';
 
 const features = [

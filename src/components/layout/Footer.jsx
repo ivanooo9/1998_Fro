@@ -1,4 +1,4 @@
-import { cn, FadeIn } from '../../design-system';
+import { cn, FadeIn } from '@/design-system';
 import { FaFacebookF, FaTwitter, FaLinkedinIn, FaInstagram } from 'react-icons/fa';
 
 export const Footer = () => {

@@ -17,12 +17,13 @@ export const motionVariants = {
     }
   }),
 
-  // Fade Up: Elemento sube ligeramente mientras se hace visible.
-  fadeUp: (yOffset = 20, duration = durations.base, delay = 0) => ({
-    hidden: { opacity: 0, y: yOffset },
+  // Fade Up/Slide: Elemento se desplaza mientras se hace visible.
+  fadeUp: (yOffset = 20, duration = durations.base, delay = 0, xOffset = 0) => ({
+    hidden: { opacity: 0, y: yOffset, x: xOffset },
     visible: { 
       opacity: 1, 
       y: 0,
+      x: 0,
       transition: { duration, delay, ease: easings.cinematic }
     }
   }),

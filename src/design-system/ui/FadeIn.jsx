@@ -26,7 +26,7 @@ export const FadeIn = ({
   return (
     <MotionComponent
       className={cn(className)}
-      variants={motionVariants.fadeUp(yOffset, safeDuration || duration, delay)}
+      variants={motionVariants.fadeUp(yOffset, safeDuration || duration, delay, xOffset)}
       {...(!staggered && {
         initial: "hidden",
         whileInView: "visible",

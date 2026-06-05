@@ -1,4 +1,4 @@
-import { cn, GlassCard, useIntegrationConfig } from '../../design-system';
+import { cn, GlassCard, useIntegrationConfig } from '@/design-system';
 
 export const MarketingCard = ({ 
   icon, 
