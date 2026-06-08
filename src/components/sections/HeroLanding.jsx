@@ -17,6 +17,7 @@ export const HeroLanding = ({ isLoading }) => {
 
   return (
     <section id="inicio" className="relative min-h-[90vh] flex items-center justify-center pt-24 pb-12 overflow-hidden bg-background">
+      <h1 className="sr-only">1998 - Agencia de Desarrollo Web, Branding y Publicidad Digital</h1>
       {/* Background Cinematic Video */}
       <video
         autoPlay

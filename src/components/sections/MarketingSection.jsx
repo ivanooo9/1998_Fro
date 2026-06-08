@@ -2,7 +2,7 @@ import { MotionContainer, FadeIn, RevealText, PremiumButton, GlassCard } from '@
 
 export const MarketingSection = ({ reversed = false }) => {
   return (
-    <section className="py-24 overflow-hidden relative">
+    <section className="py-16 md:py-20 overflow-hidden relative">
       <div className="container mx-auto px-6 md:px-12">
         <div className={`flex gap-12 lg:gap-20 items-center ${reversed ? 'flex-col-reverse lg:flex-row-reverse' : 'flex-col lg:flex-row'}`}>
 

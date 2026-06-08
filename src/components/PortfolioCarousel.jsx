@@ -95,7 +95,7 @@ export const PortfolioCarousel = () => {
   }, []);
 
   return (
-    <section id="portafolio" className="py-24 bg-background relative overflow-hidden border-t border-border/20">
+    <section id="portafolio" className="py-16 md:py-20 bg-background relative overflow-hidden border-t border-border/20">
       {/* Background ambient lighting */}
       <div className="absolute inset-0 pointer-events-none z-0">
         <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-96 h-96 bg-primary/5 rounded-full blur-[100px]" />

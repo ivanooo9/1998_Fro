@@ -153,33 +153,23 @@ export const Navbar = ({ isLoading }) => {
             className="absolute top-20 left-0 right-0 bg-background/95 border-b border-border/80 backdrop-blur-xl md:hidden overflow-hidden z-40"
           >
             <ul className="flex flex-col p-6 gap-4 text-left">
-              {['Blog', 'Features', 'Showcase', 'Pricing'].map((item) => {
-                const labelMap = {
-                  'Blog': 'Blog',
-                  'Features': '¿Cómo trabajamos?',
-                  'Showcase': 'Planes',
-                  'Pricing': 'Portafolio'
-                };
-                const targetMap = {
-                  'Blog': 'blog',
-                  'Features': 'como-trabajamos',
-                  'Showcase': 'planes',
-                  'Pricing': 'portafolio'
-                };
-                const targetId = targetMap[item];
-                return (
-                  <li key={item}>
-                    <PremiumButton
-                      variant="primary"
-                      size="sm"
-                      className="w-full justify-center bg-transparent hover:bg-transparent text-white border-none shadow-none"
-                      onClick={(e) => handleNavClick(e, targetId)}
-                    >
-                      {labelMap[item]}
-                    </PremiumButton>
-                  </li>
-                );
-              })}
+              {[
+                { name: "Blog", id: "blog" },
+                { name: "¿Cómo trabajamos?", id: "como-trabajamos" },
+                { name: "Planes", id: "planes" },
+                { name: "Portafolio", id: "portafolio" }
+              ].map((link) => (
+                <li key={link.id}>
+                  <PremiumButton
+                    variant="primary"
+                    size="sm"
+                    className="w-full justify-center bg-transparent hover:bg-transparent text-white border-none shadow-none"
+                    onClick={(e) => handleNavClick(e, link.id)}
+                  >
+                    {link.name}
+                  </PremiumButton>
+                </li>
+              ))}
             </ul>
           </motion.div>
         )}

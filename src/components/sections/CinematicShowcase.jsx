@@ -4,7 +4,7 @@ export const CinematicShowcase = () => {
   const { flags } = useIntegrationConfig();
 
   return (
-    <section className="py-32 bg-background relative overflow-hidden">
+    <section className="py-16 md:py-20 bg-background relative overflow-hidden">
       <div className="container mx-auto px-6 md:px-12 relative z-10 text-center">
         <div className="max-w-3xl mx-auto mb-20">
           <h2 className="text-4xl md:text-6xl font-serif font-bold tracking-tight mb-8">

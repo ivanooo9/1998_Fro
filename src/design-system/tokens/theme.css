@@ -24,24 +24,6 @@
     --glow-secondary: 217.2 91.2% 59.8%; /* Tailwind blue-500 HSL */
   }
 
-  html.light {
-    /* Fondo: Derivado súper claro del azul para mantenerlo limpio */
-    --background: 208 100% 96%;
-    /* Texto: Azul marino profundo para legibilidad perfecta (WCAG) */
-    --foreground: 209 60% 15%;
-    /* Tarjetas: Derivado muy suave del rosa para contrastar con el fondo azul */
-    --card: 337 100% 94%;
-    --card-foreground: 209 60% 15%;
-    /* Bordes: Púrpura sutil */
-    --border: 279 35% 78%;
-    /* Botones / CTA: Rosa vibrante */
-    --primary: 338 100% 84%;
-    --primary-foreground: 209 60% 15%;
-    /* Brillos cinemáticos: Mezcla de rosa y azul vibrante */
-    --glow-primary: 338 100% 84%;
-    --glow-secondary: 209 100% 82%;
-  }
-
   body {
     @apply bg-background text-foreground antialiased;
     scroll-behavior: smooth;

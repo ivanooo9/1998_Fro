@@ -1,12 +1,27 @@
-"use client";
-
-import React, { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import React, { useRef, useEffect } from "react";
+import { motion, useScroll, useTransform, useInView } from "framer-motion";
 
 // =====================================================
 // SERVICE CARD COMPONENT (Correct React Hook Usage)
 // =====================================================
 const ServiceCard = ({ service, index, N, scrollYProgress }) => {
+  const containerRef = useRef(null);
+  const videoRef = useRef(null);
+
+  // Detecta si al menos el 10% de la tarjeta está visible en el viewport
+  const isInView = useInView(containerRef, { amount: 0.1 });
+
+  // Control de reproducción según visibilidad para mitigar consumo de GPU
+  useEffect(() => {
+    if (videoRef.current) {
+      if (isInView) {
+        videoRef.current.play().catch(error => console.log("Autoplay prevenido:", error));
+      } else {
+        videoRef.current.pause();
+      }
+    }
+  }, [isInView]);
+
   // =================================================
   // STACKING LOGIC
   // =================================================
@@ -55,6 +70,7 @@ const ServiceCard = ({ service, index, N, scrollYProgress }) => {
 
   return (
     <div
+      ref={containerRef}
       className="
         sticky
         top-0
@@ -173,7 +189,7 @@ const ServiceCard = ({ service, index, N, scrollYProgress }) => {
             {/* VIDEO WITH RESPONSIVE SOURCES */}
             {/* ===================================== */}
             <video
-              autoPlay
+              ref={videoRef}
               loop
               muted
               playsInline

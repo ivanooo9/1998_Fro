@@ -21,7 +21,7 @@ const features = [
 
 export const FeatureGrid = () => {
   return (
-    <section id="como-trabajamos" className="py-24 bg-background relative z-10">
+    <section id="como-trabajamos" className="py-16 md:py-20 bg-background relative z-10">
       <div className="container mx-auto px-6 md:px-12">
         <div className="mb-16 text-center max-w-2xl mx-auto">
           <h2 className="text-3xl md:text-5xl font-serif font-bold tracking-tight mb-6">
@@ -32,9 +32,9 @@ export const FeatureGrid = () => {
           </FadeIn>
         </div>
 
-        <MotionContainer staggerChildren={0.15} className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <MotionContainer staggerChildren={0.15} className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
           {features.map((feature, i) => (
-            <FadeIn key={i} direction="up">
+            <FadeIn key={i} direction="up" className="h-full">
               <MarketingCard 
                 icon={feature.icon}
                 title={feature.title}
