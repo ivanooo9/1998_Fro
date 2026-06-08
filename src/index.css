@@ -4,6 +4,7 @@ html {
   scroll-behavior: smooth;
   scroll-padding-top: 80px;
   /* Ajusta según Navbar */
+  font-size: 90%;
 }
 
 /* Sandbox Custom Utilities and Overrides */

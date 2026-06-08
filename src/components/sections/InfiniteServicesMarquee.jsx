@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { motion, useScroll, useTransform, useInView } from "framer-motion";
 
 // =====================================================
@@ -7,6 +7,17 @@ import { motion, useScroll, useTransform, useInView } from "framer-motion";
 const ServiceCard = ({ service, index, N, scrollYProgress }) => {
   const containerRef = useRef(null);
   const videoRef = useRef(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Detección reactiva de mobile para actualizar el video en JS
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   // Detecta si al menos el 10% de la tarjeta está visible en el viewport
   const isInView = useInView(containerRef, { amount: 0.1 });
@@ -15,6 +26,7 @@ const ServiceCard = ({ service, index, N, scrollYProgress }) => {
   useEffect(() => {
     if (videoRef.current) {
       if (isInView) {
+        videoRef.current.muted = true; // Asegurar silencio absoluto para permitir autoplay en móviles
         videoRef.current.play().catch(error => console.log("Autoplay prevenido:", error));
       } else {
         videoRef.current.pause();
@@ -166,7 +178,7 @@ const ServiceCard = ({ service, index, N, scrollYProgress }) => {
           className="
             bg-transparent
             w-full
-            min-h-[45svh]
+            h-[45svh]
             md:h-full
             relative
             overflow-hidden
@@ -190,6 +202,8 @@ const ServiceCard = ({ service, index, N, scrollYProgress }) => {
             {/* ===================================== */}
             <video
               ref={videoRef}
+              key={isMobile ? "mobile" : "desktop"}
+              src={isMobile ? service.bgVideoMobile : service.bgVideo}
               loop
               muted
               playsInline
@@ -204,10 +218,7 @@ const ServiceCard = ({ service, index, N, scrollYProgress }) => {
                 transition-transform
                 duration-700
               "
-            >
-              <source media="(max-width: 767px)" src={service.bgVideoMobile} type="video/mp4" />
-              <source src={service.bgVideo} type="video/mp4" />
-            </video>
+            />
 
             {/* ===================================== */}
             {/* LIGHT OVERLAY */}
