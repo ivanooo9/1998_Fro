@@ -122,8 +122,13 @@ export const Navbar = ({ isLoading }) => {
           onClick={(e) => handleNavClick(e, 'inicio')}
           className="flex items-center gap-2 cursor-pointer"
         >
-          <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
-            <span className="text-primary-foreground font-bold font-serif">M</span>
+          <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center overflow-hidden">
+            {/* Aquí cambiamos la M por tu imagen */}
+            <img
+              src="/images/IMG_4002.PNG"
+              alt="Logo 1998"
+              className="w-full h-full object-cover"
+            />
           </div>
           <span className="font-serif font-bold text-xl text-foreground tracking-tight">
             1998
