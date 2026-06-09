@@ -105,7 +105,7 @@ export const PortfolioCarousel = () => {
       <div className="container mx-auto px-6 md:px-12 relative z-10 mb-12">
         <div className="max-w-3xl mx-auto text-center">
           <FadeIn direction="up">
-            <h2 className="text-3xl md:text-5xl font-serif font-bold tracking-tight mb-6 text-foreground">
+            <h2 className="text-3xl md:text-5xl font-heading font-extrabold tracking-tight mb-6 text-foreground">
               Nuestro Portafolio
             </h2>
           </FadeIn>

@@ -1,3 +1,24 @@
+/* local font declarations */
+@font-face {
+  font-family: 'Klein Condensed';
+  src: url('/fonts/KleinCondensed-Black.woff2') format('woff2'),
+       url('/fonts/KleinCondensed-Black.woff') format('woff'),
+       url('/fonts/KleinCondensed-Black.ttf') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'DIN Arabic';
+  src: url('/fonts/DINArabic-Regular.woff2') format('woff2'),
+       url('/fonts/DINArabic-Regular.woff') format('woff'),
+       url('/fonts/DINArabic-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -22,11 +43,31 @@
     /* Glows */
     --glow-primary: 0 0% 98%;
     --glow-secondary: 217.2 91.2% 59.8%; /* Tailwind blue-500 HSL */
+
+    /* Typography Tokens */
+    --font-primary: 'Poppins', 'Inter', system-ui, -apple-system, sans-serif;
+    --font-heading: 'Poppins', system-ui, -apple-system, sans-serif;
+    --font-display: 'Klein Condensed', 'Impact', 'Arial Black', sans-serif;
+    --font-arabic: 'DIN Arabic', 'Segoe UI Arabic', 'Noto Sans Arabic', sans-serif;
   }
 
   body {
     @apply bg-background text-foreground antialiased;
     scroll-behavior: smooth;
+  }
+
+  /* Estilos globales de tracking y localización */
+  h1, h2, h3, .font-heading {
+    letter-spacing: -0.02em;
+  }
+
+  .font-display {
+    letter-spacing: -0.04em;
+  }
+
+  [lang="ar"],
+  .font-arabic {
+    font-family: var(--font-arabic);
   }
 }
 
@@ -43,5 +84,25 @@
   /* Reveal mask */
   .reveal-wrapper {
     @apply overflow-hidden block;
+  }
+
+  /* Fluid Typography Scale */
+  .text-fluid-display {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+  }
+  .text-fluid-h1 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+  }
+  .text-fluid-h2 {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+  }
+  .text-fluid-h3 {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+  }
+  .text-fluid-h4 {
+    font-size: clamp(1.25rem, 2vw, 1.5rem);
+  }
+  .text-fluid-body-large {
+    font-size: clamp(1.05rem, 1.5vw, 1.125rem);
   }
 }

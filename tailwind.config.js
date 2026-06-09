@@ -27,8 +27,12 @@ export default {
         '600': '600ms',
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
-        serif: ['"GT Sectra"', 'Georgia', 'serif'],
+        primary: ['var(--font-primary)', 'sans-serif'],
+        heading: ['var(--font-heading)', 'sans-serif'],
+        display: ['var(--font-display)', 'sans-serif'],
+        arabic: ['var(--font-arabic)', 'sans-serif'],
+        sans: ['var(--font-primary)', 'Inter', 'system-ui', 'sans-serif'],
+        serif: ['"Playfair Display"', 'Georgia', 'serif'],
       },
       boxShadow: {
         'glass': '0 4px 30px rgba(0, 0, 0, 0.1)',

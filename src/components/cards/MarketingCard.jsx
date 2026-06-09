@@ -12,7 +12,7 @@ export const MarketingCard = ({
   return (
     <GlassCard
       className={cn(
-        "relative flex flex-col items-start text-left h-full group",
+        "relative flex flex-col items-center realitive flex flex-col items-center text-center h-full group",
         glow && "border-primary/30 shadow-[0_0_30px_-10px_rgba(255,255,255,0.1)]",
         className
       )}
@@ -26,7 +26,7 @@ export const MarketingCard = ({
         {icon}
       </div>
 
-      <h3 className="text-xl font-bold mb-3 text-foreground tracking-tight">
+      <h3 className="text-xl font-heading font-extrabold mb-3 text-foreground tracking-tight">
         {title}
       </h3>
 

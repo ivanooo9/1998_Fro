@@ -15,7 +15,7 @@ export const Footer = () => {
             </div>
 
             <div>
-              <h4 className="font-bold text-foreground mb-4">Servicios</h4>
+              <h4 className="font-heading font-extrabold text-foreground mb-4">Servicios</h4>
               <ul className="space-y-2 text-sm text-foreground/60">
                 <li><a href="#" className="hover:text-foreground transition-colors">Features</a></li>
                 <li><a href="#" className="hover:text-foreground transition-colors">Integrations</a></li>
@@ -25,7 +25,7 @@ export const Footer = () => {
             </div>
 
             <div>
-              <h4 className="font-bold text-foreground mb-4">Empresa</h4>
+              <h4 className="font-heading font-extrabold text-foreground mb-4">Empresa</h4>
               <ul className="space-y-2 text-sm text-foreground/60">
                 <li><a href="#" className="hover:text-foreground transition-colors">About Us</a></li>
                 <li><a href="#" className="hover:text-foreground transition-colors">Careers</a></li>
@@ -35,7 +35,7 @@ export const Footer = () => {
             </div>
 
             <div>
-              <h4 className="font-bold text-foreground mb-4">Legal</h4>
+              <h4 className="font-heading font-extrabold text-foreground mb-4">Legal</h4>
               <ul className="space-y-2 text-sm text-foreground/60 mb-6">
                 <li><a href="#" className="hover:text-foreground transition-colors">Privacy Policy</a></li>
                 <li><a href="#" className="hover:text-foreground transition-colors">Terms of Service</a></li>

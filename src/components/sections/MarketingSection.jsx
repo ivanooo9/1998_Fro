@@ -8,7 +8,7 @@ export const MarketingSection = ({ reversed = false }) => {
 
           {/* Text Content */}
           <MotionContainer staggerChildren={0.2} className="flex-1 max-w-xl">
-            <h2 className="text-3xl md:text-5xl font-serif font-bold tracking-tight mb-6 leading-tight">
+            <h2 className="text-3xl md:text-5xl font-heading font-extrabold tracking-tight mb-6 leading-tight">
               <RevealText text="No somos una" className="block" />
               <RevealText text="empresa cualquiera." delay={0.1} className="block text-foreground/70" />
             </h2>
@@ -18,7 +18,7 @@ export const MarketingSection = ({ reversed = false }) => {
               </p>
             </FadeIn>
             <FadeIn delay={0.5} direction="up">
-              <PremiumButton variant="outline">Contáctanos</PremiumButton>
+              <PremiumButton variant="outline" className="font-heading font-extrabold">Contáctanos</PremiumButton>
             </FadeIn>
           </MotionContainer>
 

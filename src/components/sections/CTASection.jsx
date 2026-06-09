@@ -6,7 +6,7 @@ export const CTASection = () => {
       <div className="container mx-auto px-6 md:px-12 relative z-10">
         <MotionContainer staggerChildren={0.2} className="max-w-4xl mx-auto text-center">
           <FadeIn direction="up">
-            <h2 className="text-4xl md:text-6xl font-serif font-bold tracking-tight mb-6 leading-tight text-foreground">
+            <h2 className="text-4xl md:text-6xl font-heading font-extrabold tracking-tight mb-6 leading-tight text-foreground">
               ¿Cuál plan se ajusta mejor a tu negocio?
             </h2>
           </FadeIn>
@@ -18,10 +18,10 @@ export const CTASection = () => {
           </FadeIn>
           
           <FadeIn delay={0.4} direction="up" className="flex flex-col sm:flex-row items-center justify-center gap-6">
-            <PremiumButton variant="primary" size="lg" className="w-full sm:w-auto px-12">
+            <PremiumButton variant="primary" size="lg" className="w-full sm:w-auto px-12 font-heading font-extrabold">
               Escríbenos
             </PremiumButton>
-            <PremiumButton variant="ghost" size="lg" className="w-full sm:w-auto px-12">
+            <PremiumButton variant="ghost" size="lg" className="w-full sm:w-auto px-12 font-heading font-extrabold">
               Ver Planes
             </PremiumButton>
           </FadeIn>

@@ -1,4 +1,5 @@
 @import "./design-system/tokens/theme.css";
+@import url("bootstrap-icons/font/bootstrap-icons.css");
 
 html {
   scroll-behavior: smooth;
@@ -66,9 +67,10 @@ html {
 }
 
 .carousel a h2 {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-size: 1.35rem;
-  font-weight: 700;
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
   color: #ffffff;
   margin-bottom: 0.25rem;
   transition: color 0.3s;
