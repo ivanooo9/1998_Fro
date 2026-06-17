@@ -88,9 +88,7 @@ export const Navbar = ({ isLoading }) => {
                 className="w-full h-full object-cover"
               />
             </div>
-            <span className="font-serif font-bold text-xl text-foreground tracking-tight">
-              1998
-            </span>
+
           </div>
         </div>
 

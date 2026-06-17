@@ -2,8 +2,8 @@ import { MotionContainer, FadeIn, PremiumButton, cn } from '@/design-system';
 
 export const CTASection = () => {
   return (
-    <section 
-      id="planes" 
+    <section
+      id="planes"
       // [Refactor]: Estandarización de ritmo vertical a py-24, borde sutil border-border/20 y uso de cn()
       className={cn("py-24 relative overflow-hidden border-t border-border/20 bg-card/50 dark:bg-card/10")}
     >
@@ -23,19 +23,12 @@ export const CTASection = () => {
           </FadeIn>
 
           <FadeIn delay={0.4} direction="up" className={cn("flex flex-col sm:flex-row items-center justify-center gap-6")}>
-            <PremiumButton 
-              variant="primary" 
-              size="lg" 
+            <PremiumButton
+              variant="primary"
+              size="lg"
               className={cn("w-full sm:w-auto px-12 font-heading font-extrabold")}
             >
               Escríbenos
-            </PremiumButton>
-            <PremiumButton 
-              variant="ghost" 
-              size="lg" 
-              className={cn("w-full sm:w-auto px-12 font-heading font-extrabold")}
-            >
-              Ver Planes
             </PremiumButton>
           </FadeIn>
         </MotionContainer>

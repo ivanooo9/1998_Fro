@@ -5,7 +5,7 @@ import { MotionContainer, FadeIn, RevealText, PremiumButton, cn } from '@/design
 export const MarketingSection = ({ reversed = false }) => {
   const sectionRef = useRef(null);
   const videoRef = useRef(null);
-  
+
   // [Refactor]: Detecta si la sección está en el viewport para pausar el video y mitigar consumo de GPU
   const isInView = useInView(sectionRef, { amount: 0.15 });
 
@@ -20,7 +20,7 @@ export const MarketingSection = ({ reversed = false }) => {
   }, [isInView]);
 
   return (
-    <section 
+    <section
       ref={sectionRef}
       // [Refactor]: Estandarización de ritmo vertical a py-24 y uso obligatorio de la utilidad cn()
       className={cn("py-24 overflow-hidden relative")}
@@ -40,14 +40,14 @@ export const MarketingSection = ({ reversed = false }) => {
               </p>
             </FadeIn>
             <FadeIn delay={0.5} direction="up">
-              <PremiumButton variant="outline" className={cn("font-heading font-extrabold")}>Contáctanos</PremiumButton>
+              <PremiumButton variant="primary" size="lg" className={cn("w-full sm:w-auto px-12 font-heading font-extrabold")}>Contáctanos</PremiumButton>
             </FadeIn>
           </MotionContainer>
 
           {/* Visual Showcase (Video Integrado) */}
           <div className={cn("flex-1 w-full max-w-xl lg:max-w-none")}>
             <FadeIn direction={reversed ? 'right' : 'left'} delay={0.2} duration={1.2}>
-              <div 
+              <div
                 // [Refactor]: Borde de tarjeta tipo glassmorphism suavizado a border-border/20 para estética premium
                 className={cn(
                   "relative aspect-square md:aspect-video rounded-3xl overflow-hidden bg-card/85 dark:bg-card/20 border border-border/20 shadow-2xl"
