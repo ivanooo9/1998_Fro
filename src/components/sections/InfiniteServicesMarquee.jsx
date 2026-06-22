@@ -90,7 +90,9 @@ const ServiceCard = ({ service, index, N, scrollYProgress }) => {
         md:h-screen
         w-full
         flex
-        items-center
+        items-start      {/* 1. CAMBIO: De items-center a items-start */}
+        pt-[12svh]       {/* 2. CAMBIO: Empujamos 12% hacia abajo en móvil para salvar el navbar */}
+        md:pt-[10vh]     {/* 3. CAMBIO: Empujamos 10% hacia abajo en PC */}
         justify-center
         relative
       "
@@ -101,19 +103,19 @@ const ServiceCard = ({ service, index, N, scrollYProgress }) => {
       <div
         className="
           w-full
-          min-h-[78svh]
+          min-h-[70svh]    
           h-auto
-          md:h-[92vh]
+          md:h-[78vh]      
           flex
           flex-col
           md:grid
           md:grid-cols-2
-          rounded-[32px]
+          rounded-none     {/* ⬅️ CAMBIO: Eliminamos las curvas para dejar las esquinas en 90 grados */}
           overflow-hidden
           border
           border-border/20
           shadow-2xl
-          bg-transparent
+          bg-background
         "
       >
         {/* ========================================= */}
@@ -179,7 +181,9 @@ const ServiceCard = ({ service, index, N, scrollYProgress }) => {
             bg-transparent
             w-full
             h-[45svh]
-            md:h-full
+            md:h-auto
+            flex
+            flex-col
             relative
             overflow-hidden
             z-0
@@ -313,18 +317,19 @@ const InfiniteServicesMarquee = () => {
   return (
     <section
       ref={containerRef}
+      id="servicios"
       className="
         relative
         w-full
         bg-background
         h-[520vh]
         md:h-[620vh]
-        mt-[8vh]
-        md:mt-[15vh]
-        mb-[18vh]
-        md:mb-[35vh]
-        py-[6vh]
-        md:py-[10vh]
+        mt-0
+        md:mt-0
+        mb-[6vh]
+        md:mb-[12vh]
+        py-[4vh]
+        md:py-[6vh]
       "
     >
       <div

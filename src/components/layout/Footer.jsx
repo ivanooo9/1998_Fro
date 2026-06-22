@@ -58,12 +58,8 @@ export const Footer = () => {
           </div>
 
           <div className="flex flex-col md:flex-row items-center justify-between pt-8 border-t border-border/40 text-sm text-foreground/40">
-            <p>© {new Date().getFullYear()} 1998 - Desarrollo Digital y Marketing. Todos los derechos reservados.</p>
-            <div className="flex gap-4 mt-4 md:mt-0">
-              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">Twitter</a>
-              <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">GitHub</a>
-              <a href="https://dribbble.com" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">Dribbble</a>
-            </div>
+            <p>© {new Date().getFullYear()} 1998 Digital Development and Marketing. All rights reserved.</p>
+
           </div>
         </FadeIn>
       </div>
