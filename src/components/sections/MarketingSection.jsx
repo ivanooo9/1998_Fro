@@ -40,7 +40,13 @@ export const MarketingSection = ({ reversed = false }) => {
               </p>
             </FadeIn>
             <FadeIn delay={0.5} direction="up">
-              <PremiumButton variant="primary" size="lg" className={cn("w-full sm:w-auto px-12 font-heading font-extrabold")}>Contáctanos</PremiumButton>
+              <PremiumButton
+                variant="primary"
+                size="md"
+                className={cn("w-auto px-8 font-heading font-extrabold")}
+              >
+                Contáctanos
+              </PremiumButton>
             </FadeIn>
           </MotionContainer>
 

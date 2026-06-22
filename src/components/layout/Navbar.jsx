@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
-import { cn, PremiumButton, useIntegrationConfig } from '@/design-system';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { cn, useIntegrationConfig } from '@/design-system';
 
 export const Navbar = ({ isLoading }) => {
-  const [isOpen, setIsOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { scrollY } = useScroll();
   const { flags } = useIntegrationConfig();
@@ -46,8 +45,10 @@ export const Navbar = ({ isLoading }) => {
     const element = document.getElementById(targetId);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      console.warn(`Target section #${targetId} not found in the DOM.`);
     }
-    setIsOpen(false);
+    setIsMenuOpen(false); // Cierra el menú móvil de pantalla completa
   };
 
   return (
@@ -70,27 +71,48 @@ export const Navbar = ({ isLoading }) => {
 
           {/* Left Nav: Alineado a la derecha con gap */}
           <div className="flex items-center justify-end w-full gap-12">
-            <PremiumButton
-              variant="primary"
-              size="sm"
-              className="bg-transparent hover:bg-transparent text-white border-none shadow-none p-0"
+            <motion.a
+              href="#como-trabajamos"
               onClick={(e) => handleNavClick(e, 'como-trabajamos')}
+              className="relative overflow-hidden rounded-full font-medium text-sm text-white bg-transparent p-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-colors"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              transition={{ duration: 0.3 }}
             >
-              ¿Cómo trabajamos?
-            </PremiumButton>
-            <PremiumButton
-              variant="primary"
-              size="sm"
-              className="bg-transparent hover:bg-transparent text-white border-none shadow-none p-0"
+              <span className="relative z-10 flex items-center justify-center gap-2 px-2 py-1">
+                ¿Cómo trabajamos?
+              </span>
+              <motion.div 
+                className="absolute inset-0 z-0 bg-white/20"
+                initial={{ opacity: 0 }}
+                whileHover={{ opacity: 1 }}
+                transition={{ duration: 0.4 }}
+              />
+            </motion.a>
+            <motion.a
+              href="#servicios"
               onClick={(e) => handleNavClick(e, 'servicios')}
+              className="relative overflow-hidden rounded-full font-medium text-sm text-white bg-transparent p-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-colors"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              transition={{ duration: 0.3 }}
             >
-              Servicios
-            </PremiumButton>
+              <span className="relative z-10 flex items-center justify-center gap-2 px-2 py-1">
+                Servicios
+              </span>
+              <motion.div 
+                className="absolute inset-0 z-0 bg-white/20"
+                initial={{ opacity: 0 }}
+                whileHover={{ opacity: 1 }}
+                transition={{ duration: 0.4 }}
+              />
+            </motion.a>
           </div>
 
           {/* Center: Logo */}
           <div className="flex justify-center px-4">
-            <div
+            <a
+              href="#inicio"
               onClick={(e) => handleNavClick(e, 'inicio')}
               className="flex items-center gap-2 cursor-pointer"
             >
@@ -101,47 +123,66 @@ export const Navbar = ({ isLoading }) => {
                   className="w-full h-full object-cover"
                 />
               </div>
-            </div>
+            </a>
           </div>
 
           {/* Right Nav: Alineado a la izquierda con gap */}
           <div className="flex items-center justify-start w-full gap-12">
-            <PremiumButton
-              variant="primary"
-              size="sm"
-              className="bg-transparent hover:bg-transparent text-white border-none shadow-none p-0"
+            <motion.a
+              href="#portafolio"
               onClick={(e) => handleNavClick(e, 'portafolio')}
+              className="relative overflow-hidden rounded-full font-medium text-sm text-white bg-transparent p-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-colors"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              transition={{ duration: 0.3 }}
             >
-              Portafolio
-            </PremiumButton>
-            <PremiumButton
-              variant="primary"
-              size="sm"
-              className="bg-transparent hover:bg-transparent text-white border-none shadow-none p-0"
+              <span className="relative z-10 flex items-center justify-center gap-2 px-2 py-1">
+                Portafolio
+              </span>
+              <motion.div 
+                className="absolute inset-0 z-0 bg-white/20"
+                initial={{ opacity: 0 }}
+                whileHover={{ opacity: 1 }}
+                transition={{ duration: 0.4 }}
+              />
+            </motion.a>
+            <motion.a
+              href="#planes"
               onClick={(e) => handleNavClick(e, 'planes')}
+              className="relative overflow-hidden rounded-full font-medium text-sm text-white bg-transparent p-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-colors"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              transition={{ duration: 0.3 }}
             >
-              Planes
-            </PremiumButton>
+              <span className="relative z-10 flex items-center justify-center gap-2 px-2 py-1">
+                Planes
+              </span>
+              <motion.div 
+                className="absolute inset-0 z-0 bg-white/20"
+                initial={{ opacity: 0 }}
+                whileHover={{ opacity: 1 }}
+                transition={{ duration: 0.4 }}
+              />
+            </motion.a>
           </div>
         </div>
 
         {/* Mobile Layout */}
         <div className="flex md:hidden w-full items-center justify-between h-full">
           {/* Mobile Logo */}
-          <div
+          <a
+            href="#inicio"
             onClick={(e) => handleNavClick(e, 'inicio')}
             className="flex items-center gap-2 cursor-pointer"
           >
             <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center overflow-hidden">
-              {/* Aquí cambiamos la M por tu imagen */}
               <img
                 src="/images/IMG_4002.PNG"
                 alt="Logo 1998"
                 className="w-full h-full object-cover"
               />
             </div>
-
-          </div>
+          </a>
 
           {/* Mobile Hamburger Button */}
           <button
@@ -155,45 +196,13 @@ export const Navbar = ({ isLoading }) => {
             </svg>
           </button>
         </div>
-
-        {/* Mobile Dropdown Panel */}
-        <AnimatePresence>
-          {isOpen && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-              className="absolute top-20 left-0 right-0 bg-background/95 border-b border-border/80 backdrop-blur-xl md:hidden overflow-hidden z-40"
-            >
-              <ul className="flex flex-col p-6 gap-4 text-left">
-                {[
-                  { name: "Blog", id: "blog" },
-                  { name: "¿Cómo trabajamos?", id: "como-trabajamos" },
-                  { name: "Planes", id: "planes" },
-                  { name: "Portafolio", id: "portafolio" }
-                ].map((link) => (
-                  <li key={link.id}>
-                    <PremiumButton
-                      variant="primary"
-                      size="sm"
-                      className="w-full justify-center bg-transparent hover:bg-transparent text-white border-none shadow-none"
-                      onClick={(e) => handleNavClick(e, link.id)}
-                    >
-                      {link.name}
-                    </PremiumButton>
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
-          )}
-        </AnimatePresence>
       </motion.header>
 
       {/* Full Screen Mobile Menu */}
       <div
-        className={`fixed inset-0 z-[100] flex flex-col items-center justify-between py-16 px-6 bg-black/95 backdrop-blur-xl transition-all duration-500 ease-in-out ${isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
-          }`}
+        className={`fixed inset-0 z-[100] flex flex-col items-center justify-between py-16 px-6 bg-black/95 backdrop-blur-xl transition-all duration-500 ease-in-out ${
+          isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+        }`}
       >
         {/* Close Button */}
         <button
@@ -212,10 +221,9 @@ export const Navbar = ({ isLoading }) => {
 
         {/* Navigation List */}
         <nav className="flex flex-col items-center gap-6 text-center w-full max-w-[280px]">
-          {/* Glassmorphic card for "Servicios" */}
           <a
             href="#servicios"
-            onClick={(e) => { handleNavClick(e, 'servicios'); setIsMenuOpen(false); }}
+            onClick={(e) => handleNavClick(e, 'servicios')}
             className="text-lg text-white/80 hover:text-white font-medium transition-colors py-2 block active:scale-95"
           >
             Servicios
@@ -223,7 +231,7 @@ export const Navbar = ({ isLoading }) => {
 
           <a
             href="#como-trabajamos"
-            onClick={(e) => { handleNavClick(e, 'como-trabajamos'); setIsMenuOpen(false); }}
+            onClick={(e) => handleNavClick(e, 'como-trabajamos')}
             className="text-lg text-white/80 hover:text-white font-medium transition-colors py-2 block active:scale-95"
           >
             ¿Cómo trabajamos?
@@ -231,7 +239,7 @@ export const Navbar = ({ isLoading }) => {
 
           <a
             href="#portafolio"
-            onClick={(e) => { handleNavClick(e, 'portafolio'); setIsMenuOpen(false); }}
+            onClick={(e) => handleNavClick(e, 'portafolio')}
             className="text-lg text-white/80 hover:text-white font-medium transition-colors py-2 block active:scale-95"
           >
             Portafolio
@@ -239,7 +247,7 @@ export const Navbar = ({ isLoading }) => {
 
           <a
             href="#planes"
-            onClick={(e) => { handleNavClick(e, 'planes'); setIsMenuOpen(false); }}
+            onClick={(e) => handleNavClick(e, 'planes')}
             className="text-lg text-white/80 hover:text-white font-medium transition-colors py-2 block active:scale-95"
           >
             Planes

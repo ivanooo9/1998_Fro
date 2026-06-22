@@ -26,7 +26,7 @@ export const CTASection = () => {
             <PremiumButton
               variant="primary"
               size="lg"
-              className={cn("w-full sm:w-auto px-12 font-heading font-extrabold")}
+              className={cn("w-40 font-heading font-extrabold text-center")} // w-40 equivale a 160px de ancho
             >
               Escríbenos
             </PremiumButton>
