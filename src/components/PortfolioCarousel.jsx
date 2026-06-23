@@ -2,93 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { FadeIn, GlassCard, useReducedMotionGlobal, cn, PremiumButton } from '@/design-system';
 
-// Datos reales estructurados del portafolio 1998
-const projects = [
-  {
-    title: "Secultura",
-    category: "Plataforma Cultural",
-    href: "https://secultura.net/",
-    desc: "Plataforma de difusión cultural y gestión de eventos artísticos.",
-    img: "https://mil998.com/wp-content/uploads/2025/10/PORTAFOLIO-1998.png"
-  },
-  {
-    title: "Fumilimpieza",
-    category: "Servicios Corporativos",
-    href: "https://fumilimpieza.net/",
-    desc: "Sitio corporativo optimizado para la cotización de servicios de limpieza industrial.",
-    img: "https://mil998.com/wp-content/uploads/2025/10/3.png"
-  },
-  {
-    title: "CAE Loja",
-    category: "Sitio Institucional",
-    href: "https://caeloja.com/",
-    desc: "Portal institucional y académico para el Colegio de Arquitectos de Loja.",
-    img: "https://mil998.com/wp-content/uploads/2025/10/4.png"
-  },
-  {
-    title: "Duolens",
-    category: "E-commerce Óptica",
-    href: "https://duolens.ec/",
-    desc: "Plataforma e-commerce avanzada con catálogo digital para óptica y lentes.",
-    img: "https://mil998.com/wp-content/uploads/2025/10/5.png"
-  },
-  {
-    title: "Electrocercos",
-    category: "Desarrollo Web",
-    href: "https://electrocercos.ec/",
-    desc: "Landing page y embudo de conversión para sistemas de seguridad perimetral.",
-    img: "https://mil998.com/wp-content/uploads/2025/10/2.png",
-    isStart: true
-  },
-  {
-    title: "Maku Sushi",
-    category: "Landing Gastronómica",
-    href: "https://www.makusushi.com/init",
-    desc: "Plataforma gastronómica digital con menú interactivo y pedidos en línea.",
-    img: "https://mil998.com/wp-content/uploads/2025/10/9.png"
-  },
-  {
-    title: "Profesionales EC",
-    category: "Directorio Web",
-    href: "https://profesionales.ec/",
-    desc: "Directorio profesional y red de contactos para especialistas en Ecuador.",
-    img: "https://mil998.com/wp-content/uploads/2025/10/10.png"
-  },
-  {
-    title: "La Marquesa",
-    category: "Tienda Online",
-    href: "https://lamarquesaecuador.com/",
-    desc: "Tienda online premium para productos de belleza y cuidado personal.",
-    img: "https://mil998.com/wp-content/uploads/2025/10/6.png"
-  },
-  {
-    title: "Tienda 98",
-    category: "E-commerce",
-    desc: "Comercio electrónico multiproducto optimizado para conversión rápida.",
-    img: "https://mil998.com/wp-content/uploads/2025/10/8.png"
-  },
-  {
-    title: "The Clean Harmony",
-    category: "Servicios Integrales",
-    href: "https://thecleanharmony.com/",
-    desc: "Portal de servicios residenciales y comerciales de limpieza integral.",
-    img: "https://mil998.com/wp-content/uploads/2025/10/7.png"
-  },
-  {
-    title: "Importadora Ortega",
-    category: "Catálogo Digital",
-    href: "https://importadoraortega.com/",
-    desc: "Catálogo digital mayorista con pasarela de consulta y cotizaciones.",
-    img: "https://mil998.com/wp-content/uploads/2025/10/11.png"
-  },
-  {
-    title: "Prestig01",
-    category: "Sitio Corporativo",
-    href: "https://prestig01.com/",
-    desc: "Sitio web corporativo de consultoría y branding empresarial de alto nivel.",
-    img: "https://mil998.com/wp-content/uploads/2025/10/12.png"
-  }
-];
+// Datos del portafolio obtenidos dinámicamente desde el backend de Prisma
 
 
 // Subcomponente abstraído para mantener limpio el render principal
@@ -111,7 +25,7 @@ const ProjectCard = ({ project, className }) => {
       {/* Imagen del proyecto (Full-Bleed) */}
       <div className="relative z-0 h-40 md:h-44 lg:h-48 overflow-hidden bg-card border-b border-border/40">
         <img
-          src={project.img}
+          src={project.imageUrl || project.img}
           alt={project.title}
           referrerPolicy="no-referrer"
           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
@@ -128,7 +42,7 @@ const ProjectCard = ({ project, className }) => {
           {project.title}
         </h3>
         <p className="text-foreground/70 text-xs md:text-sm leading-relaxed mb-4 flex-grow">
-          {project.desc}
+          {project.description || project.desc}
         </p>
 
         {/* Botón Premium Integrado */}
@@ -152,7 +66,13 @@ const ProjectCard = ({ project, className }) => {
 };
 
 
-export const PortfolioCarousel = () => {
+export const PortfolioCarousel = ({ data }) => {
+  if (!data) return null;
+
+  const projects = data.projects || [];
+  const title = data.title || "Nuestros Proyectos";
+  const subtitle = data.subtitle || "";
+
   const containerRef = useRef(null);
   const carouselMobileRef = useRef(null);
   const [isMobile, setIsMobile] = useState(false);
@@ -181,7 +101,7 @@ export const PortfolioCarousel = () => {
     handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  }, [projects.length]);
 
   // Límites de paginación
   const maxIndex = Math.max(0, projects.length - visibleCards);
@@ -252,12 +172,12 @@ export const PortfolioCarousel = () => {
         <div className="px-6 md:px-24 mb-8 md:mb-10 max-w-4xl">
           <FadeIn delay={0.1}>
             <h2 className="font-display text-4xl md:text-6xl text-white font-bold tracking-tighter">
-              Nuestros Proyectos
+              {title}
             </h2>
           </FadeIn>
           <FadeIn delay={0.2}>
             <p className="text-foreground/75 text-lg md:text-xl mt-3 max-w-2xl">
-              Innovación técnica y diseño estratégico aplicados a problemas del mundo real.
+              {subtitle}
             </p>
           </FadeIn>
         </div>

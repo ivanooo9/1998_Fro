@@ -207,7 +207,7 @@ const ServiceCard = ({ service, index, N, scrollYProgress }) => {
             <video
               ref={videoRef}
               key={isMobile ? "mobile" : "desktop"}
-              src={isMobile ? service.bgVideoMobile : service.bgVideo}
+              src={isMobile ? (service.bgVideoMobileUrl || service.bgVideoMobile) : (service.bgVideoUrl || service.bgVideo)}
               loop
               muted
               playsInline
@@ -262,49 +262,13 @@ const ServiceCard = ({ service, index, N, scrollYProgress }) => {
 // =====================================================
 // MAIN INFINITE SERVICES MARQUEE COMPONENT
 // =====================================================
-const InfiniteServicesMarquee = () => {
+const InfiniteServicesMarquee = ({ data }) => {
+  if (!data) return null;
+
   const containerRef = useRef(null);
 
-  // =====================================================
-  // SERVICES DATA
-  // =====================================================
-  const services = [
-    {
-      id: 1,
-      title: "1. Web & App",
-      description: "Creamos tu página web o app, una sucursal de tu negocio 24/7",
-      bgVideo: "/videos/web_app.mp4",
-      bgVideoMobile: "/videos/web_app_phone.mp4"
-    },
-    {
-      id: 2,
-      title: "2. Publicidad Digital",
-      description: "Anuncios en redes y Google que traen más clientes",
-      bgVideo: "/videos/publicidad_digital.mp4",
-      bgVideoMobile: "/videos/publicidad_digital_phone.mp4"
-    },
-    {
-      id: 3,
-      title: "3. Branding",
-      description: "Diseñamos tu logo y todo lo que hace única a tu marca",
-      bgVideo: "/videos/Branding.mp4",
-      bgVideoMobile: "/videos/Branding_phone.mp4"
-    },
-    {
-      id: 4,
-      title: "4. Redes Sociales",
-      description: "Manejamos tus redes con contenido que llama la atención",
-      bgVideo: "/videos/redes_sociales.mp4",
-      bgVideoMobile: "/videos/redes_sociales_phone.mp4"
-    },
-    {
-      id: 5,
-      title: "5. Ventas",
-      description: "Te ayudamos a vender más y mejor, sin enredos",
-      bgVideo: "/videos/ventas.mp4",
-      bgVideoMobile: "/videos/ventas_phone.mp4"
-    }
-  ];
+  const services = data.services || [];
+  const title = data.title || "Servicios";
 
   // =====================================================
   // SCROLL PROGRESS
@@ -361,7 +325,7 @@ const InfiniteServicesMarquee = () => {
             md:pb-16
           "
         >
-          Servicios
+          {title}
         </h2>
 
         {/* ================================================= */}

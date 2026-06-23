@@ -6,7 +6,9 @@ import {
   cn
 } from '@/design-system';
 
-export const HeroLanding = ({ isLoading }) => {
+export const HeroLanding = ({ data, isLoading }) => {
+  if (!data) return null;
+
   const handleScrollTo = (e, targetId) => {
     e.preventDefault();
     const element = document.getElementById(targetId);
@@ -21,7 +23,7 @@ export const HeroLanding = ({ isLoading }) => {
       // [Refactor]: Contenedor del Hero principal utilizando la utilidad cn()
       className={cn("relative min-h-[90vh] flex items-center justify-center pt-24 pb-12 overflow-hidden bg-background")}
     >
-      <h1 className="sr-only">1998 - Agencia de Desarrollo Web, Branding y Publicidad Digital</h1>
+      <h1 className="sr-only">{data.seoTitle}</h1>
       
       {/* Background Cinematic Video */}
       <video
@@ -33,9 +35,9 @@ export const HeroLanding = ({ isLoading }) => {
         // [Refactor]: Ajuste de clases con la utilidad cn() y control de eventos
         className={cn("absolute inset-0 w-full h-full object-cover z-0 pointer-events-none")}
       >
-        <source media="(min-width: 1024px)" src="/videos/hero-pc.mp4" type="video/mp4" />
-        <source media="(min-width: 768px)" src="/videos/hero-tablet.mp4" type="video/mp4" />
-        <source src="/videos/hero-mobile.mp4" type="video/mp4" />
+        {data.videoDesktopUrl && <source media="(min-width: 1024px)" src={data.videoDesktopUrl} type="video/mp4" />}
+        {data.videoTabletUrl && <source media="(min-width: 768px)" src={data.videoTabletUrl} type="video/mp4" />}
+        {data.videoMobileUrl && <source src={data.videoMobileUrl} type="video/mp4" />}
       </video>
 
       {/* Video Overlay Layer */}

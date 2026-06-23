@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { Navbar } from '../components/layout/Navbar';
 import { Footer } from '../components/layout/Footer';
@@ -12,14 +12,39 @@ import { CTASection } from '../components/sections/CTASection';
 import InfiniteServicesMarquee from '../components/sections/InfiniteServicesMarquee';
 
 export const Home = () => {
+  const [content, setContent] = useState(null);
+  const [isFetching, setIsFetching] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchContent = async () => {
+      try {
+        const response = await fetch('http://localhost:3000/api/landing-content');
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        setContent(data);
+      } catch (err) {
+        console.error("Error al obtener el contenido de la landing page:", err);
+      } finally {
+        setIsFetching(false);
+      }
+    };
+
+    fetchContent();
+  }, []);
 
   return (
     <div className="min-h-screen bg-background text-foreground font-sans selection:bg-primary selection:text-primary-foreground">
       {/* 1. Preloader Overlay */}
       <AnimatePresence mode="wait">
         {isLoading && (
-          <Preloader key="preloader" onComplete={() => setIsLoading(false)} />
+          <Preloader 
+            key="preloader" 
+            isFetching={isFetching}
+            onComplete={() => setIsLoading(false)} 
+          />
         )}
       </AnimatePresence>
 
@@ -27,14 +52,14 @@ export const Home = () => {
       <Navbar isLoading={isLoading} />
       
       <main>
-        <HeroLanding isLoading={isLoading} />
+        <HeroLanding data={content?.hero} isLoading={isLoading} />
         <FeatureGrid />
         
-        <InfiniteServicesMarquee />
+        <InfiniteServicesMarquee data={content?.servicesMarquee} />
         <MarketingSection reversed />
         
         <CinematicShowcase />
-        <PortfolioCarousel />
+        <PortfolioCarousel data={content?.portfolio} />
         <CTASection />
       </main>
 
