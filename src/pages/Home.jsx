@@ -53,12 +53,12 @@ export const Home = () => {
       
       <main>
         <HeroLanding data={content?.hero} isLoading={isLoading} />
-        <FeatureGrid />
+        <FeatureGrid workSteps={content?.workSteps} />
         
         <InfiniteServicesMarquee data={content?.servicesMarquee} />
-        <MarketingSection reversed />
+        <MarketingSection reversed infoBlocks={content?.infoBlocks || []} />
         
-        <CinematicShowcase />
+        <CinematicShowcase infoBlocks={content?.infoBlocks || []} />
         <PortfolioCarousel data={content?.portfolio} />
         <CTASection />
       </main>

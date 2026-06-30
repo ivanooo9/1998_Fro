@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from 'react';
+import { IconPicker } from '../components/IconPicker';
 
 // Subcomponente de Alerta Premium para mostrar éxitos y errores
 const AlertMessage = ({ type, message, onClose }) => {
   if (!message) return null;
   const isError = type === 'error';
   return (
-    <div className={`fixed bottom-6 right-6 z-50 flex items-center gap-3 px-5 py-4 rounded-xl border backdrop-blur-md transition-all duration-300 shadow-lg ${
-      isError 
-        ? 'bg-red-500/10 border-red-500/20 text-red-400' 
-        : 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400'
-    }`}>
+    <div className={`fixed bottom-6 right-6 z-50 flex items-center gap-3 px-5 py-4 rounded-xl border backdrop-blur-md transition-all duration-300 shadow-lg ${isError
+      ? 'bg-red-500/10 border-red-500/20 text-red-400'
+      : 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400'
+      }`}>
       <div className={`w-2 h-2 rounded-full ${isError ? 'bg-red-500' : 'bg-emerald-500'} animate-pulse`} />
       <span className="text-sm font-medium">{message}</span>
-      <button 
-        onClick={onClose} 
+      <button
+        onClick={onClose}
         className="ml-4 hover:text-white transition-colors"
       >
         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -75,9 +75,8 @@ const HashedUploadInput = ({ label, id, value, onChange, placeholder, fileAccept
           placeholder={placeholder}
           className="flex-grow bg-neutral-900 border border-neutral-800 focus:border-primary/50 text-white rounded-lg px-4 py-2.5 text-sm outline-none transition-all placeholder:text-neutral-600"
         />
-        <label className={`shrink-0 flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg border border-neutral-800 bg-neutral-900/50 hover:bg-neutral-900 hover:border-white/20 text-white text-xs font-semibold cursor-pointer transition-all ${
-          isUploading ? 'opacity-50 pointer-events-none' : ''
-        }`}>
+        <label className={`shrink-0 flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg border border-neutral-800 bg-neutral-900/50 hover:bg-neutral-900 hover:border-white/20 text-white text-xs font-semibold cursor-pointer transition-all ${isUploading ? 'opacity-50 pointer-events-none' : ''
+          }`}>
           {isUploading ? (
             <>
               <svg className="animate-spin h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
@@ -117,10 +116,12 @@ export const AdminDashboard = () => {
   const [projects, setProjects] = useState([]);
   const [services, setServices] = useState([]);
   const [infoBlocks, setInfoBlocks] = useState([]);
+  const [workSteps, setWorkSteps] = useState([]);
 
   // Estados de Edición
   const [editingProjectId, setEditingProjectId] = useState(null);
   const [editingServiceId, setEditingServiceId] = useState(null);
+  const [editingWorkStepId, setEditingWorkStepId] = useState(null);
 
   // Estados para Login
   const [password, setPassword] = useState('');
@@ -151,6 +152,13 @@ export const AdminDashboard = () => {
     order: '',
   });
 
+  const [workStepForm, setWorkStepForm] = useState({
+    title: '',
+    description: '',
+    iconClass: '',
+    order: '',
+  });
+
   const [infoBlockForm, setInfoBlockForm] = useState({
     identifier: '',
     title: '',
@@ -166,7 +174,7 @@ export const AdminDashboard = () => {
       const response = await fetch('http://localhost:3000/api/landing-content');
       if (!response.ok) throw new Error('Error al cargar contenido de la API');
       const data = await response.json();
-      
+
       if (data.portfolio && data.portfolio.projects) {
         setProjects(data.portfolio.projects);
       }
@@ -175,6 +183,9 @@ export const AdminDashboard = () => {
       }
       if (data.infoBlocks) {
         setInfoBlocks(data.infoBlocks);
+      }
+      if (data.workSteps) {
+        setWorkSteps(data.workSteps);
       }
     } catch (err) {
       console.error('Error cargando contenidos:', err);
@@ -199,6 +210,11 @@ export const AdminDashboard = () => {
   const handleServiceChange = (e) => {
     const { id, value } = e.target;
     setServiceForm((prev) => ({ ...prev, [id]: value }));
+  };
+
+  const handleWorkStepChange = (e) => {
+    const { id, value } = e.target;
+    setWorkStepForm((prev) => ({ ...prev, [id]: value }));
   };
 
   const handleInfoBlockChange = (e) => {
@@ -259,7 +275,7 @@ export const AdminDashboard = () => {
 
       const response = await fetch('http://localhost:3000/api/admin/hero', {
         method: 'PUT',
-        headers: { 
+        headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
         },
@@ -295,14 +311,14 @@ export const AdminDashboard = () => {
         order: projectForm.order ? parseInt(projectForm.order, 10) : undefined,
       };
 
-      const url = editingProjectId 
+      const url = editingProjectId
         ? `http://localhost:3000/api/admin/portfolio/project/${editingProjectId}`
         : 'http://localhost:3000/api/admin/portfolio/project';
       const method = editingProjectId ? 'PUT' : 'POST';
 
       const response = await fetch(url, {
         method,
-        headers: { 
+        headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
         },
@@ -315,9 +331,9 @@ export const AdminDashboard = () => {
       }
 
       const data = await response.json();
-      setAlert({ 
-        type: 'success', 
-        message: data.message || (editingProjectId ? '¡Proyecto actualizado exitosamente!' : '¡Proyecto añadido exitosamente!') 
+      setAlert({
+        type: 'success',
+        message: data.message || (editingProjectId ? '¡Proyecto actualizado exitosamente!' : '¡Proyecto añadido exitosamente!')
       });
 
       setProjectForm({
@@ -339,12 +355,24 @@ export const AdminDashboard = () => {
 
   const handleDelete = async (type, id) => {
     const isProject = type === 'project';
-    const typeLabel = isProject ? 'proyecto' : 'servicio';
+    const isService = type === 'service';
+    const isWorkStep = type === 'workstep';
+
+    let typeLabel = '';
+    if (isProject) typeLabel = 'proyecto';
+    else if (isService) typeLabel = 'servicio';
+    else if (isWorkStep) typeLabel = 'paso de trabajo';
+
     if (!window.confirm(`¿Estás seguro de que deseas eliminar este ${typeLabel}?`)) return;
 
-    const url = isProject 
-      ? `http://localhost:3000/api/admin/portfolio/project/${id}`
-      : `http://localhost:3000/api/admin/services/service/${id}`;
+    let url = '';
+    if (isProject) {
+      url = `http://localhost:3000/api/admin/portfolio/project/${id}`;
+    } else if (isService) {
+      url = `http://localhost:3000/api/admin/services/service/${id}`;
+    } else if (isWorkStep) {
+      url = `http://localhost:3000/api/admin/worksteps/${id}`;
+    }
 
     try {
       const response = await fetch(url, {
@@ -360,7 +388,10 @@ export const AdminDashboard = () => {
       }
 
       const data = await response.json();
-      setAlert({ type: 'success', message: data.message || `¡${isProject ? 'Proyecto' : 'Servicio'} eliminado exitosamente!` });
+      setAlert({
+        type: 'success',
+        message: data.message || `¡${isProject ? 'Proyecto' : isService ? 'Servicio' : 'Paso de trabajo'} eliminado exitosamente!`
+      });
       loadLandingContent();
     } catch (err) {
       setAlert({ type: 'error', message: err.message });
@@ -414,7 +445,7 @@ export const AdminDashboard = () => {
 
       const response = await fetch(url, {
         method,
-        headers: { 
+        headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
         },
@@ -427,9 +458,9 @@ export const AdminDashboard = () => {
       }
 
       const data = await response.json();
-      setAlert({ 
-        type: 'success', 
-        message: data.message || (editingServiceId ? '¡Servicio actualizado exitosamente!' : '¡Servicio añadido exitosamente!') 
+      setAlert({
+        type: 'success',
+        message: data.message || (editingServiceId ? '¡Servicio actualizado exitosamente!' : '¡Servicio añadido exitosamente!')
       });
 
       setServiceForm({
@@ -472,6 +503,118 @@ export const AdminDashboard = () => {
     });
   };
 
+  // CRUD Pasos de Trabajo (WorkSteps)
+  const submitWorkStep = async (e) => {
+    e.preventDefault();
+    if (!workStepForm.title || !workStepForm.description || !workStepForm.iconClass) {
+      setAlert({ type: 'error', message: 'Los campos Título, Descripción e Icono son obligatorios.' });
+      return;
+    }
+
+    setIsSaving(true);
+    try {
+      const payload = {
+        ...workStepForm,
+        order: workStepForm.order ? parseInt(workStepForm.order, 10) : undefined,
+      };
+
+      const url = editingWorkStepId
+        ? `http://localhost:3000/api/admin/worksteps/${editingWorkStepId}`
+        : 'http://localhost:3000/api/admin/worksteps';
+      const method = editingWorkStepId ? 'PUT' : 'POST';
+
+      const response = await fetch(url, {
+        method,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Error al guardar el paso de trabajo');
+      }
+
+      const data = await response.json();
+      setAlert({
+        type: 'success',
+        message: data.message || (editingWorkStepId ? '¡Paso de trabajo actualizado exitosamente!' : '¡Paso de trabajo añadido exitosamente!')
+      });
+
+      setWorkStepForm({
+        title: '',
+        description: '',
+        iconClass: '',
+        order: '',
+      });
+      setEditingWorkStepId(null);
+      loadLandingContent();
+    } catch (err) {
+      setAlert({ type: 'error', message: err.message });
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const startEditWorkStep = (step) => {
+    setEditingWorkStepId(step.id);
+    setWorkStepForm({
+      title: step.title || '',
+      description: step.description || '',
+      iconClass: step.iconClass || '',
+      order: step.order !== undefined && step.order !== null ? String(step.order) : '',
+    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const cancelEditWorkStep = () => {
+    setEditingWorkStepId(null);
+    setWorkStepForm({
+      title: '',
+      description: '',
+      iconClass: '',
+      order: '',
+    });
+  };
+
+  const initializeDefaultWorkSteps = async () => {
+    setIsSaving(true);
+    try {
+      const defaults = [
+        { title: "1. Diagnóstico", description: "Analizamos tu presencia digital actual y definimos la estrategia ideal.", iconClass: "bi bi-search", order: 1 },
+        { title: "2. Diseño & Desarrollo", description: "Creamos y programamos una experiencia premium a medida.", iconClass: "bi bi-code-slash", order: 2 },
+        { title: "3. Despegue", description: "Lanzamos el producto al mercado con optimización SEO extrema.", iconClass: "bi bi-rocket", order: 3 }
+      ];
+
+      const toAdd = defaults.slice(workSteps.length);
+
+      for (const step of toAdd) {
+        const response = await fetch('http://localhost:3000/api/admin/worksteps', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify(step)
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.error || 'Error al inicializar paso');
+        }
+      }
+
+      setAlert({ type: 'success', message: '¡Pasos de trabajo inicializados correctamente!' });
+      loadLandingContent();
+    } catch (err) {
+      setAlert({ type: 'error', message: err.message });
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
   // CRUD InfoBlock
   const submitInfoBlock = async (e) => {
     e.preventDefault();
@@ -484,7 +627,7 @@ export const AdminDashboard = () => {
     try {
       const response = await fetch(`http://localhost:3000/api/admin/infoblock/${infoBlockForm.identifier}`, {
         method: 'PUT',
-        headers: { 
+        headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
         },
@@ -504,7 +647,7 @@ export const AdminDashboard = () => {
 
       const data = await response.json();
       setAlert({ type: 'success', message: data.message || '¡Bloque de información guardado exitosamente!' });
-      
+
       setInfoBlockForm({
         identifier: '',
         title: '',
@@ -532,6 +675,43 @@ export const AdminDashboard = () => {
     });
     window.scrollTo({ top: 0, behavior: 'smooth' });
     setAlert({ type: 'success', message: `Bloque "${block.identifier}" cargado en el formulario.` });
+  };
+
+  const handleSelectInfoBlock = (e) => {
+    const selectedValue = e.target.value;
+    if (!selectedValue) {
+      setInfoBlockForm({
+        identifier: '',
+        title: '',
+        description: '',
+        imageUrl: '',
+        buttonText: '',
+        buttonLink: '',
+      });
+      return;
+    }
+
+    const found = infoBlocks.find(b => b.identifier.toLowerCase() === selectedValue.toLowerCase());
+    if (found) {
+      setInfoBlockForm({
+        identifier: found.identifier || '',
+        title: found.title || '',
+        description: found.description || '',
+        imageUrl: found.imageUrl || '',
+        buttonText: found.buttonText || '',
+        buttonLink: found.buttonLink || '',
+      });
+      setAlert({ type: 'success', message: `Sección "${selectedValue}" cargada correctamente.` });
+    } else {
+      setInfoBlockForm({
+        identifier: selectedValue,
+        title: '',
+        description: '',
+        imageUrl: '',
+        buttonText: '',
+        buttonLink: '',
+      });
+    }
   };
 
   const loadInfoBlockByIdentifier = () => {
@@ -612,10 +792,10 @@ export const AdminDashboard = () => {
         </div>
 
         {/* Alerta de notificación flotante */}
-        <AlertMessage 
-          type={alert.type} 
-          message={alert.message} 
-          onClose={() => setAlert({ type: '', message: '' })} 
+        <AlertMessage
+          type={alert.type}
+          message={alert.message}
+          onClose={() => setAlert({ type: '', message: '' })}
         />
       </div>
     );
@@ -663,44 +843,49 @@ export const AdminDashboard = () => {
         </header>
 
         {/* Navigation Tabs */}
-        <nav className="flex gap-1 bg-neutral-900/50 p-1.5 rounded-xl border border-neutral-900 mb-8 max-w-xl">
+        <nav className="flex gap-1 bg-neutral-900/50 p-1.5 rounded-xl border border-neutral-900 mb-8 max-w-2xl">
           <button
             onClick={() => setActiveTab('hero')}
-            className={`flex-1 py-2.5 text-xs font-bold uppercase tracking-wider rounded-lg transition-all ${
-              activeTab === 'hero'
-                ? 'bg-neutral-800 text-white shadow-sm'
-                : 'text-white/40 hover:text-white/80'
-            }`}
+            className={`flex-1 py-2.5 text-xs font-bold uppercase tracking-wider rounded-lg transition-all ${activeTab === 'hero'
+              ? 'bg-neutral-800 text-white shadow-sm'
+              : 'text-white/40 hover:text-white/80'
+              }`}
           >
             Editar Hero
           </button>
           <button
             onClick={() => setActiveTab('portfolio')}
-            className={`flex-1 py-2.5 text-xs font-bold uppercase tracking-wider rounded-lg transition-all ${
-              activeTab === 'portfolio'
-                ? 'bg-neutral-800 text-white shadow-sm'
-                : 'text-white/40 hover:text-white/80'
-            }`}
+            className={`flex-1 py-2.5 text-xs font-bold uppercase tracking-wider rounded-lg transition-all ${activeTab === 'portfolio'
+              ? 'bg-neutral-800 text-white shadow-sm'
+              : 'text-white/40 hover:text-white/80'
+              }`}
           >
             Portafolio
           </button>
           <button
             onClick={() => setActiveTab('services')}
-            className={`flex-1 py-2.5 text-xs font-bold uppercase tracking-wider rounded-lg transition-all ${
-              activeTab === 'services'
-                ? 'bg-neutral-800 text-white shadow-sm'
-                : 'text-white/40 hover:text-white/80'
-            }`}
+            className={`flex-1 py-2.5 text-xs font-bold uppercase tracking-wider rounded-lg transition-all ${activeTab === 'services'
+              ? 'bg-neutral-800 text-white shadow-sm'
+              : 'text-white/40 hover:text-white/80'
+              }`}
           >
             Servicios
           </button>
           <button
+            onClick={() => setActiveTab('worksteps')}
+            className={`flex-1 py-2.5 text-xs font-bold uppercase tracking-wider rounded-lg transition-all ${activeTab === 'worksteps'
+              ? 'bg-neutral-800 text-white shadow-sm'
+              : 'text-white/40 hover:text-white/80'
+              }`}
+          >
+            Pasos de Trabajo
+          </button>
+          <button
             onClick={() => setActiveTab('extra')}
-            className={`flex-1 py-2.5 text-xs font-bold uppercase tracking-wider rounded-lg transition-all ${
-              activeTab === 'extra'
-                ? 'bg-neutral-800 text-white shadow-sm'
-                : 'text-white/40 hover:text-white/80'
-            }`}
+            className={`flex-1 py-2.5 text-xs font-bold uppercase tracking-wider rounded-lg transition-all ${activeTab === 'extra'
+              ? 'bg-neutral-800 text-white shadow-sm'
+              : 'text-white/40 hover:text-white/80'
+              }`}
           >
             Secciones Extra
           </button>
@@ -708,7 +893,7 @@ export const AdminDashboard = () => {
 
         {/* Dashboard Panels */}
         <main className="bg-neutral-900/20 border border-neutral-800/60 rounded-2xl p-6 md:p-8 backdrop-blur-md">
-          
+
           {/* TAB 1: HERO FORM */}
           {activeTab === 'hero' && (
             <form onSubmit={submitHero} className="flex flex-col gap-6">
@@ -1098,147 +1283,179 @@ export const AdminDashboard = () => {
           {activeTab === 'extra' && (
             <form onSubmit={submitInfoBlock} className="flex flex-col gap-6">
               <div className="border-b border-neutral-800 pb-4">
-                <h2 className="text-xl font-heading font-extrabold text-white">Gestionar Bloques de Información (InfoBlock)</h2>
-                <p className="text-xs text-white/50 mt-1">Crea o actualiza bloques informativos genéricos (ej: 'nosotros', 'cta').</p>
+                <h2 className="text-xl font-heading font-extrabold text-white">Gestionar Secciones Visuales</h2>
+                <p className="text-xs text-white/50 mt-1">Edita los textos e imágenes de las secciones predefinidas del diseño.</p>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-end">
-                <div className="flex flex-col gap-2 md:col-span-2">
-                  <label htmlFor="identifier" className="text-xs font-semibold text-white/60 uppercase tracking-wider">
-                    Identificador Único del Bloque (Identifier)
-                  </label>
-                  <input
-                    type="text"
+              {/* MENÚ DESPLEGABLE ESTRICTO */}
+              <div className="flex flex-col gap-2">
+                <label htmlFor="identifier" className="text-xs font-semibold text-white/60 uppercase tracking-wider">
+                  Selecciona la Sección a Editar
+                </label>
+                <div className="relative">
+                  <select
                     id="identifier"
                     value={infoBlockForm.identifier}
-                    onChange={handleInfoBlockChange}
-                    placeholder="Ej: nosotros, cta, servicios-intro"
+                    onChange={(e) => {
+                      const ident = e.target.value;
+                      handleInfoBlockChange(e);
+                      const found = infoBlocks.find(b => b.identifier === ident);
+                      if (found) {
+                        setInfoBlockForm({
+                          identifier: found.identifier,
+                          title: found.title || '',
+                          description: found.description || '',
+                          imageUrl: found.imageUrl || '',
+                          buttonText: found.buttonText || '',
+                          buttonLink: found.buttonLink || '',
+                        });
+                        setAlert({ type: 'success', message: `¡Datos de la sección cargados listos para editar!` });
+                      } else {
+                        setInfoBlockForm(prev => ({
+                          ...prev, identifier: ident, title: '', description: '', imageUrl: '', buttonText: '', buttonLink: ''
+                        }));
+                      }
+                    }}
                     required
-                    className="bg-neutral-900 border border-neutral-800 focus:border-primary/50 text-white rounded-lg px-4 py-2.5 text-sm outline-none transition-all placeholder:text-neutral-600 font-mono"
-                  />
+                    className="w-full bg-neutral-900 border border-neutral-800 focus:border-primary/50 text-white rounded-lg px-4 py-3 text-sm outline-none transition-all appearance-none cursor-pointer"
+                  >
+                    <option value="" disabled>-- Haz clic aquí para elegir una sección --</option>
+                    <option value="marketing">Sección: "No somos una empresa cualquiera"</option>
+                    <option value="showcase">Sección: "Impulsa tu Marca" (Video Final)</option>
+                  </select>
+                  <div className="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-white/50">
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
+                  </div>
                 </div>
-                <button
-                  type="button"
-                  onClick={loadInfoBlockByIdentifier}
-                  className="w-full py-2.5 bg-neutral-900 border border-neutral-800 hover:bg-neutral-850 text-white rounded-lg text-xs font-bold uppercase tracking-wider transition-all font-mono h-[42px]"
-                >
-                  Buscar / Cargar
-                </button>
               </div>
 
               <div className="flex flex-col gap-2">
-                <label htmlFor="title" className="text-xs font-semibold text-white/60 uppercase tracking-wider">
-                  Título del Bloque
-                </label>
-                <input
-                  type="text"
-                  id="title"
-                  value={infoBlockForm.title}
-                  onChange={handleInfoBlockChange}
-                  placeholder="Ej: Sobre Nosotros"
-                  required
-                  className="bg-neutral-900 border border-neutral-800 focus:border-primary/50 text-white rounded-lg px-4 py-2.5 text-sm outline-none transition-all placeholder:text-neutral-600"
-                />
+                <label htmlFor="title" className="text-xs font-semibold text-white/60 uppercase tracking-wider">Título de la Sección</label>
+                <input type="text" id="title" value={infoBlockForm.title} onChange={handleInfoBlockChange} required className="bg-neutral-900 border border-neutral-800 focus:border-primary/50 text-white rounded-lg px-4 py-2.5 text-sm outline-none transition-all" />
               </div>
 
               <div className="flex flex-col gap-2">
-                <label htmlFor="description" className="text-xs font-semibold text-white/60 uppercase tracking-wider">
-                  Contenido / Descripción
-                </label>
-                <textarea
-                  id="description"
-                  value={infoBlockForm.description}
-                  onChange={handleInfoBlockChange}
-                  placeholder="Escribe el texto principal de este bloque..."
-                  rows="4"
-                  required
-                  className="bg-neutral-900 border border-neutral-800 focus:border-primary/50 text-white rounded-lg px-4 py-2.5 text-sm outline-none transition-all resize-none placeholder:text-neutral-600"
-                />
+                <label htmlFor="description" className="text-xs font-semibold text-white/60 uppercase tracking-wider">Texto / Descripción</label>
+                <textarea id="description" value={infoBlockForm.description} onChange={handleInfoBlockChange} rows="4" required className="bg-neutral-900 border border-neutral-800 focus:border-primary/50 text-white rounded-lg px-4 py-2.5 text-sm outline-none transition-all resize-none" />
               </div>
 
-              <HashedUploadInput
-                label="Imagen del Bloque (Image Url)"
-                id="imageUrl"
-                value={infoBlockForm.imageUrl}
-                onChange={handleInfoBlockChange}
-                placeholder="Enlace de la imagen o súbela a Cloudinary"
-                fileAccept="image/*"
-                uploadingField={uploadingField}
-                setUploadingField={setUploadingField}
-                setAlert={setAlert}
-                token={token}
-              />
+              <HashedUploadInput label="Imagen o Video (Reemplaza el fondo)" id="imageUrl" value={infoBlockForm.imageUrl} onChange={handleInfoBlockChange} placeholder="Sube el archivo a Cloudinary..." fileAccept="image/*,video/mp4" uploadingField={uploadingField} setUploadingField={setUploadingField} setAlert={setAlert} token={token} />
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="flex flex-col gap-2">
-                  <label htmlFor="buttonText" className="text-xs font-semibold text-white/60 uppercase tracking-wider">
-                    Texto del Botón (Opcional)
-                  </label>
-                  <input
-                    type="text"
-                    id="buttonText"
-                    value={infoBlockForm.buttonText}
-                    onChange={handleInfoBlockChange}
-                    placeholder="Ej: Saber Más"
-                    className="bg-neutral-900 border border-neutral-800 focus:border-primary/50 text-white rounded-lg px-4 py-2.5 text-sm outline-none transition-all placeholder:text-neutral-600"
-                  />
+                  <label htmlFor="buttonText" className="text-xs font-semibold text-white/60 uppercase tracking-wider">Texto del Botón (Opcional)</label>
+                  <input type="text" id="buttonText" value={infoBlockForm.buttonText} onChange={handleInfoBlockChange} className="bg-neutral-900 border border-neutral-800 focus:border-primary/50 text-white rounded-lg px-4 py-2.5 text-sm outline-none transition-all" />
                 </div>
-
                 <div className="flex flex-col gap-2">
-                  <label htmlFor="buttonLink" className="text-xs font-semibold text-white/60 uppercase tracking-wider">
-                    Enlace del Botón (Opcional)
-                  </label>
-                  <input
-                    type="text"
-                    id="buttonLink"
-                    value={infoBlockForm.buttonLink}
-                    onChange={handleInfoBlockChange}
-                    placeholder="Ej: /nosotros"
-                    className="bg-neutral-900 border border-neutral-800 focus:border-primary/50 text-white rounded-lg px-4 py-2.5 text-sm outline-none transition-all placeholder:text-neutral-600"
-                  />
+                  <label htmlFor="buttonLink" className="text-xs font-semibold text-white/60 uppercase tracking-wider">Enlace del Botón (Opcional)</label>
+                  <input type="text" id="buttonLink" value={infoBlockForm.buttonLink} onChange={handleInfoBlockChange} className="bg-neutral-900 border border-neutral-800 focus:border-primary/50 text-white rounded-lg px-4 py-2.5 text-sm outline-none transition-all" />
                 </div>
               </div>
 
-              <div className="flex gap-4">
-                <button
-                  type="submit"
-                  disabled={isSaving}
-                  className="flex-grow flex items-center justify-center gap-2 py-3 bg-white text-black hover:bg-neutral-200 disabled:opacity-50 text-sm font-bold uppercase rounded-lg transition-all"
-                >
-                  {isSaving ? 'Guardando Bloque...' : 'Guardar Bloque de Información'}
-                </button>
+              <button type="submit" disabled={isSaving || !infoBlockForm.identifier} className="w-full flex items-center justify-center py-3 bg-white text-black hover:bg-neutral-200 disabled:opacity-50 text-sm font-bold uppercase rounded-lg transition-all mt-4">
+                {isSaving ? 'Guardando Cambios...' : 'Guardar Sección'}
+              </button>
+            </form>
+          )}
+
+          {/* TAB 5: WORKSTEPS FORM */}
+          {activeTab === 'worksteps' && (
+            <div>
+              <div className="border-b border-neutral-800 pb-4 mb-6">
+                <h2 className="text-xl font-heading font-extrabold text-white">¿Cómo trabajamos?</h2>
+                <p className="text-xs text-white/50 mt-1">El diseño de la página requiere exactamente 3 tarjetas para mantener la estructura correcta.</p>
               </div>
 
-              {/* LISTA DE INFOBLOCKS EXISTENTES */}
-              <div className="mt-12 border-t border-neutral-800/80 pt-8">
-                <h3 className="text-lg font-bold text-white mb-6 uppercase tracking-wider font-mono">Bloques Existentes</h3>
-                {infoBlocks.length === 0 ? (
-                  <p className="text-sm text-white/40 font-mono">No hay bloques de información registrados.</p>
+              {/* Botón de Inicialización si faltan tarjetas */}
+              {workSteps.length < 3 && (
+                <div className="mb-6 p-5 rounded-xl border border-amber-500/20 bg-amber-500/10 text-amber-200/90 flex flex-col md:flex-row md:items-center justify-between gap-4 backdrop-blur-md">
+                  <div>
+                    <h4 className="font-bold text-sm text-amber-400">Error de Layout: Se requieren exactamente 3 tarjetas</h4>
+                    <p className="text-xs text-amber-200/70 mt-1">Actualmente hay {workSteps.length} tarjeta(s). Inicializa los pasos por defecto para corregir el grid de la Landing Page.</p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={initializeDefaultWorkSteps}
+                    disabled={isSaving}
+                    className="shrink-0 px-4 py-2 bg-amber-500 text-black hover:bg-amber-400 disabled:opacity-50 text-xs font-bold uppercase rounded-lg transition-all"
+                  >
+                    {isSaving ? 'Inicializando...' : 'Inicializar 3 pasos por defecto'}
+                  </button>
+                </div>
+              )}
+
+              {/* Formulario / Mensaje Condicional */}
+              {!editingWorkStepId && workSteps.length >= 3 ? (
+                <div className="p-5 rounded-xl border border-primary/30 bg-primary/10 text-primary-foreground text-sm font-semibold flex items-center gap-3 mb-8">
+                  <svg className="w-6 h-6 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                  </svg>
+                  Límite de 3 tarjetas alcanzado. Por favor, utiliza el botón Editar de abajo para modificar las existentes.
+                </div>
+              ) : (
+                <form onSubmit={submitWorkStep} className="flex flex-col gap-6 mb-12 p-6 bg-neutral-950/20 border border-neutral-800/60 rounded-2xl backdrop-blur-md">
+                  <div className="border-b border-neutral-800 pb-3">
+                    <h3 className="text-md font-bold text-white uppercase tracking-wider font-mono">
+                      {editingWorkStepId ? 'Editar Paso de Trabajo' : 'Añadir Nuevo Paso de Trabajo'}
+                    </h3>
+                    <p className="text-xs text-white/50 mt-0.5">
+                      {editingWorkStepId 
+                        ? 'Modifica los detalles del paso seleccionado a continuación.' 
+                        : 'Crea un nuevo paso para la sección ¿Cómo trabajamos?.'}
+                    </p>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="flex flex-col gap-2">
+                      <label htmlFor="title" className="text-xs font-semibold text-white/60 uppercase tracking-wider">Título del Paso</label>
+                      <input type="text" id="title" value={workStepForm.title} onChange={handleWorkStepChange} required className="bg-neutral-900 border border-neutral-800 focus:border-primary/50 text-white rounded-lg px-4 py-2.5 text-sm outline-none transition-all" />
+                    </div>
+                    <div className="flex flex-col gap-2">
+                      <label className="text-xs font-semibold text-white/60 uppercase tracking-wider">Icono del Paso</label>
+                      <IconPicker
+                        value={workStepForm.iconClass}
+                        onChange={(className) => setWorkStepForm(prev => ({ ...prev, iconClass: className }))}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col gap-2">
+                    <label htmlFor="description" className="text-xs font-semibold text-white/60 uppercase tracking-wider">Descripción</label>
+                    <textarea id="description" value={workStepForm.description} onChange={handleWorkStepChange} rows="3" required className="bg-neutral-900 border border-neutral-800 focus:border-primary/50 text-white rounded-lg px-4 py-2.5 text-sm outline-none transition-all resize-none" />
+                  </div>
+
+                  <div className="flex gap-4">
+                    <button type="submit" disabled={isSaving} className="flex-grow flex items-center justify-center py-3 bg-white text-black hover:bg-neutral-200 disabled:opacity-50 text-sm font-bold uppercase rounded-lg transition-all">
+                      {isSaving ? 'Guardando...' : (editingWorkStepId ? 'Guardar Cambios' : 'Añadir Paso de Trabajo')}
+                    </button>
+                    {editingWorkStepId && (
+                      <button type="button" onClick={cancelEditWorkStep} className="px-6 py-3 bg-neutral-900 border border-neutral-800 text-white hover:bg-neutral-850 text-sm font-bold uppercase rounded-lg transition-all">
+                        Cancelar
+                      </button>
+                    )}
+                  </div>
+                </form>
+              )}
+
+              {/* LISTA DE PASOS EXISTENTES */}
+              <div className="mt-8">
+                <h3 className="text-lg font-bold text-white mb-6 uppercase tracking-wider font-mono">Pasos Existentes (Máximo 3)</h3>
+                {workSteps.length === 0 ? (
+                  <p className="text-sm text-white/40 font-mono">No hay pasos de trabajo registrados. Por favor haz clic en el botón de inicialización.</p>
                 ) : (
                   <div className="flex flex-col gap-4">
-                    {infoBlocks.map((block) => (
-                      <div key={block.id} className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 bg-neutral-950/40 border border-neutral-800/80 rounded-xl gap-4 hover:border-white/10 transition-all">
-                        <div className="flex items-center gap-4">
-                          {block.imageUrl ? (
-                            <img src={block.imageUrl} alt={block.title} className="w-16 h-12 object-cover rounded-lg border border-neutral-800" />
-                          ) : (
-                            <div className="w-16 h-12 bg-neutral-900 border border-neutral-800 rounded-lg flex items-center justify-center text-xs text-white/20 font-mono">Sin img</div>
-                          )}
-                          <div>
-                            <div className="flex items-center gap-2">
-                              <h4 className="font-bold text-white text-sm">{block.title}</h4>
-                              <span className="text-[9px] bg-white/10 text-white/80 px-1.5 py-0.5 rounded font-mono">{block.identifier}</span>
-                            </div>
-                            <p className="text-xs text-white/50 line-clamp-1 mt-0.5">{block.description}</p>
+                    {workSteps.map((step) => (
+                      <div key={step.id} className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 bg-neutral-950/40 border border-neutral-800/80 rounded-xl gap-4 hover:border-white/10 transition-all">
+                        <div>
+                          <div className="flex items-center gap-2">
+                            <span className="text-white/60"><i className={step.iconClass}></i></span>
+                            <h4 className="font-bold text-white text-sm">{step.title}</h4>
                           </div>
+                          <p className="text-xs text-white/50 mt-1">{step.description}</p>
                         </div>
-                        <div className="flex gap-2 w-full sm:w-auto justify-end">
-                          <button
-                            type="button"
-                            onClick={() => loadInfoBlockToForm(block)}
-                            className="px-3 py-1.5 bg-neutral-900 border border-neutral-850 hover:bg-neutral-850 text-white/80 hover:text-white rounded-lg text-xs font-semibold transition-all font-mono"
-                          >
-                            Cargar
+                        <div className="flex gap-2 w-full sm:w-auto justify-end shrink-0">
+                          <button type="button" onClick={() => startEditWorkStep(step)} className="px-5 py-2 bg-neutral-900 border border-neutral-850 hover:bg-neutral-850 text-white/80 hover:text-white rounded-lg text-xs font-bold uppercase transition-all">
+                            Editar
                           </button>
                         </div>
                       </div>
@@ -1246,17 +1463,17 @@ export const AdminDashboard = () => {
                   </div>
                 )}
               </div>
-            </form>
+            </div>
           )}
 
         </main>
       </div>
 
       {/* Alerta de notificación flotante */}
-      <AlertMessage 
-        type={alert.type} 
-        message={alert.message} 
-        onClose={() => setAlert({ type: '', message: '' })} 
+      <AlertMessage
+        type={alert.type}
+        message={alert.message}
+        onClose={() => setAlert({ type: '', message: '' })}
       />
     </div>
   );

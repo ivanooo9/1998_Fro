@@ -26,11 +26,11 @@
 @layer base {
   :root {
     /* Base Dark UI Palette */
-    --background: 0 0% 4%; /* #0a0a0a */
+    --background: 0 0% 0%; /* #000000 */
     --foreground: 0 0% 98%;
     
     /* Surfaces */
-    --card: 0 0% 7%;
+    --card: 0 0% 0%;
     --card-foreground: 0 0% 98%;
     
     /* Borders: Sutiles, 12% luminosity para blend perfecto */

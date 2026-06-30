@@ -33,9 +33,6 @@ export const CTASection = () => {
           </FadeIn>
         </MotionContainer>
       </div>
-
-      {/* [Refactor]: Acabado estético premium con token bg-glow-primary configurado */}
-      <div className={cn("absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-2xl h-64 bg-glow-primary/10 dark:bg-glow-primary/15 rounded-t-full blur-3xl pointer-events-none")} />
     </section>
   );
 };

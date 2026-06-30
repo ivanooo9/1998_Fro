@@ -1,12 +1,12 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { useReducedMotionGlobal } from '../motion/useReducedMotionGlobal';
+import React, { useRef } from 'react';
+import { gsap } from 'gsap';
+import { useGSAP } from '@gsap/react';
 import { cn } from '../utils/cn';
 
 /**
  * AntiGravity Wrapper Component
- * Proporciona un efecto de levitación continua suave y premium en el eje Y.
- * Respeta las preferencias de accesibilidad del usuario.
+ * Proporciona un efecto de levitación continua suave y premium en el eje Y utilizando GSAP.
+ * Respeta las preferencias de accesibilidad del usuario desactivando el movimiento.
  */
 export const AntiGravity = ({
   children,
@@ -16,31 +16,36 @@ export const AntiGravity = ({
   yDistance = -12,
   ...props
 }) => {
-  const { prefersReduced } = useReducedMotionGlobal();
+  const containerRef = useRef(null);
 
-  // Si el usuario prefiere movimiento reducido en el SO, la animación y transición se desactivan.
-  const floatTransition = prefersReduced
-    ? {}
-    : {
-        duration,
-        ease: "easeInOut",
-        repeat: Infinity,
-        repeatType: "mirror",
-        delay,
-      };
+  useGSAP(() => {
+    // Verificación del lado del cliente para Reduced Motion (Accesibilidad)
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  const floatAnimation = prefersReduced
-    ? { y: 0 }
-    : { y: [0, yDistance] };
+    if (prefersReduced) {
+      // Asegurar que el elemento esté estático en el eje Y
+      gsap.set(containerRef.current, { y: 0 });
+      return;
+    }
+
+    // Animación infinita oscilatoria en el eje Y
+    gsap.to(containerRef.current, {
+      y: yDistance,
+      duration: duration,
+      delay: delay,
+      repeat: -1, // Bucle infinito
+      yoyo: true, // Ida y vuelta
+      ease: 'sine.inOut', // Flotación fluida tipo burbuja
+    });
+  }, { scope: containerRef, dependencies: [duration, delay, yDistance] });
 
   return (
-    <motion.div
+    <div
+      ref={containerRef}
       className={cn('will-change-transform', className)}
-      animate={floatAnimation}
-      transition={floatTransition}
       {...props}
     >
       {children}
-    </motion.div>
+    </div>
   );
 };

@@ -11,10 +11,10 @@ const ProjectCard = ({ project, className }) => {
 
   return (
     <motion.div
-      whileHover={prefersReduced ? {} : { 
-        scale: 1.02, 
+      whileHover={prefersReduced ? {} : {
+        scale: 1.02,
         y: -5,
-        transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] } 
+        transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] }
       }}
       whileTap={prefersReduced ? {} : { scale: 0.98 }}
       className={cn(
@@ -58,7 +58,7 @@ const ProjectCard = ({ project, className }) => {
             "before:absolute before:inset-0 before:z-10"
           )}
         >
-          Explorar Caso <i className="bi bi-arrow-up-right ml-1.5 md:ml-2"></i>
+          Explorar <i className="bi bi-arrow-up-right ml-1.5 md:ml-2"></i>
         </PremiumButton>
       </div>
     </motion.div>
@@ -94,7 +94,7 @@ export const PortfolioCarousel = ({ data }) => {
       }
       setIsMobile(mobile);
       setVisibleCards(cards);
-      
+
       const maxIdx = Math.max(0, projects.length - cards);
       setActiveIndex((prev) => Math.min(prev, maxIdx));
     };
@@ -145,18 +145,18 @@ export const PortfolioCarousel = ({ data }) => {
         .portfolio-carousel-container {
           --card-gap: 1.5rem;
           --card-width: 80vw;
-          --arrow-top: 80px;
+          --arrow-top: 50%;
         }
         @media (min-width: 768px) {
           .portfolio-carousel-container {
             --card-width: calc((100vw - 13.5rem) / 2);
-            --arrow-top: 88px;
+            --arrow-top: 50%;
           }
         }
         @media (min-width: 1024px) {
           .portfolio-carousel-container {
             --card-width: calc((100vw - 15rem) / 3);
-            --arrow-top: 96px;
+            --arrow-top: 50%;
           }
         }
       `}</style>

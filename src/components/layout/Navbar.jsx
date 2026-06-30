@@ -23,7 +23,7 @@ export const Navbar = ({ isLoading }) => {
   const backgroundColor = useTransform(
     scrollY,
     [0, 50],
-    ['rgba(10, 10, 10, 0)', 'rgba(10, 10, 10, 0.85)']
+    ['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 0.85)']
   );
 
   // Interpolación de blur: 0 -> 12px
@@ -58,7 +58,7 @@ export const Navbar = ({ isLoading }) => {
           "fixed top-0 left-0 right-0 z-50 flex h-20 items-center justify-between px-6 md:px-12 transition-colors",
         )}
         style={{
-          backgroundColor: flags.enableGlassEffects ? backgroundColor : 'rgba(10, 10, 10, 0.95)',
+          backgroundColor: flags.enableGlassEffects ? backgroundColor : 'rgba(0, 0, 0, 0.95)',
           backdropFilter: flags.enableGlassEffects ? backdropBlur : 'none',
           borderBottom
         }}

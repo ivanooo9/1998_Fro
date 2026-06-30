@@ -8,41 +8,21 @@ El sitio está estructurado como una Single Page Application (SPA) de alto rendi
 
 ## Documentación Técnica del Proyecto
 
-Para evitar la duplicidad de contenidos y facilitar el mantenimiento de la plataforma, la documentación se ha modularizado y dividido en guías técnicas específicas según su área de dominio:
+Para facilitar el desarrollo, mantenimiento y escalabilidad de la plataforma, se ha redactado una guía técnica maestra exhaustiva:
 
-### 1. [Arquitectura General y Configuración](file:///c:/Users/eduardo/Documents/Practicas/front_1998/docs/1-arquitectura-general.md)
-*   Stack tecnológico principal (React, Vite, Tailwind CSS, Framer Motion, React Icons).
-*   Estructura y árbol jerárquico de directorios de todo el repositorio.
-*   Configuración de aliases de ruta (`@/`) y ciclo de vida de arranque del sitio.
+### 📄 [Documentación Técnica Maestra](file:///c:/Users/eduardo/Documents/Practicas/front_1998/docs/DOCUMENTACION_TECNICA.md)
+Este documento principal cubre todos los aspectos clave del proyecto frontend, incluyendo:
+*   **Introducción y Requisitos Previos**: Entorno de ejecución y dependencias de desarrollo.
+*   **Arquitectura General**: Integración híbrida con React/Vite y la guía de preparación y migración progresiva a **Next.js (App Router)**.
+*   **Sistema de Diseño y Estilos**: Implementación cromática HSL, tipografía fluida y guía de **Glassmorphism** utilizando Tailwind CSS.
+*   **Animaciones Avanzadas con GSAP**: Configuración paso a paso de GreenSock, registro de plugins (`ScrollTrigger`), hooks de integración segura (`useGSAP`), guías de accesibilidad para Reduced Motion y ejemplos de código interactivo.
+*   **Componentes Clave**: Detalle técnico del Preloader líquido, Navbar inteligente, carrusel de proyectos y componentes atómicos.
 
-### 2. [Sistema de Diseño (Design System) y Motor de Motion](file:///c:/Users/eduardo/Documents/Practicas/front_1998/docs/2-sistema-de-diseno-y-motion.md)
-*   Tokens de estilo HSL globales (`theme.css`) y clases utilitarias personalizadas (`.glass`, `.glass-intense`).
-*   Catálogo de primitivas visuales animadas (`FadeIn`, `GlassCard`, `HoverMotion`, etc.).
-*   Especificación de físicas de animación, curvas de Bézier centralizadas e integración de accesibilidad para Reduced Motion.
-
-### 3. [Componentes y Secciones de Producción](file:///c:/Users/eduardo/Documents/Practicas/front_1998/docs/3-componentes-de-produccion.md)
-*   Lógica y layouts estructurales de la landing page (`Navbar`, `Footer`, `StickySocial`).
-*   Explicación técnica detallada de secciones interactivas del sitio:
-    *   Carga multimedia responsiva en el Hero (`HeroLanding`).
-    *   Efecto de apilamiento 3D (Z-Index virtual) de tarjetas de servicios (`InfiniteServicesMarquee`).
-    *   Centrado programático inicial en el carrusel horizontal de proyectos (`PortfolioCarousel`).
-
-### 4. [Framework de Integración y Compatibilidad](file:///c:/Users/eduardo/Documents/Practicas/front_1998/docs/4-framework-de-integracion.md)
-*   Modos de migración y compatibilidad progresiva (`SOFT`, `HYBRID`, `FULL`).
-*   Feature Flags del tema e interactividad.
-*   Presupuestos de rendimiento (límites de staggers y capas de animación).
-*   Envolturas y adaptadores de seguridad (`MotionSafeWrapper`, `LegacyCardAdapter`, `ProgressiveEnhancer`).
-
-### 5. [Blueprint de Migración a Next.js 14 (App Router)](file:///c:/Users/eduardo/Documents/Practicas/front_1998/docs/5-blueprint-migracion-nextjs.md)
-*   Jerarquía y separación entre React Server Components (RSC) y Client Components.
-*   Resolución segura de hidratación en entornos SSR al consumir objetos del navegador (`window`).
-*   Estrategias de optimización de imágenes (`next/image`) y fuentes del lado del servidor (`next/font`).
-
-### 6. [QA, Estándares de Código y Normas de Seguridad](file:///c:/Users/eduardo/Documents/Practicas/front_1998/docs/6-qa-y-normas-de-seguridad.md)
-*   *Do's and Don'ts* esenciales para evitar el retraso del navegador (*Layout Thrashing*).
-*   *Enterprise Safety Rules* (Mandamientos de estabilidad del negocio).
-*   Prevención de conflictos de apilamiento visual (Z-index).
-*   Checklist y plan de pruebas de QA para integraciones.
+### Módulos de Soporte Adicionales
+*   [4. Framework de Integración y Compatibilidad](file:///c:/Users/eduardo/Documents/Practicas/front_1998/docs/4-framework-de-integracion.md): Gestión de Feature Flags y modos de migración (`SOFT`, `HYBRID`, `FULL`).
+*   [5. Blueprint de Migración a Next.js 14](file:///c:/Users/eduardo/Documents/Practicas/front_1998/docs/5-blueprint-migracion-nextjs.md): RSC vs Client Components y resolución de hidratación SSR.
+*   [6. QA, Estándares de Código y Normas de Seguridad](file:///c:/Users/eduardo/Documents/Practicas/front_1998/docs/6-qa-y-normas-de-seguridad.md): Prevención de Layout Thrashing y normas de estabilidad empresarial.
+*   [Auditoría Técnica Exhaustiva (AUDIT.md)](file:///c:/Users/eduardo/Documents/Practicas/front_1998/docs/AUDIT.md): Análisis detallado del código fuente y roadmap de prioridades de deuda técnica.
 
 ---
 
