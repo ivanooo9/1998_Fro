@@ -3,7 +3,7 @@ import { FaFacebookF, FaTwitter, FaLinkedinIn, FaInstagram } from 'react-icons/f
 
 export const Footer = () => {
   return (
-    <footer className="w-full border-t border-border/40 bg-background pt-20 pb-10">
+    <footer className="w-full border-t border-border/40 bg-background pt-16 pb-10">
       <div className="container mx-auto px-6 md:px-12">
         <FadeIn delay={0.2}>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-12 mb-16">
@@ -17,28 +17,27 @@ export const Footer = () => {
             <div>
               <h4 className="font-heading font-extrabold text-foreground mb-4">Servicios</h4>
               <ul className="space-y-2 text-sm text-foreground/60">
-                <li><a href="#" className="hover:text-foreground transition-colors">Features</a></li>
-                <li><a href="#" className="hover:text-foreground transition-colors">Integrations</a></li>
-                <li><a href="#" className="hover:text-foreground transition-colors">Pricing</a></li>
-                <li><a href="#" className="hover:text-foreground transition-colors">Changelog</a></li>
+                <li><a href="#como-trabajamos" className="hover:text-foreground transition-colors">¿Cómo trabajamos?</a></li>
+                <li><a href="#servicios" className="hover:text-foreground transition-colors">Servicios</a></li>
+                <li><a href="#planes" className="hover:text-foreground transition-colors">Planes</a></li>
+                <li><a href="#portafolio" className="hover:text-foreground transition-colors">Portafolio</a></li>
               </ul>
             </div>
 
             <div>
               <h4 className="font-heading font-extrabold text-foreground mb-4">Empresa</h4>
               <ul className="space-y-2 text-sm text-foreground/60">
-                <li><a href="#" className="hover:text-foreground transition-colors">About Us</a></li>
-                <li><a href="#" className="hover:text-foreground transition-colors">Careers</a></li>
-                <li><a href="#" className="hover:text-foreground transition-colors">Blog</a></li>
-                <li><a href="#" className="hover:text-foreground transition-colors">Contact</a></li>
+                <li><a href="#inicio" className="hover:text-foreground transition-colors">Sobre Nosotros</a></li>
+                <li><a href="#como-trabajamos" className="hover:text-foreground transition-colors">Metodología</a></li>
+                <li><a href="#planes" className="hover:text-foreground transition-colors">Contacto</a></li>
               </ul>
             </div>
 
             <div>
               <h4 className="font-heading font-extrabold text-foreground mb-4">Legal</h4>
               <ul className="space-y-2 text-sm text-foreground/60 mb-6">
-                <li><a href="#" className="hover:text-foreground transition-colors">Privacy Policy</a></li>
-                <li><a href="#" className="hover:text-foreground transition-colors">Terms of Service</a></li>
+                <li><a href="#" onClick={(e) => e.preventDefault()} className="hover:text-foreground transition-colors">Política de Privacidad</a></li>
+                <li><a href="#" onClick={(e) => e.preventDefault()} className="hover:text-foreground transition-colors">Términos de Servicio</a></li>
               </ul>
               <div className="flex gap-4 text-foreground/50">
                 <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors" aria-label="Facebook">

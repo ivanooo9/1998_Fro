@@ -32,53 +32,56 @@ const ServiceCard = ({ service, index, N, scrollYProgress }) => {
         videoRef.current.pause();
       }
     }
-  }, [isInView]);
+  }, [isInView, isMobile]);
 
   // =================================================
   // STACKING LOGIC
   // =================================================
-  const range = [0];
-  const scaleOutput = [1];
-  const opacityOutput = [0];
+  const { range, scaleOutput, opacityOutput } = React.useMemo(() => {
+    const r = [0];
+    const s = [1];
+    const o = [0];
 
-  // Initial state
-  if (index > 0) {
-    range.push(index * (1 / N));
-    scaleOutput.push(1);
-    opacityOutput.push(0);
-  }
+    // Initial state
+    if (index > 0) {
+      r.push(index * (1 / N));
+      s.push(1);
+      o.push(0);
+    }
 
-  // Progressive stacking
-  for (let j = index + 1; j < N; j++) {
-    const stepProgress = j * (1 / N);
-    range.push(stepProgress);
+    // Progressive stacking
+    for (let j = index + 1; j < N; j++) {
+      const stepProgress = j * (1 / N);
+      r.push(stepProgress);
 
-    const depth = j - index;
+      const depth = j - index;
 
-    // Scale reduction
-    const targetScale = 1 - (depth * 0.05);
-    scaleOutput.push(targetScale);
+      // Scale reduction
+      const targetScale = 1 - (depth * 0.05);
+      s.push(targetScale);
 
-    // Darkening effect
-    const targetOpacity = Math.min(
-      0.35 + (depth - 1) * 0.15,
-      0.75
-    );
-    opacityOutput.push(targetOpacity);
-  }
+      // Darkening effect
+      const targetOpacity = Math.min(
+        0.35 + (depth - 1) * 0.15,
+        0.75
+      );
+      o.push(targetOpacity);
+    }
 
-  // Ensure animation reaches end
-  if (range[range.length - 1] < 1) {
-    range.push(1);
-    scaleOutput.push(scaleOutput[scaleOutput.length - 1]);
-    opacityOutput.push(opacityOutput[opacityOutput.length - 1]);
-  }
+    // Ensure animation reaches end
+    if (r[r.length - 1] < 1) {
+      r.push(1);
+      s.push(s[s.length - 1]);
+      o.push(o[o.length - 1]);
+    }
+    return { range: r, scaleOutput: s, opacityOutput: o };
+  }, [index, N]);
 
   // =================================================
   // MOTION VALUES
   // =================================================
-  const scale = useTransform(scrollYProgress, range, scaleOutput);
-  const darken = useTransform(scrollYProgress, range, opacityOutput);
+  const scale = useTransform(scrollYProgress, range, scaleOutput, { clamp: true });
+  const darken = useTransform(scrollYProgress, range, opacityOutput, { clamp: true });
 
   return (
     <div
@@ -86,16 +89,17 @@ const ServiceCard = ({ service, index, N, scrollYProgress }) => {
       className="
         sticky
         top-0
-        min-h-[100svh]
-        md:h-screen
         w-full
         flex
-        items-start      {/* 1. CAMBIO: De items-center a items-start */}
-        pt-[12svh]       {/* 2. CAMBIO: Empujamos 12% hacia abajo en móvil para salvar el navbar */}
-        md:pt-[10vh]     {/* 3. CAMBIO: Empujamos 10% hacia abajo en PC */}
+        items-start
         justify-center
         relative
       "
+      style={{
+        zIndex: index,
+        height: "calc(var(--stable-vh, 1vh) * 100)",
+        paddingTop: isMobile ? "calc(var(--stable-vh, 1vh) * 12)" : "calc(var(--stable-vh, 1vh) * 10)",
+      }}
     >
       {/* ============================================= */}
       {/* MAIN CARD */}
@@ -103,20 +107,22 @@ const ServiceCard = ({ service, index, N, scrollYProgress }) => {
       <div
         className="
           w-full
-          min-h-[70svh]    
-          h-auto
-          md:h-[78vh]      
+          max-w-[95%]
+          mx-auto
           flex
           flex-col
           md:grid
           md:grid-cols-2
-          rounded-none     {/* ⬅️ CAMBIO: Eliminamos las curvas para dejar las esquinas en 90 grados */}
+          rounded-3xl
           overflow-hidden
           border
           border-border/20
           shadow-2xl
           bg-background
         "
+        style={{
+          height: isMobile ? "calc(var(--stable-vh, 1vh) * 76)" : "calc(var(--stable-vh, 1vh) * 78)",
+        }}
       >
         {/* ========================================= */}
         {/* LEFT COLUMN (TEXT) */}
@@ -132,7 +138,7 @@ const ServiceCard = ({ service, index, N, scrollYProgress }) => {
             md:p-16
             flex
             flex-col
-            justify-end
+            justify-start
             md:justify-center
             items-start
             text-left
@@ -180,8 +186,7 @@ const ServiceCard = ({ service, index, N, scrollYProgress }) => {
           className="
             bg-transparent
             w-full
-            h-[45svh]
-            md:h-auto
+            flex-grow
             flex
             flex-col
             relative
@@ -192,7 +197,7 @@ const ServiceCard = ({ service, index, N, scrollYProgress }) => {
           <motion.div
             className="
               w-full
-              h-full
+              flex-1
               origin-center
               relative
             "
@@ -206,22 +211,21 @@ const ServiceCard = ({ service, index, N, scrollYProgress }) => {
             {/* ===================================== */}
             <video
               ref={videoRef}
-              key={isMobile ? "mobile" : "desktop"}
-              src={isMobile ? (service.bgVideoMobileUrl || service.bgVideoMobile) : (service.bgVideoUrl || service.bgVideo)}
+              src={isMobile ? (service.bgVideoMobileUrl || service.bgVideoMobile || service.bgVideoUrl || service.bgVideo) : (service.bgVideoUrl || service.bgVideo)}
               loop
               muted
               playsInline
               disablePictureInPicture
               preload="metadata"
               className="
-                absolute
-                inset-0
-                w-full
-                h-full
-                object-cover
-                transition-transform
-                duration-700
-              "
+                      absolute
+                      inset-0
+                      w-full
+                      h-full
+                      object-cover  /* CAMBIO: De object-contain a object-cover */
+                      transition-transform
+                      duration-700
+                    "
             />
 
             {/* ===================================== */}
@@ -263,35 +267,53 @@ const ServiceCard = ({ service, index, N, scrollYProgress }) => {
 // MAIN INFINITE SERVICES MARQUEE COMPONENT
 // =====================================================
 const InfiniteServicesMarquee = ({ data }) => {
-  if (!data) return null;
+  const cardsContainerRef = useRef(null);
 
-  const containerRef = useRef(null);
-
-  const services = data.services || [];
-  const title = data.title || "Servicios";
+  const services = data?.services || [];
+  const title = data?.title || "Servicios";
+  const N = services.length;
 
   // =====================================================
   // SCROLL PROGRESS
   // =====================================================
   const { scrollYProgress } = useScroll({
-    target: containerRef,
+    target: cardsContainerRef,
     offset: ["start start", "end end"]
   });
 
+  // Calculate stable viewport height custom property to prevent mobile flickering
+  useEffect(() => {
+    const updateStableVh = () => {
+      const vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty("--stable-vh", `${vh}px`);
+    };
+
+    updateStableVh();
+
+    let lastWidth = window.innerWidth;
+    const handleResize = () => {
+      if (window.innerWidth !== lastWidth) {
+        lastWidth = window.innerWidth;
+        updateStableVh();
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  if (!data) return null;
+
   return (
     <section
-      ref={containerRef}
       id="servicios"
       className="
         relative
         w-full
         bg-background
-        h-[520vh]
-        md:h-[620vh]
         mt-0
-        md:mt-0
-        mb-[6vh]
-        md:mb-[12vh]
+        mb-12
+        md:mb-16
         py-[4vh]
         md:py-[6vh]
       "
@@ -301,10 +323,9 @@ const InfiniteServicesMarquee = ({ data }) => {
           w-full
           max-w-7xl
           mx-auto
-          px-3
+          px-0
           sm:px-4
           md:px-8
-          h-full
           relative
         "
       >
@@ -329,17 +350,25 @@ const InfiniteServicesMarquee = ({ data }) => {
         </h2>
 
         {/* ================================================= */}
-        {/* SERVICES CARDS */}
+        {/* CARDS CONTAINER (Scroll Target) */}
         {/* ================================================= */}
-        {services.map((service, index) => (
-          <ServiceCard
-            key={service.id}
-            service={service}
-            index={index}
-            N={services.length}
-            scrollYProgress={scrollYProgress}
-          />
-        ))}
+        <div
+          ref={cardsContainerRef}
+          className="relative w-full"
+          style={{
+            height: `calc(var(--stable-vh, 1vh) * ${(N + 1) * 100})`
+          }}
+        >
+          {services.map((service, index) => (
+            <ServiceCard
+              key={service.id}
+              service={service}
+              index={index}
+              N={N}
+              scrollYProgress={scrollYProgress}
+            />
+          ))}
+        </div>
       </div>
     </section>
   );

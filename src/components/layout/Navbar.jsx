@@ -19,6 +19,56 @@ export const Navbar = ({ isLoading }) => {
     };
   }, [isMenuOpen]);
 
+  // Captura de foco accesible (Focus Trap) para el menú móvil de pantalla completa
+  useEffect(() => {
+    if (!isMenuOpen) return;
+
+    const menuEl = document.getElementById('mobile-fullscreen-menu');
+    if (!menuEl) return;
+
+    const focusableSelector = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+    const focusableElements = Array.from(menuEl.querySelectorAll(focusableSelector));
+    
+    if (focusableElements.length === 0) return;
+
+    const firstElement = focusableElements[0];
+    const lastElement = focusableElements[focusableElements.length - 1];
+
+    // Colocar el foco inicial en el primer elemento (generalmente el botón de cerrar)
+    setTimeout(() => {
+      firstElement.focus();
+    }, 50);
+
+    const handleKeyDown = (e) => {
+      if (e.key !== 'Tab') return;
+
+      if (e.shiftKey) { // Shift + Tab
+        if (document.activeElement === firstElement) {
+          lastElement.focus();
+          e.preventDefault();
+        }
+      } else { // Tab
+        if (document.activeElement === lastElement) {
+          firstElement.focus();
+          e.preventDefault();
+        }
+      }
+    };
+
+    const handleEscape = (e) => {
+      if (e.key === 'Escape') {
+        setIsMenuOpen(false);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('keydown', handleEscape);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('keydown', handleEscape);
+    };
+  }, [isMenuOpen]);
+
   // Interpolación de background: transparente -> oscuro con glass
   const backgroundColor = useTransform(
     scrollY,
@@ -200,6 +250,7 @@ export const Navbar = ({ isLoading }) => {
 
       {/* Full Screen Mobile Menu */}
       <div
+        id="mobile-fullscreen-menu"
         className={`fixed inset-0 z-[100] flex flex-col items-center justify-between py-16 px-6 bg-black/95 backdrop-blur-xl transition-all duration-500 ease-in-out ${
           isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         }`}
@@ -208,7 +259,7 @@ export const Navbar = ({ isLoading }) => {
         <button
           onClick={() => setIsMenuOpen(false)}
           id="close-menu-btn"
-          className="absolute top-8 right-8 flex items-center justify-center w-12 h-12 text-white/70 hover:text-white transition-colors focus:outline-none"
+          className="absolute top-8 right-8 flex items-center justify-center w-12 h-12 text-white/70 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-primary rounded-full"
           aria-label="Close menu"
         >
           <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -222,25 +273,25 @@ export const Navbar = ({ isLoading }) => {
         {/* Navigation List */}
         <nav className="flex flex-col items-center gap-6 text-center w-full max-w-[280px]">
           <a
-            href="#servicios"
-            onClick={(e) => handleNavClick(e, 'servicios')}
-            className="text-lg text-white/80 hover:text-white font-medium transition-colors py-2 block active:scale-95"
-          >
-            Servicios
-          </a>
-
-          <a
             href="#como-trabajamos"
             onClick={(e) => handleNavClick(e, 'como-trabajamos')}
-            className="text-lg text-white/80 hover:text-white font-medium transition-colors py-2 block active:scale-95"
+            className="text-lg text-white/80 hover:text-white font-medium transition-colors py-2 block active:scale-95 rounded focus:outline-none focus:ring-2 focus:ring-primary px-4"
           >
             ¿Cómo trabajamos?
           </a>
 
           <a
+            href="#servicios"
+            onClick={(e) => handleNavClick(e, 'servicios')}
+            className="text-lg text-white/80 hover:text-white font-medium transition-colors py-2 block active:scale-95 rounded focus:outline-none focus:ring-2 focus:ring-primary px-4"
+          >
+            Servicios
+          </a>
+
+          <a
             href="#portafolio"
             onClick={(e) => handleNavClick(e, 'portafolio')}
-            className="text-lg text-white/80 hover:text-white font-medium transition-colors py-2 block active:scale-95"
+            className="text-lg text-white/80 hover:text-white font-medium transition-colors py-2 block active:scale-95 rounded focus:outline-none focus:ring-2 focus:ring-primary px-4"
           >
             Portafolio
           </a>
@@ -248,7 +299,7 @@ export const Navbar = ({ isLoading }) => {
           <a
             href="#planes"
             onClick={(e) => handleNavClick(e, 'planes')}
-            className="text-lg text-white/80 hover:text-white font-medium transition-colors py-2 block active:scale-95"
+            className="text-lg text-white/80 hover:text-white font-medium transition-colors py-2 block active:scale-95 rounded focus:outline-none focus:ring-2 focus:ring-primary px-4"
           >
             Planes
           </a>

@@ -1,13 +1,6 @@
 import { useRef, useEffect } from 'react';
 import { useInView } from 'framer-motion';
-import { FadeIn, RevealText, cn, useIntegrationConfig } from '@/design-system';
-
-const isVideo = (url) => {
-  if (!url) return false;
-  const cleanUrl = url.split('?')[0].split('#')[0].toLowerCase();
-  const videoExtensions = ['.mp4', '.webm', '.ogg', '.mov', '.quicktime'];
-  return videoExtensions.some(ext => cleanUrl.endsWith(ext)) || url.toLowerCase().includes('/video/upload/');
-};
+import { FadeIn, RevealText, cn, useIntegrationConfig, isVideo } from '@/design-system';
 
 // Recibimos infoBlocks como prop
 export const CinematicShowcase = ({ infoBlocks = [] }) => {
@@ -26,8 +19,11 @@ export const CinematicShowcase = ({ infoBlocks = [] }) => {
 
   useEffect(() => {
     if (videoRef.current) {
+      videoRef.current.muted = true; // Asegurar muted programático
+
       if (isInView) {
-        videoRef.current.play().catch(error => console.log("Autoplay prevenido:", error));
+        videoRef.current.play()
+          .catch(() => {}); // Manejar autoplay prevenido silenciosamente
       } else {
         videoRef.current.pause();
       }
@@ -51,16 +47,32 @@ export const CinematicShowcase = ({ infoBlocks = [] }) => {
           <div className={cn("relative w-full max-w-5xl mx-auto aspect-[16/9] md:aspect-[21/9] rounded-3xl overflow-hidden bg-card/40 border border-border/20 shadow-[0_0_100px_-20px_rgba(255,255,255,0.05)] flex items-center justify-center")}>
             {mediaUrl ? (
               isMediaVideo ? (
-                <video ref={videoRef} autoPlay loop muted playsInline preload="metadata" className={cn("absolute inset-0 w-full h-full object-cover z-0 pointer-events-none")}>
-                  <source src={mediaUrl} type="video/mp4" />
-                </video>
+                <video
+                  key={mediaUrl}
+                  ref={videoRef}
+                  src={mediaUrl}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  preload="metadata"
+                  className={cn("absolute inset-0 w-full h-full object-cover z-0 pointer-events-none")}
+                />
               ) : (
                 <img src={mediaUrl} alt={title} className="absolute inset-0 w-full h-full object-cover z-0" />
               )
             ) : (
-              <video ref={videoRef} autoPlay loop muted playsInline preload="metadata" className={cn("absolute inset-0 w-full h-full object-cover z-0 pointer-events-none")}>
-                <source src="/videos/hero-pc.mp4" media="(min-width: 1024px)" type="video/mp4" />
-              </video>
+              <video
+                key="default"
+                ref={videoRef}
+                src="/videos/hero-pc.mp4"
+                autoPlay
+                loop
+                muted
+                playsInline
+                preload="metadata"
+                className={cn("absolute inset-0 w-full h-full object-cover z-0 pointer-events-none")}
+              />
             )}
           </div>
         </FadeIn>

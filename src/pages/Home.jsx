@@ -19,7 +19,10 @@ export const Home = () => {
   useEffect(() => {
     const fetchContent = async () => {
       try {
-        const response = await fetch('http://localhost:3000/api/landing-content');
+        const apiHost = window.location.hostname === 'localhost'
+          ? 'http://localhost:3000'
+          : `http://${window.location.hostname}:3000`;
+        const response = await fetch(`${apiHost}/api/landing-content`);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }

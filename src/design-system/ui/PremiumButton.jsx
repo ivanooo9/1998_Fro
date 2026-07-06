@@ -10,7 +10,9 @@ export const PremiumButton = ({
   variant = 'primary', // 'primary' | 'outline' | 'ghost'
   size = 'md', // 'sm' | 'md' | 'lg'
   className,
-  disabled = false
+  disabled = false,
+  href,
+  ...props
 }) => {
   const { prefersReduced } = useReducedMotionGlobal();
 
@@ -28,16 +30,16 @@ export const PremiumButton = ({
     lg: "px-8 py-4 text-lg"
   };
 
-  return (
-    <motion.button
-      type={type}
-      onClick={onClick}
-      disabled={disabled}
-      className={cn(baseStyles, variants[variant], sizes[size], className)}
-      whileHover={prefersReduced || disabled ? {} : { scale: 1.02 }}
-      whileTap={prefersReduced || disabled ? {} : { scale: 0.98 }}
-      transition={{ duration: 0.3, ease: easings.cinematic }}
-    >
+  const buttonProps = {
+    className: cn(baseStyles, variants[variant], sizes[size], className),
+    whileHover: prefersReduced || disabled ? {} : { scale: 1.02 },
+    whileTap: prefersReduced || disabled ? {} : { scale: 0.98 },
+    transition: { duration: 0.3, ease: easings.cinematic },
+    ...props
+  };
+
+  const innerContent = (
+    <>
       <span className="relative z-10 flex items-center justify-center gap-2">
         {children}
       </span>
@@ -49,6 +51,28 @@ export const PremiumButton = ({
           transition={{ duration: 0.4 }}
         />
       )}
+    </>
+  );
+
+  if (href) {
+    return (
+      <motion.a
+        href={href}
+        {...buttonProps}
+      >
+        {innerContent}
+      </motion.a>
+    );
+  }
+
+  return (
+    <motion.button
+      type={type}
+      onClick={onClick}
+      disabled={disabled}
+      {...buttonProps}
+    >
+      {innerContent}
     </motion.button>
   );
 };
