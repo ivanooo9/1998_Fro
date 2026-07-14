@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import HashedUploadInput from './HashedUploadInput';
+import { API_BASE_URL } from '../../config/api';
 
 export const HeroForm = ({ 
   heroData, 
@@ -43,7 +44,7 @@ export const HeroForm = ({
         }
       });
 
-      const response = await fetch('http://localhost:3000/api/admin/hero', {
+      const response = await fetch(`${API_BASE_URL}/api/admin/hero`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

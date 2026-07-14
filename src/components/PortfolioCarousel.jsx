@@ -75,6 +75,7 @@ export const PortfolioCarousel = ({ data }) => {
       <style>{`
         .portfolio-carousel-container {
           --card-gap: 24px;
+          --card-width: 290px;
         }
         @media (min-width: 768px) {
           .portfolio-carousel-container { --card-width: calc((100% - 24px) / 2); }
@@ -99,9 +100,9 @@ export const PortfolioCarousel = ({ data }) => {
         </button>
 
         {/* Carrusel */}
-        <div className="w-full overflow-hidden">
+        <div className="w-full overflow-x-auto md:overflow-hidden snap-x snap-mandatory md:snap-none touch-pan-x scrollbar-none py-2">
           <motion.div
-            animate={{ x: `calc(-${activeIndex} * (var(--card-width) + var(--card-gap)))` }}
+            animate={isMobile ? { x: 0 } : { x: `calc(-${activeIndex} * (var(--card-width) + var(--card-gap)))` }}
             transition={{ ease: [0.22, 1, 0.36, 1], duration: 0.6 }}
             className="flex gap-[var(--card-gap)]"
           >

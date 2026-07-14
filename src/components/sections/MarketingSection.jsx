@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { useInView } from 'framer-motion';
 import { MotionContainer, FadeIn, RevealText, PremiumButton, cn, isVideo } from '@/design-system';
 
@@ -7,6 +7,13 @@ export const MarketingSection = ({ reversed = false, infoBlocks = [] }) => {
   const sectionRef = useRef(null);
   const videoRef = useRef(null);
   const isInView = useInView(sectionRef, { amount: 0.15 });
+  const [hasBeenVisible, setHasBeenVisible] = useState(false);
+
+  useEffect(() => {
+    if (isInView && !hasBeenVisible) {
+      setHasBeenVisible(true);
+    }
+  }, [isInView, hasBeenVisible]);
 
   // 1. Buscamos el bloque de marketing. Si no existe, usamos los textos por defecto
   const block = infoBlocks.find(b => b.identifier === 'marketing') || {};
@@ -33,7 +40,7 @@ export const MarketingSection = ({ reversed = false, infoBlocks = [] }) => {
   return (
     <section ref={sectionRef} className={cn("py-24 overflow-hidden relative")}>
       <div className={cn("container mx-auto px-6 md:px-12")}>
-        <div className={cn("flex gap-12 lg:gap-20 items-center", reversed ? 'flex-col-reverse lg:flex-row-reverse' : 'flex-col lg:flex-row')}>
+        <div className={cn("flex gap-12 lg:gap-20 items-center", reversed ? 'flex-col lg:flex-row-reverse' : 'flex-col lg:flex-row')}>
 
           {/* Text Content */}
           <MotionContainer staggerChildren={0.2} className={cn("flex-1 max-w-xl")}>
@@ -59,7 +66,7 @@ export const MarketingSection = ({ reversed = false, infoBlocks = [] }) => {
                     <video
                       key={mediaUrl}
                       ref={videoRef}
-                      src={mediaUrl}
+                      src={hasBeenVisible ? mediaUrl : ''}
                       autoPlay
                       muted
                       loop
@@ -74,7 +81,7 @@ export const MarketingSection = ({ reversed = false, infoBlocks = [] }) => {
                   <video
                     key="default"
                     ref={videoRef}
-                    src="/videos/hero-pc.mp4"
+                    src={hasBeenVisible ? "/videos/hero-pc.webm" : ""}
                     autoPlay
                     muted
                     loop

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import HashedUploadInput from './HashedUploadInput';
+import { API_BASE_URL } from '../../config/api';
 
 export const ServiceForm = ({ 
   services, 
@@ -63,8 +64,8 @@ export const ServiceForm = ({
       };
 
       const url = editingId
-        ? `http://localhost:3000/api/admin/services/service/${editingId}`
-        : 'http://localhost:3000/api/admin/services/service';
+        ? `${API_BASE_URL}/api/admin/services/service/${editingId}`
+        : `${API_BASE_URL}/api/admin/services/service`;
       const method = editingId ? 'PUT' : 'POST';
 
       const response = await fetch(url, {
@@ -100,7 +101,7 @@ export const ServiceForm = ({
     if (!window.confirm('¿Estás seguro de que deseas eliminar este servicio?')) return;
 
     try {
-      const response = await fetch(`http://localhost:3000/api/admin/services/service/${id}`, {
+      const response = await fetch(`${API_BASE_URL}/api/admin/services/service/${id}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`

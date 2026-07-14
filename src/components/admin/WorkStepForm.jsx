@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { IconPicker } from '../IconPicker';
+import { API_BASE_URL } from '../../config/api';
 
 export const WorkStepForm = ({ 
   workSteps, 
+  workStepsHeader,
   token, 
   setAlert, 
   loadLandingContent 
@@ -14,8 +16,55 @@ export const WorkStepForm = ({
     order: '',
   });
 
+  const [headerForm, setHeaderForm] = useState({
+    title: '',
+    description: '',
+  });
+
   const [editingId, setEditingId] = useState(null);
   const [isSaving, setIsSaving] = useState(false);
+  const [isSavingHeader, setIsSavingHeader] = useState(false);
+
+  useEffect(() => {
+    if (workStepsHeader) {
+      setHeaderForm({
+        title: workStepsHeader.title || '',
+        description: workStepsHeader.description || '',
+      });
+    }
+  }, [workStepsHeader]);
+
+  const handleHeaderSubmit = async (e) => {
+    e.preventDefault();
+    if (!headerForm.title || !headerForm.description) {
+      setAlert({ type: 'error', message: 'El título y la descripción de la cabecera son obligatorios.' });
+      return;
+    }
+    setIsSavingHeader(true);
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/admin/worksteps/header`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(headerForm),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Error al guardar la cabecera');
+      }
+
+      const data = await response.json();
+      setAlert({ type: 'success', message: data.message || '¡Cabecera actualizada exitosamente!' });
+      loadLandingContent();
+    } catch (err) {
+      setAlert({ type: 'error', message: err.message });
+    } finally {
+      setIsSavingHeader(false);
+    }
+  };
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -58,8 +107,8 @@ export const WorkStepForm = ({
       };
 
       const url = editingId
-        ? `http://localhost:3000/api/admin/worksteps/${editingId}`
-        : 'http://localhost:3000/api/admin/worksteps';
+        ? `${API_BASE_URL}/api/admin/worksteps/${editingId}`
+        : `${API_BASE_URL}/api/admin/worksteps`;
       const method = editingId ? 'PUT' : 'POST';
 
       const response = await fetch(url, {
@@ -103,7 +152,7 @@ export const WorkStepForm = ({
       const toAdd = defaults.slice(workSteps.length);
 
       for (const step of toAdd) {
-        const response = await fetch('http://localhost:3000/api/admin/worksteps', {
+        const response = await fetch(`${API_BASE_URL}/api/admin/worksteps`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -130,9 +179,51 @@ export const WorkStepForm = ({
   return (
     <div>
       <div className="border-b border-neutral-800 pb-4 mb-6">
-        <h2 className="text-xl font-heading font-extrabold text-white">¿Cómo trabajamos?</h2>
-        <p className="text-xs text-white/50 mt-1">El diseño de la página requiere exactamente 3 tarjetas para mantener la estructura correcta.</p>
+        <h2 className="text-xl font-heading font-extrabold text-white">
+          {workStepsHeader?.title || "¿Cómo trabajamos?"}
+        </h2>
+        <p className="text-xs text-white/50 mt-1">
+          {workStepsHeader?.description || "El diseño de la página requiere exactamente 3 tarjetas para mantener la estructura correcta."}
+        </p>
       </div>
+
+      {/* Formulario de Cabecera de Sección */}
+      <form onSubmit={handleHeaderSubmit} className="flex flex-col gap-4 mb-8 p-5 bg-neutral-950/40 border border-neutral-800/80 rounded-2xl backdrop-blur-md">
+        <h3 className="text-xs font-semibold text-white/60 uppercase tracking-wider font-mono">Editar Cabecera de la Sección</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="flex flex-col gap-1.5">
+            <label htmlFor="headerTitle" className="text-[10px] font-semibold text-white/40 uppercase tracking-wider">Título de la Sección</label>
+            <input
+              type="text"
+              id="headerTitle"
+              value={headerForm.title}
+              onChange={(e) => setHeaderForm(prev => ({ ...prev, title: e.target.value }))}
+              placeholder="¿Cómo trabajamos?"
+              className="bg-neutral-900 border border-neutral-800 focus:border-primary/50 text-white rounded-lg px-3 py-2 text-xs outline-none transition-all"
+            />
+          </div>
+          <div className="flex flex-col gap-1.5">
+            <label htmlFor="headerDescription" className="text-[10px] font-semibold text-white/40 uppercase tracking-wider">Descripción / Subtítulo</label>
+            <input
+              type="text"
+              id="headerDescription"
+              value={headerForm.description}
+              onChange={(e) => setHeaderForm(prev => ({ ...prev, description: e.target.value }))}
+              placeholder="Rápido, claro y enfocado en resultados."
+              className="bg-neutral-900 border border-neutral-800 focus:border-primary/50 text-white rounded-lg px-3 py-2 text-xs outline-none transition-all"
+            />
+          </div>
+        </div>
+        <div className="flex justify-end mt-1">
+          <button
+            type="submit"
+            disabled={isSavingHeader}
+            className="px-5 py-2 bg-white text-black hover:bg-neutral-200 disabled:opacity-50 text-xs font-bold uppercase rounded-lg transition-all"
+          >
+            {isSavingHeader ? 'Guardando...' : 'Actualizar Cabecera de Sección'}
+          </button>
+        </div>
+      </form>
 
       {/* Botón de Inicialización si faltan tarjetas */}
       {workSteps.length < 3 && (

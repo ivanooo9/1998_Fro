@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { useInView } from 'framer-motion';
 import { FadeIn, RevealText, cn, useIntegrationConfig, isVideo } from '@/design-system';
 
@@ -8,6 +8,13 @@ export const CinematicShowcase = ({ infoBlocks = [] }) => {
   const sectionRef = useRef(null);
   const videoRef = useRef(null);
   const isInView = useInView(sectionRef, { amount: 0.1 });
+  const [hasBeenVisible, setHasBeenVisible] = useState(false);
+
+  useEffect(() => {
+    if (isInView && !hasBeenVisible) {
+      setHasBeenVisible(true);
+    }
+  }, [isInView, hasBeenVisible]);
 
   // 1. Buscamos el bloque de showcase. Si no existe, usamos los textos por defecto
   const block = infoBlocks.find(b => b.identifier === 'showcase') || {};
@@ -50,7 +57,7 @@ export const CinematicShowcase = ({ infoBlocks = [] }) => {
                 <video
                   key={mediaUrl}
                   ref={videoRef}
-                  src={mediaUrl}
+                  src={hasBeenVisible ? mediaUrl : ''}
                   autoPlay
                   loop
                   muted
@@ -65,7 +72,7 @@ export const CinematicShowcase = ({ infoBlocks = [] }) => {
               <video
                 key="default"
                 ref={videoRef}
-                src="/videos/hero-pc.mp4"
+                src={hasBeenVisible ? "/videos/hero-pc.webm" : ""}
                 autoPlay
                 loop
                 muted

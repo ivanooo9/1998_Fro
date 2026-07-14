@@ -1,0 +1,7 @@
+# Robots.txt for 1998 - Agencia Digital
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /api
+
+Sitemap: https://mil998.com/sitemap.xml

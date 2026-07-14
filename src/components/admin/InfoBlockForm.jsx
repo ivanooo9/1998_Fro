@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import HashedUploadInput from './HashedUploadInput';
+import { API_BASE_URL } from '../../config/api';
 
 export const InfoBlockForm = ({ 
   infoBlocks, 
@@ -70,7 +71,7 @@ export const InfoBlockForm = ({
 
     setIsSaving(true);
     try {
-      const response = await fetch(`http://localhost:3000/api/admin/infoblock/${form.identifier}`, {
+      const response = await fetch(`${API_BASE_URL}/api/admin/infoblock/${form.identifier}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

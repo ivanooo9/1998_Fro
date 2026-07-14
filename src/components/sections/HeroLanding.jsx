@@ -69,7 +69,7 @@ export const HeroLanding = ({ data, isLoading }) => {
           loop
           muted
           playsInline
-          preload="metadata"
+          preload="auto"
           poster={data.videoFallbackImageUrl || data.imageUrl}
           className={cn("absolute inset-0 w-full h-full object-cover z-0 pointer-events-none")}
         />

@@ -6,6 +6,9 @@ import ProjectForm from '../components/admin/ProjectForm';
 import ServiceForm from '../components/admin/ServiceForm';
 import WorkStepForm from '../components/admin/WorkStepForm';
 import InfoBlockForm from '../components/admin/InfoBlockForm';
+import FooterForm from '../components/admin/FooterForm';
+import CTAForm from '../components/admin/CTAForm';
+import { API_BASE_URL } from '../config/api';
 
 export const AdminDashboard = () => {
   const [token, setToken] = useState(() => localStorage.getItem('token') || '');
@@ -20,11 +23,14 @@ export const AdminDashboard = () => {
   const [services, setServices] = useState([]);
   const [infoBlocks, setInfoBlocks] = useState([]);
   const [workSteps, setWorkSteps] = useState([]);
+  const [footerData, setFooterData] = useState(null);
+  const [ctaData, setCtaData] = useState(null);
+  const [workStepsHeader, setWorkStepsHeader] = useState(null);
 
   // Carga de datos de la Landing Page
   const loadLandingContent = async () => {
     try {
-      const response = await fetch('http://localhost:3000/api/landing-content');
+      const response = await fetch(`${API_BASE_URL}/api/landing-content`);
       if (!response.ok) throw new Error('Error al cargar contenido de la API');
       const data = await response.json();
 
@@ -41,6 +47,15 @@ export const AdminDashboard = () => {
       if (data.workSteps) {
         setWorkSteps(data.workSteps);
       }
+      if (data.footer) {
+        setFooterData(data.footer);
+      }
+      if (data.cta) {
+        setCtaData(data.cta);
+      }
+      if (data.workStepsHeader) {
+        setWorkStepsHeader(data.workStepsHeader);
+      }
     } catch (err) {
       console.error('Error cargando contenidos:', err);
     }
@@ -53,7 +68,7 @@ export const AdminDashboard = () => {
   const handleLogin = async (password) => {
     setIsLoggingIn(true);
     try {
-      const response = await fetch('http://localhost:3000/api/admin/login', {
+      const response = await fetch(`${API_BASE_URL}/api/admin/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ password }),
@@ -135,7 +150,7 @@ export const AdminDashboard = () => {
 
         {/* Navigation Tabs */}
         <nav className="flex gap-1 bg-neutral-900/50 p-1.5 rounded-xl border border-neutral-900 mb-8 max-w-2xl overflow-x-auto">
-          {['hero', 'portfolio', 'services', 'worksteps', 'extra'].map((tab) => (
+          {['hero', 'portfolio', 'services', 'worksteps', 'extra', 'footer', 'cta'].map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
@@ -148,7 +163,9 @@ export const AdminDashboard = () => {
               {tab === 'hero' ? 'Editar Hero' :
                tab === 'portfolio' ? 'Portafolio' :
                tab === 'services' ? 'Servicios' :
-               tab === 'worksteps' ? 'Pasos de Trabajo' : 'Secciones Extra'}
+               tab === 'worksteps' ? 'Pasos de Trabajo' :
+               tab === 'extra' ? 'Secciones Extra' :
+               tab === 'footer' ? 'Editar Footer' : 'Editar CTA'}
             </button>
           ))}
         </nav>
@@ -190,6 +207,7 @@ export const AdminDashboard = () => {
           {activeTab === 'worksteps' && (
             <WorkStepForm
               workSteps={workSteps}
+              workStepsHeader={workStepsHeader}
               token={token}
               setAlert={setAlert}
               loadLandingContent={loadLandingContent}
@@ -204,6 +222,24 @@ export const AdminDashboard = () => {
               loadLandingContent={loadLandingContent}
               uploadingField={uploadingField}
               setUploadingField={setUploadingField}
+            />
+          )}
+
+          {activeTab === 'footer' && (
+            <FooterForm
+              footerData={footerData}
+              token={token}
+              setAlert={setAlert}
+              uploadingField={uploadingField}
+              setUploadingField={setUploadingField}
+            />
+          )}
+
+          {activeTab === 'cta' && (
+            <CTAForm
+              ctaData={ctaData}
+              token={token}
+              setAlert={setAlert}
             />
           )}
         </main>

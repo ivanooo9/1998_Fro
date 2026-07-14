@@ -21,6 +21,13 @@ const ServiceCard = ({ service, index, N, scrollYProgress }) => {
 
   // Detecta si al menos el 10% de la tarjeta está visible en el viewport
   const isInView = useInView(containerRef, { amount: 0.1 });
+  const [hasBeenVisible, setHasBeenVisible] = useState(false);
+
+  useEffect(() => {
+    if (isInView && !hasBeenVisible) {
+      setHasBeenVisible(true);
+    }
+  }, [isInView, hasBeenVisible]);
 
   // Control de reproducción según visibilidad para mitigar consumo de GPU
   useEffect(() => {
@@ -121,7 +128,7 @@ const ServiceCard = ({ service, index, N, scrollYProgress }) => {
           bg-background
         "
         style={{
-          height: isMobile ? "calc(var(--stable-vh, 1vh) * 76)" : "calc(var(--stable-vh, 1vh) * 78)",
+          height: isMobile ? "calc(var(--stable-vh, 1vh) * 76)" : "calc(var(--stable-vh, 1vh) * 90)",
         }}
       >
         {/* ========================================= */}
@@ -211,7 +218,7 @@ const ServiceCard = ({ service, index, N, scrollYProgress }) => {
             {/* ===================================== */}
             <video
               ref={videoRef}
-              src={isMobile ? (service.bgVideoMobileUrl || service.bgVideoMobile || service.bgVideoUrl || service.bgVideo) : (service.bgVideoUrl || service.bgVideo)}
+              src={hasBeenVisible ? (isMobile ? (service.bgVideoMobileUrl || service.bgVideoMobile || service.bgVideoUrl || service.bgVideo) : (service.bgVideoUrl || service.bgVideo)) : ''}
               loop
               muted
               playsInline

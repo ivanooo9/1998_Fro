@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import HashedUploadInput from './HashedUploadInput';
+import { API_BASE_URL } from '../../config/api';
 
 export const ProjectForm = ({ 
   projects, 
@@ -66,8 +67,8 @@ export const ProjectForm = ({
       };
 
       const url = editingId
-        ? `http://localhost:3000/api/admin/portfolio/project/${editingId}`
-        : 'http://localhost:3000/api/admin/portfolio/project';
+        ? `${API_BASE_URL}/api/admin/portfolio/project/${editingId}`
+        : `${API_BASE_URL}/api/admin/portfolio/project`;
       const method = editingId ? 'PUT' : 'POST';
 
       const response = await fetch(url, {
@@ -103,7 +104,7 @@ export const ProjectForm = ({
     if (!window.confirm('¿Estás seguro de que deseas eliminar este proyecto?')) return;
 
     try {
-      const response = await fetch(`http://localhost:3000/api/admin/portfolio/project/${id}`, {
+      const response = await fetch(`${API_BASE_URL}/api/admin/portfolio/project/${id}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`

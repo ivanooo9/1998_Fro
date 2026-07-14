@@ -7,6 +7,15 @@ export default function App() {
   const [currentPath, setCurrentPath] = useState(window.location.pathname);
 
   useEffect(() => {
+    // Configurar la restauración de scroll como manual para evitar saltos del navegador
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+    // Desplazar al tope superior de la página
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     const handleLocationChange = () => {
       setCurrentPath(window.location.pathname);
     };

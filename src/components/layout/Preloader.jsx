@@ -85,7 +85,7 @@ export const Preloader = ({ onComplete, isFetching }) => {
       </svg>
 
       {/* Spinner minimalista y elegante que se desvanece al terminar */}
-      <motion.div 
+      <motion.div
         className="absolute inset-0 flex flex-col items-center justify-center pointer-events-auto z-10"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -95,16 +95,13 @@ export const Preloader = ({ onComplete, isFetching }) => {
         <div className="relative flex items-center justify-center">
           {/* Círculo animado en órbita */}
           <div className="w-20 h-20 rounded-full border border-white/5 border-t-white/80 animate-spin" />
-          
+
           {/* Logo/Marca central estático */}
           <div className="absolute font-display font-black text-xl text-white tracking-widest">
             1998
           </div>
         </div>
-        
-        <span className="mt-6 text-[10px] font-mono tracking-[0.3em] text-white/40 uppercase animate-pulse">
-          Cargando Experiencia
-        </span>
+
       </motion.div>
     </motion.div>
   );

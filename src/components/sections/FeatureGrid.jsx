@@ -1,10 +1,13 @@
 import { MotionContainer, FadeIn, RevealText, cn } from '@/design-system';
 import { MarketingCard } from '../cards/MarketingCard';
 
-export const FeatureGrid = ({ workSteps }) => {
+export const FeatureGrid = ({ workSteps, workStepsHeader }) => {
   if (!workSteps || workSteps.length === 0) {
     return null;
   }
+
+  const title = workStepsHeader?.title || "¿Cómo trabajamos?";
+  const description = workStepsHeader?.description || "Rápido, claro y enfocado en resultados.";
 
   return (
     <section
@@ -18,7 +21,7 @@ export const FeatureGrid = ({ workSteps }) => {
               "text-3xl md:text-5xl font-heading font-extrabold tracking-tight mb-6"
             )}
           >
-            <RevealText text="¿Cómo trabajamos?" />
+            <RevealText text={title} />
           </h2>
 
           <FadeIn
@@ -26,7 +29,7 @@ export const FeatureGrid = ({ workSteps }) => {
             direction="up"
             className={cn("text-foreground/70 text-lg")}
           >
-            Rápido, claro y enfocado en resultados.
+            {description}
           </FadeIn>
         </div>
 

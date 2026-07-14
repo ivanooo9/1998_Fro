@@ -1,4 +1,5 @@
 import React from 'react';
+import { API_BASE_URL } from '../../config/api';
 
 export const HashedUploadInput = ({ 
   label, 
@@ -23,7 +24,7 @@ export const HashedUploadInput = ({
     formData.append('file', file);
 
     try {
-      const response = await fetch('http://localhost:3000/api/admin/upload', {
+      const response = await fetch(`${API_BASE_URL}/api/admin/upload`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`
