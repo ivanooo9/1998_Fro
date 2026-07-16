@@ -24,17 +24,19 @@ export const Navbar = ({ isLoading }) => {
     if (!isMenuOpen) return;
 
     const menuEl = document.getElementById('mobile-fullscreen-menu');
-    if (!menuEl) return;
+    const toggleBtn = document.getElementById('mobile-menu-toggle-btn');
+    if (!menuEl || !toggleBtn) return;
 
     const focusableSelector = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
-    const focusableElements = Array.from(menuEl.querySelectorAll(focusableSelector));
+    const menuFocusables = Array.from(menuEl.querySelectorAll(focusableSelector));
+    const focusableElements = [toggleBtn, ...menuFocusables];
     
     if (focusableElements.length === 0) return;
 
     const firstElement = focusableElements[0];
     const lastElement = focusableElements[focusableElements.length - 1];
 
-    // Colocar el foco inicial en el primer elemento (generalmente el botón de cerrar)
+    // Colocar el foco inicial en el primer elemento
     setTimeout(() => {
       firstElement.focus();
     }, 50);
@@ -105,7 +107,7 @@ export const Navbar = ({ isLoading }) => {
     <>
       <motion.header
         className={cn(
-          "fixed top-0 left-0 right-0 z-50 flex h-20 items-center justify-between px-6 md:px-12 transition-colors",
+          "fixed top-0 left-0 right-0 z-[110] flex h-20 items-center justify-between px-6 md:px-12 transition-colors",
         )}
         style={{
           backgroundColor: flags.enableGlassEffects ? backgroundColor : 'rgba(0, 0, 0, 0.95)',
@@ -236,14 +238,26 @@ export const Navbar = ({ isLoading }) => {
 
           {/* Mobile Hamburger Button */}
           <button
-            onClick={() => setIsMenuOpen(true)}
-            className="flex items-center justify-center w-10 h-10 rounded-full border border-border/40 bg-card/25 text-foreground hover:bg-card/50 transition-colors focus:outline-none focus:ring-2 focus:ring-primary"
-            aria-label="Toggle menu"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            id="mobile-menu-toggle-btn"
+            className="flex items-center justify-center w-10 h-10 rounded-full border border-border/40 bg-card/25 text-foreground hover:bg-card/50 transition-colors focus:outline-none focus:ring-2 focus:ring-primary z-[110]"
+            aria-label={isMenuOpen ? "Close menu" : "Toggle menu"}
             aria-expanded={isMenuOpen}
           >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
+            <div className="relative w-5 h-4">
+              <motion.span
+                className="absolute left-0 w-full h-[2px] bg-current rounded-full"
+                style={{ top: "50%", marginTop: "-1px", transformOrigin: "center" }}
+                animate={isMenuOpen ? { rotate: 45, y: 0 } : { rotate: 0, y: -4 }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+              />
+              <motion.span
+                className="absolute left-0 w-full h-[2px] bg-current rounded-full"
+                style={{ top: "50%", marginTop: "-1px", transformOrigin: "center" }}
+                animate={isMenuOpen ? { rotate: -45, y: 0 } : { rotate: 0, y: 4 }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+              />
+            </div>
           </button>
         </div>
       </motion.header>
@@ -255,17 +269,7 @@ export const Navbar = ({ isLoading }) => {
           isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         }`}
       >
-        {/* Close Button */}
-        <button
-          onClick={() => setIsMenuOpen(false)}
-          id="close-menu-btn"
-          className="absolute top-8 right-8 flex items-center justify-center w-12 h-12 text-white/70 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-primary rounded-full"
-          aria-label="Close menu"
-        >
-          <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M6 18L18 6M6 6l12 12"></path>
-          </svg>
-        </button>
+        {/* Close Button is handled by the animated toggle button in the header */}
 
         {/* Dummy div to align content properly with justify-between */}
         <div className="h-10" />
