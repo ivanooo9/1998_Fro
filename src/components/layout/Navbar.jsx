@@ -240,7 +240,7 @@ export const Navbar = ({ isLoading }) => {
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             id="mobile-menu-toggle-btn"
-            className="flex items-center justify-center w-10 h-10 rounded-full border border-border/40 bg-card/25 text-foreground hover:bg-card/50 transition-colors focus:outline-none focus:ring-2 focus:ring-primary z-[110]"
+            className="flex items-center justify-center w-10 h-10 rounded-full border border-border/40 bg-card/25 text-foreground hover:bg-card/50 transition-colors focus:outline-none z-[110]"
             aria-label={isMenuOpen ? "Close menu" : "Toggle menu"}
             aria-expanded={isMenuOpen}
           >

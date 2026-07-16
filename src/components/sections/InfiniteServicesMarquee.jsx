@@ -4,7 +4,7 @@ import { motion, useScroll, useTransform, useInView } from "framer-motion";
 // =====================================================
 // SERVICE CARD COMPONENT (Correct React Hook Usage)
 // =====================================================
-const ServiceCard = ({ service, index, N, scrollYProgress }) => {
+const ServiceCard = ({ service, index, N, isLast, scrollYProgress }) => {
   const containerRef = useRef(null);
   const videoRef = useRef(null);
   const [isMobile, setIsMobile] = useState(false);
@@ -93,19 +93,15 @@ const ServiceCard = ({ service, index, N, scrollYProgress }) => {
   return (
     <div
       ref={containerRef}
-      className="
-        sticky
-        top-20
-        w-full
-        flex
-        items-start
-        justify-center
-        relative
-      "
+      className={`sticky top-20 w-full flex items-start justify-center relative ${isLast ? "snap-end" : "snap-start"}`}
       style={{
         zIndex: index,
-        height: isMobile ? "calc(var(--stable-vh, 1vh) * 88)" : "calc(var(--stable-vh, 1vh) * 100)",
+        height: isLast
+          ? (isMobile ? "calc(var(--stable-vh, 1vh) * 78)" : "calc(var(--stable-vh, 1vh) * 90)")
+          : (isMobile ? "calc(var(--stable-vh, 1vh) * 88)" : "calc(var(--stable-vh, 1vh) * 100)"),
+        maxHeight: "100vh",
         paddingTop: "12px",
+        paddingBottom: isLast ? "0px" : undefined
       }}
     >
       {/* ============================================= */}
@@ -319,10 +315,10 @@ const InfiniteServicesMarquee = ({ data }) => {
         w-full
         bg-background
         mt-0
-        mb-12
-        md:mb-16
-        py-[4vh]
-        md:py-[6vh]
+        mb-0
+        section-spacing
+        snap-y
+        snap-proximity
       "
     >
       <div
@@ -363,7 +359,7 @@ const InfiniteServicesMarquee = ({ data }) => {
           ref={cardsContainerRef}
           className="relative w-full"
           style={{
-            height: `calc(var(--stable-vh, 1vh) * ${(N + 1) * 100})`
+            height: `calc(var(--stable-vh, 1vh) * ${N * 100})`
           }}
         >
           {services.map((service, index) => (
@@ -372,6 +368,7 @@ const InfiniteServicesMarquee = ({ data }) => {
               service={service}
               index={index}
               N={N}
+              isLast={index === N - 1}
               scrollYProgress={scrollYProgress}
             />
           ))}

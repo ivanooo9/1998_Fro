@@ -38,7 +38,7 @@ export const MarketingSection = ({ reversed = false, infoBlocks = [] }) => {
   }, [isInView, mediaUrl, isMediaVideo]);
 
   return (
-    <section ref={sectionRef} className={cn("py-24 overflow-hidden relative")}>
+    <section ref={sectionRef} className={cn("section-spacing overflow-hidden relative")}>
       <div className={cn("container mx-auto px-6 md:px-12")}>
         <div className={cn("flex gap-12 lg:gap-20 items-center", reversed ? 'flex-col lg:flex-row-reverse' : 'flex-col lg:flex-row')}>
 

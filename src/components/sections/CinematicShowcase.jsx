@@ -38,7 +38,7 @@ export const CinematicShowcase = ({ infoBlocks = [] }) => {
   }, [isInView, mediaUrl, isMediaVideo]);
 
   return (
-    <section ref={sectionRef} className={cn("py-24 bg-background relative overflow-hidden")}>
+    <section ref={sectionRef} className={cn("section-spacing bg-background relative overflow-hidden")}>
       <div className={cn("container mx-auto px-6 md:px-12 relative z-10 text-center")}>
         <div className={cn("max-w-3xl mx-auto mb-20")}>
           <h2 className={cn("text-4xl md:text-6xl font-heading font-extrabold tracking-tight mb-8")}>

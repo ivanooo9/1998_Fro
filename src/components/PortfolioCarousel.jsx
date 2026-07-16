@@ -154,7 +154,7 @@ export const PortfolioCarousel = ({ data }) => {
   const activeDotIndex = Math.min(activeIndex, totalDots - 1);
 
   return (
-    <section id="portafolio" className="relative bg-background border-t border-border/20 py-24 overflow-hidden portfolio-carousel-container">
+    <section id="portafolio" className="relative bg-background border-t border-border/20 section-spacing overflow-hidden portfolio-carousel-container">
       <style>{`
         .portfolio-carousel-container {
           --card-gap: 24px;

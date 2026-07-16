@@ -9,8 +9,7 @@ export const CTASection = ({ data }) => {
   return (
     <section
       id="planes"
-      // [Refactor]: Estandarización de ritmo vertical a py-36 md:py-48, borde sutil border-border/20 y uso de cn()
-      className={cn("py-36 md:py-48 relative overflow-hidden border-t border-border/20 bg-card/50 dark:bg-card/10")}
+      className={cn("section-spacing relative overflow-hidden border-t border-border/20 bg-card/50 dark:bg-card/10")}
     >
       <div className={cn("container mx-auto px-6 md:px-12 relative z-10")}>
         <MotionContainer staggerChildren={0.2} className={cn("max-w-4xl mx-auto text-center")}>

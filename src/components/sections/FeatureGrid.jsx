@@ -12,7 +12,7 @@ export const FeatureGrid = ({ workSteps, workStepsHeader }) => {
   return (
     <section
       id="como-trabajamos"
-      className={cn("py-24 bg-background relative")}
+      className={cn("section-spacing bg-background relative")}
     >
       <div className={cn("container mx-auto px-6 md:px-12")}>
         <div className={cn("mb-16 text-center max-w-2xl mx-auto")}>

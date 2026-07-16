@@ -102,3 +102,33 @@ html {
 .carousel a:hover .img img {
   transform: scale(1.04);
 }
+
+/* Unified section vertical spacing */
+:root {
+  --section-spacing-y: 3rem; /* 48px on mobile */
+}
+
+@media (min-width: 768px) {
+  :root {
+    --section-spacing-y: 4rem; /* 64px on desktop */
+  }
+}
+
+.section-spacing {
+  padding-top: var(--section-spacing-y) !important;
+  padding-bottom: var(--section-spacing-y) !important;
+}
+
+/* Remove tap highlight, outlines, and box-shadows on mobile menu button */
+#mobile-menu-toggle-btn {
+  -webkit-tap-highlight-color: transparent !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+#mobile-menu-toggle-btn:focus,
+#mobile-menu-toggle-btn:active,
+#mobile-menu-toggle-btn:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
