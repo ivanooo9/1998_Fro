@@ -60,15 +60,98 @@ export const PortfolioCarousel = ({ data }) => {
   if (!data) return null;
   const { projects = [], title = "Nuestros Proyectos", subtitle = "" } = data;
 
+  const carouselRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [visibleCards, setVisibleCards] = useState(3);
-  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  const [canScrollPrev, setCanScrollPrev] = useState(false);
+  const [canScrollNext, setCanScrollNext] = useState(true);
 
-  const maxIndex = Math.max(0, projects.length - visibleCards);
-  const totalDots = maxIndex + 1;
+  // Determinar cuántas cartas caben en pantalla según el ancho de la ventana
+  const updateVisibleCards = () => {
+    if (typeof window === 'undefined') return;
+    const width = window.innerWidth;
+    if (width < 768) {
+      setVisibleCards(1);
+    } else if (width < 1024) {
+      setVisibleCards(2);
+    } else {
+      setVisibleCards(3);
+    }
+  };
 
-  const handlePrev = () => setActiveIndex((prev) => Math.max(prev - 1, 0));
-  const handleNext = () => setActiveIndex((prev) => Math.min(prev + 1, maxIndex));
+  const handleScroll = () => {
+    const el = carouselRef.current;
+    if (!el) return;
+    const currentScroll = el.scrollLeft;
+    const maxScroll = el.scrollWidth - el.clientWidth;
+    
+    const step = getScrollStep();
+    if (step > 0) {
+      const index = Math.round(currentScroll / step);
+      setActiveIndex(index);
+    }
+
+    setCanScrollPrev(currentScroll > 2);
+    setCanScrollNext(currentScroll < maxScroll - 2);
+  };
+
+  useEffect(() => {
+    updateVisibleCards();
+    window.addEventListener('resize', updateVisibleCards);
+    return () => {
+      window.removeEventListener('resize', updateVisibleCards);
+    };
+  }, []);
+
+  useEffect(() => {
+    const el = carouselRef.current;
+    if (el) {
+      handleScroll();
+      // Pequeño retardo para asegurar que los elementos estén renderizados
+      const timer = setTimeout(handleScroll, 100);
+      window.addEventListener('resize', handleScroll);
+      return () => {
+        clearTimeout(timer);
+        window.removeEventListener('resize', handleScroll);
+      };
+    }
+  }, [projects, visibleCards]);
+
+  const getScrollStep = () => {
+    const el = carouselRef.current;
+    if (!el) return 0;
+    const firstCard = el.querySelector('.relative.flex.flex-col');
+    if (firstCard) {
+      const style = window.getComputedStyle(el);
+      const gap = parseFloat(style.getPropertyValue('--card-gap')) || 24;
+      return firstCard.getBoundingClientRect().width + gap;
+    }
+    return el.clientWidth;
+  };
+
+  const handlePrev = () => {
+    const el = carouselRef.current;
+    if (!el) return;
+    const step = getScrollStep();
+    el.scrollBy({ left: -step, behavior: 'smooth' });
+  };
+
+  const handleNext = () => {
+    const el = carouselRef.current;
+    if (!el) return;
+    const step = getScrollStep();
+    el.scrollBy({ left: step, behavior: 'smooth' });
+  };
+
+  const scrollToCard = (index) => {
+    const el = carouselRef.current;
+    if (!el) return;
+    const step = getScrollStep();
+    el.scrollTo({ left: index * step, behavior: 'smooth' });
+  };
+
+  const totalDots = Math.max(1, projects.length - visibleCards + 1);
+  const activeDotIndex = Math.min(activeIndex, totalDots - 1);
 
   return (
     <section id="portafolio" className="relative bg-background border-t border-border/20 py-24 overflow-hidden portfolio-carousel-container">
@@ -83,6 +166,13 @@ export const PortfolioCarousel = ({ data }) => {
         @media (min-width: 1024px) {
           .portfolio-carousel-container { --card-width: calc((100% - 48px) / 3); }
         }
+        .no-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+        .no-scrollbar {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
       `}</style>
 
       <div className="max-w-6xl mx-auto px-12 mb-10">
@@ -92,31 +182,47 @@ export const PortfolioCarousel = ({ data }) => {
 
       <div className="relative w-full max-w-6xl mx-auto px-12">
         {/* Flechas de navegación */}
-        <button onClick={handlePrev} disabled={activeIndex === 0} className="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 z-30 w-10 h-10 rounded-full bg-white text-black items-center justify-center hover:scale-105 disabled:opacity-0">
+        <button
+          onClick={handlePrev}
+          disabled={!canScrollPrev}
+          className="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 z-30 w-10 h-10 rounded-full bg-white text-black items-center justify-center hover:scale-105 disabled:opacity-0 transition-all duration-300"
+        >
           <i className="bi bi-chevron-left"></i>
         </button>
-        <button onClick={handleNext} disabled={activeIndex >= maxIndex} className="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 z-30 w-10 h-10 rounded-full bg-white text-black items-center justify-center hover:scale-105 disabled:opacity-0">
+        <button
+          onClick={handleNext}
+          disabled={!canScrollNext}
+          className="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 z-30 w-10 h-10 rounded-full bg-white text-black items-center justify-center hover:scale-105 disabled:opacity-0 transition-all duration-300"
+        >
           <i className="bi bi-chevron-right"></i>
         </button>
 
         {/* Carrusel */}
-        <div className="w-full overflow-x-auto md:overflow-hidden snap-x snap-mandatory md:snap-none touch-pan-x scrollbar-none py-2">
-          <motion.div
-            animate={isMobile ? { x: 0 } : { x: `calc(-${activeIndex} * (var(--card-width) + var(--card-gap)))` }}
-            transition={{ ease: [0.22, 1, 0.36, 1], duration: 0.6 }}
-            className="flex gap-[var(--card-gap)]"
-          >
+        <div
+          ref={carouselRef}
+          onScroll={handleScroll}
+          className="w-full overflow-x-auto snap-x snap-mandatory touch-pan-x no-scrollbar py-2 scroll-smooth"
+        >
+          <div className="flex gap-[var(--card-gap)]">
             {projects.map((project, i) => (
               <ProjectCard key={i} project={project} />
             ))}
-          </motion.div>
+          </div>
         </div>
       </div>
 
       {/* Dots */}
       <div className="flex justify-center gap-3 mt-10">
         {Array.from({ length: totalDots }).map((_, i) => (
-          <button key={i} onClick={() => setActiveIndex(i)} className={cn("h-3 rounded-full transition-all", i === activeIndex ? "w-10 bg-primary" : "w-3 bg-white/20")} />
+          <button
+            key={i}
+            onClick={() => scrollToCard(i)}
+            className={cn(
+              "h-3 rounded-full transition-all duration-300",
+              i === activeDotIndex ? "w-10 bg-primary" : "w-3 bg-white/20 hover:bg-white/40"
+            )}
+            aria-label={`Go to slide ${i + 1}`}
+          />
         ))}
       </div>
     </section>

@@ -107,7 +107,7 @@ export const Navbar = ({ isLoading }) => {
     <>
       <motion.header
         className={cn(
-          "fixed top-0 left-0 right-0 z-[110] flex h-20 items-center justify-between px-6 md:px-12 transition-colors",
+          "fixed top-0 left-0 right-0 z-[110] flex items-center justify-between p-5 md:py-6 md:px-12 transition-colors",
         )}
         style={{
           backgroundColor: flags.enableGlassEffects ? backgroundColor : 'rgba(0, 0, 0, 0.95)',
@@ -119,7 +119,7 @@ export const Navbar = ({ isLoading }) => {
         transition={{ duration: 1.0, ease: [0.76, 0, 0.24, 1], delay: 0.15 }}
       >
         {/* Desktop Panoramic Layout */}
-        <div className="hidden md:grid grid-cols-[1fr_auto_1fr] w-full items-center h-full gap-8 lg:gap-20">
+        <div className="hidden md:grid grid-cols-[1fr_auto_1fr] w-full items-center gap-8 lg:gap-20">
 
           {/* Left Nav: Alineado a la derecha con gap */}
           <div className="flex items-center justify-end w-full gap-12">
@@ -220,7 +220,7 @@ export const Navbar = ({ isLoading }) => {
         </div>
 
         {/* Mobile Layout */}
-        <div className="flex md:hidden w-full items-center justify-between h-full">
+        <div className="flex md:hidden w-full items-center justify-between">
           {/* Mobile Logo */}
           <a
             href="#inicio"
@@ -265,17 +265,17 @@ export const Navbar = ({ isLoading }) => {
       {/* Full Screen Mobile Menu */}
       <div
         id="mobile-fullscreen-menu"
-        className={`fixed inset-0 z-[100] flex flex-col items-center justify-between py-16 px-6 bg-black/95 backdrop-blur-xl transition-all duration-500 ease-in-out ${
+        className={`fixed inset-0 z-[100] flex flex-col items-center justify-between p-8 bg-black/95 backdrop-blur-xl transition-all duration-500 ease-in-out ${
           isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         }`}
       >
         {/* Close Button is handled by the animated toggle button in the header */}
 
-        {/* Dummy div to align content properly with justify-between */}
-        <div className="h-10" />
+        {/* Top Spacer to balance footer text height and keep the central navigation list perfectly centered */}
+        <div className="h-6" />
 
         {/* Navigation List */}
-        <nav className="flex flex-col items-center gap-6 text-center w-full max-w-[280px]">
+        <nav className="flex flex-col items-center gap-8 text-center w-full max-w-[280px]">
           <a
             href="#como-trabajamos"
             onClick={(e) => handleNavClick(e, 'como-trabajamos')}
@@ -310,7 +310,7 @@ export const Navbar = ({ isLoading }) => {
         </nav>
 
         {/* Footer text */}
-        <div className="text-xs text-white/40 tracking-wider font-mono">
+        <div className="text-xs text-white/40 tracking-wider font-mono h-6 flex items-center justify-center">
           1998 - Development and Marketing
         </div>
       </div>
