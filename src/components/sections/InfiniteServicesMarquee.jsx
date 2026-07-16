@@ -95,7 +95,7 @@ const ServiceCard = ({ service, index, N, scrollYProgress }) => {
       ref={containerRef}
       className="
         sticky
-        top-0
+        top-20
         w-full
         flex
         items-start
@@ -104,8 +104,8 @@ const ServiceCard = ({ service, index, N, scrollYProgress }) => {
       "
       style={{
         zIndex: index,
-        height: "calc(var(--stable-vh, 1vh) * 100)",
-        paddingTop: isMobile ? "calc(var(--stable-vh, 1vh) * 12)" : "calc(var(--stable-vh, 1vh) * 10)",
+        height: isMobile ? "calc(var(--stable-vh, 1vh) * 88)" : "calc(var(--stable-vh, 1vh) * 100)",
+        paddingTop: "12px",
       }}
     >
       {/* ============================================= */}
@@ -128,7 +128,7 @@ const ServiceCard = ({ service, index, N, scrollYProgress }) => {
           bg-background
         "
         style={{
-          height: isMobile ? "calc(var(--stable-vh, 1vh) * 76)" : "calc(var(--stable-vh, 1vh) * 90)",
+          height: isMobile ? "calc(var(--stable-vh, 1vh) * 78)" : "calc(var(--stable-vh, 1vh) * 90)",
         }}
       >
         {/* ========================================= */}
@@ -349,8 +349,8 @@ const InfiniteServicesMarquee = ({ data }) => {
             tracking-tight
             text-center
             text-foreground
-            pb-12
-            md:pb-16
+            pb-4
+            md:pb-10
           "
         >
           {title}

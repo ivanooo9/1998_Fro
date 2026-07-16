@@ -30,7 +30,7 @@ export const Navbar = ({ isLoading }) => {
     const focusableSelector = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
     const menuFocusables = Array.from(menuEl.querySelectorAll(focusableSelector));
     const focusableElements = [toggleBtn, ...menuFocusables];
-    
+
     if (focusableElements.length === 0) return;
 
     const firstElement = focusableElements[0];
@@ -134,7 +134,7 @@ export const Navbar = ({ isLoading }) => {
               <span className="relative z-10 flex items-center justify-center gap-2 px-2 py-1">
                 ¿Cómo trabajamos?
               </span>
-              <motion.div 
+              <motion.div
                 className="absolute inset-0 z-0 bg-white/20"
                 initial={{ opacity: 0 }}
                 whileHover={{ opacity: 1 }}
@@ -152,7 +152,7 @@ export const Navbar = ({ isLoading }) => {
               <span className="relative z-10 flex items-center justify-center gap-2 px-2 py-1">
                 Servicios
               </span>
-              <motion.div 
+              <motion.div
                 className="absolute inset-0 z-0 bg-white/20"
                 initial={{ opacity: 0 }}
                 whileHover={{ opacity: 1 }}
@@ -191,7 +191,7 @@ export const Navbar = ({ isLoading }) => {
               <span className="relative z-10 flex items-center justify-center gap-2 px-2 py-1">
                 Portafolio
               </span>
-              <motion.div 
+              <motion.div
                 className="absolute inset-0 z-0 bg-white/20"
                 initial={{ opacity: 0 }}
                 whileHover={{ opacity: 1 }}
@@ -209,7 +209,7 @@ export const Navbar = ({ isLoading }) => {
               <span className="relative z-10 flex items-center justify-center gap-2 px-2 py-1">
                 Planes
               </span>
-              <motion.div 
+              <motion.div
                 className="absolute inset-0 z-0 bg-white/20"
                 initial={{ opacity: 0 }}
                 whileHover={{ opacity: 1 }}
@@ -265,9 +265,8 @@ export const Navbar = ({ isLoading }) => {
       {/* Full Screen Mobile Menu */}
       <div
         id="mobile-fullscreen-menu"
-        className={`fixed inset-0 z-[100] flex flex-col items-center justify-between p-8 bg-black/95 backdrop-blur-xl transition-all duration-500 ease-in-out ${
-          isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
-        }`}
+        className={`fixed inset-0 z-[100] flex flex-col items-center justify-between p-8 bg-black/95 backdrop-blur-xl transition-all duration-500 ease-in-out ${isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+          }`}
       >
         {/* Close Button is handled by the animated toggle button in the header */}
 
@@ -311,7 +310,6 @@ export const Navbar = ({ isLoading }) => {
 
         {/* Footer text */}
         <div className="text-xs text-white/40 tracking-wider font-mono h-6 flex items-center justify-center">
-          1998 - Development and Marketing
         </div>
       </div>
     </>

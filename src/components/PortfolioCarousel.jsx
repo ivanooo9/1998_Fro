@@ -84,7 +84,7 @@ export const PortfolioCarousel = ({ data }) => {
     if (!el) return;
     const currentScroll = el.scrollLeft;
     const maxScroll = el.scrollWidth - el.clientWidth;
-    
+
     const step = getScrollStep();
     if (step > 0) {
       const index = Math.round(currentScroll / step);
@@ -176,7 +176,7 @@ export const PortfolioCarousel = ({ data }) => {
       `}</style>
 
       <div className="max-w-6xl mx-auto px-12 mb-10">
-        <h2 className="text-6xl text-white font-bold tracking-tighter">{title}</h2>
+        <h2 className="text-4xl text-white font-bold tracking-tighter">{title}</h2>
         <p className="text-foreground/75 text-xl mt-3">{subtitle}</p>
       </div>
 
